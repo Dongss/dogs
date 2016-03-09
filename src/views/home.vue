@@ -1,6 +1,6 @@
 <template>
 	<header-component></header-component>
-	<container-component></container-component>
+	<container-component></container-component>    
 </template>
 
 <script>

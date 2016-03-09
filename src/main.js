@@ -10,9 +10,10 @@ require('../node_modules/semantic-ui-css/semantic.min.css');
 Vue.use(VueRouter);
 
 let router = new VueRouter({
-    hashbang: true,
+    hashbang: false,
     saveScrollPosition: true,
-    transitionOnLoad: true
+    transitionOnLoad: true,
+    linkActiveClass: "active"
 });
 
 let app = Vue.extend({});

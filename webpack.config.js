@@ -3,7 +3,7 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var entry = ['./src/main.js'];
-var buildPath = '/dist/';
+var buildPath = './dist/';
 
 var plugins = [
 	new ExtractTextPlugin('style.css'),
@@ -16,7 +16,7 @@ var plugins = [
 module.exports = {
 	entry: entry,
 	output:  {
-		path: path.join(__dirname, buildPath),
+        path: buildPath,
 		filename: 'build.js'
 	},
 	module: {
