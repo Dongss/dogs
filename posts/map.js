@@ -6,8 +6,8 @@ let CategoryMap = {
     others: 'Others'
 };
 
-let PostsMap = {
-    0: { name: '千里之行', categoty: 'Others' }
-};
+let PostsMap = [
+    { id: 0, title: '千里之行', category: 'others' }
+];
 
 export { CategoryMap, PostsMap }

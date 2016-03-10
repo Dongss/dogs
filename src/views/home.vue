@@ -1,6 +1,10 @@
 <template>
 	<header-component></header-component>
-	<container-component></container-component>    
+	<container-component></container-component> 
+    <div class="ui center aligned basic segment">   
+        <div class="ui divider"></div>
+        <a href="mailto:dongsoso@hotmail.com?subject=Dogs%20Feedback">Feedback</a>    
+    </div>
 </template>
 
 <script>

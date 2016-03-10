@@ -3,25 +3,35 @@
         <div class="ui vertical teal text menu">
             <a class="teal item"
                 v-link="{name: 'category', params: {category:'all'}}">
-                全部分类
+                全部分类 ({{postsCount}})
             </a>
             <a class="green item" 
-                v-for="category in categoryMap"
-                v-link="{name: 'category', params: {category:$key}}">
-                {{category}}
+                v-for="category in categorys"
+                v-link="{name: 'category', params: {category: category.name}}">
+                {{category.alias}} ({{category.count}})
             </a>
         </div>
     </div>
 </template>
 
 <script>
-    import { CategoryMap } from '../../posts/map.js';
+    import { CategoryMap, PostsMap } from '../../posts/map.js';
+    import _ from 'underscore';
     
     export default {
         data () {
-            return {
-                categoryMap: CategoryMap
-            }
+            let categorys = _.map(CategoryMap, (val, key) => {
+                let count = _.where(PostsMap, { category: key }).length;
+                return {
+                    name: key,
+                    alias: val,
+                    count: count
+                };
+            });
+            return {               
+                categorys: categorys,
+                postsCount: PostsMap.length
+            };
         }
     }
 </script>

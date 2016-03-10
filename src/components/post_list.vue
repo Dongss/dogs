@@ -5,31 +5,34 @@
                 <div class="detail">
                     分类：           
                 </div>
-                {{categoryMap[category]}}       
+                {{categoryAlias}}       
             </a> 
          </div>
          <div class="item"
             v-for="post in posts">
-            {{post.name}}       
+            {{post.title}}       
          </div>
     </div>
 </template>
 
 <script>
-    import { CategoryMap, PostsMap } from '../../posts/map';
+    import { CategoryMap, PostsMap } from '../../posts/map.js';
     import _ from 'underscore';
-    
+        
     export default {
         props: ['category'],
-        data () {
-            return {
-                categoryMap: CategoryMap,
-                postsMap: PostsMap
-            };
-        },
         computed: {
+            categoryAlias () {
+                if (this.category == 'all') {
+                    return '全部分类';
+                }
+                return CategoryMap[this.category]  || '未知';
+            },
             posts () {
-                return _.where(postsMap, { categoty: this.category });
+                if (this.category == 'all') {
+                    return PostsMap;
+                }
+                return _.where(PostsMap, { category: this.category });
             }
         }
     }
