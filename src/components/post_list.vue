@@ -1,7 +1,7 @@
 <template>
     <div class="ui divided items">
         <div class="item">
-            <a class="ui teal label">
+            <a class="ui blue label">
                 <div class="detail">
                     分类：           
                 </div>
@@ -10,13 +10,13 @@
          </div>
          <div class="item"
             v-for="post in posts">
-            {{post.title}}       
+            <strong><a class="post-title" href="{{href(post.id)}}" target="_blank">{{post.title}}</a></strong>      
          </div>
     </div>
 </template>
 
 <script>
-    import { CategoryMap, PostsMap } from '../../posts/map.js';
+    import { CategoryMap, PostsMap, GHAddr } from '../../posts/map.js';
     import _ from 'underscore';
         
     export default {
@@ -34,6 +34,18 @@
                 }
                 return _.where(PostsMap, { category: this.category });
             }
+        },
+        methods: {
+            href (id) {
+                let post = _.find(PostsMap, { id: id });
+                return GHAddr + 'posts/' + post.category + '/' + id + '.md';
+            }
         }
     }
 </script>
+
+<style>
+    .post-title {
+        font-size: 150%;
+    }
+</style>

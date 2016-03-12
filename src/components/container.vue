@@ -1,5 +1,5 @@
 <template>
-	<div class="ui teal pointing secondary menu">
+	<div class="ui blue pointing secondary menu">
   		<a class="item active" data-tab="blog-list">博客列表</a>
 		<a class="item" data-tab="links">链接</a>
 	</div>

@@ -1,7 +1,7 @@
 <template>
     <div class="ui segment">
-        <div class="ui vertical teal text menu">
-            <a class="teal item"
+        <div class="ui vertical blue text menu">
+            <a class="item"
                 v-link="{name: 'category', params: {category:'all'}}">
                 全部分类 ({{postsCount}})
             </a>

@@ -10,4 +10,6 @@ let PostsMap = [
     { id: 0, title: '千里之行', category: 'others' }
 ];
 
-export { CategoryMap, PostsMap }
+let GHAddr = 'https://github.com/Dongss/dogs/blob/master/';
+
+export { CategoryMap, PostsMap,  GHAddr}
