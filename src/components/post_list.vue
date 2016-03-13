@@ -8,9 +8,18 @@
                 {{categoryAlias}}       
             </a> 
          </div>
-         <div class="item"
+            <div class="item"
             v-for="post in posts">
-            <strong><a class="post-title" href="{{href(post.id)}}" target="_blank">{{post.title}}</a></strong>      
+                <div class="content">
+                    <div class="header">
+                        <strong>
+                            <a class="post-title" href="{{href(post.id)}}" target="_blank">{{post.title}}</a>
+                        </strong>
+                    </div>
+                    <div class="discription meta">
+                        {{post.date | unixtime}}    <a href="{{href(post.id)}}" target="_blank">source</a>
+                    </div>
+                </div>
          </div>
     </div>
 </template>
