@@ -9,15 +9,17 @@
             </a> 
          </div>
             <div class="item"
-            v-for="post in posts">
+                v-for="post in posts">
                 <div class="content">
                     <div class="header">
                         <strong>
-                            <a class="post-title" href="{{href(post.id)}}" target="_blank">{{post.title}}</a>
+                            <a class="post-title" v-link="{name:'post', params: {postId: post.id}}">
+                                {{post.title}}
+                            </a>
                         </strong>
                     </div>
                     <div class="discription meta">
-                        {{post.date | unixtime}}    <a href="{{href(post.id)}}" target="_blank">source</a>
+                        {{post.date | unixtime}}
                     </div>
                 </div>
          </div>
@@ -25,7 +27,7 @@
 </template>
 
 <script>
-    import { CategoryMap, PostsMap, GHAddr } from '../../posts/map.js';
+    import { CategoryMap, PostsMap } from '../../posts/map.js';
     import _ from 'underscore';
         
     export default {
@@ -43,13 +45,7 @@
                 }
                 return _.where(PostsMap, { category: this.category });
             }
-        },
-        methods: {
-            href (id) {
-                let post = _.find(PostsMap, { id: id });
-                return GHAddr + 'posts/' + post.category + '/' + id + '.md';
-            }
-        }
+        }       
     }
 </script>
 

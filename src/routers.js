@@ -9,6 +9,10 @@ export default function(router) {
                 '/category/:category': {
                     name: 'category',
                     component: require('./views/category.vue')
+                 },
+                 '/post/:postId': {
+                     name: 'post',
+                     component: require('./views/post.vue')
                  }
             }
 		}      
