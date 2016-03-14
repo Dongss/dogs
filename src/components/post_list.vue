@@ -19,7 +19,8 @@
                         </strong>
                     </div>
                     <div class="discription meta">
-                        {{post.date | unixtime}}
+                        {{post.date | unixtime}} | 
+                        分类：{{post.categoryAlias}}
                     </div>
                 </div>
          </div>
@@ -29,9 +30,17 @@
 <script>
     import { CategoryMap, PostsMap } from '../../posts/map.js';
     import _ from 'underscore';
+    _.each(PostsMap, function(post) {
+        post.categoryAlias = CategoryMap[post.category]
+    });
         
     export default {
         props: ['category'],
+        methods: {
+            category (category) {
+                return CategoryMap[this.category]  || '未知';
+            } 
+        },
         computed: {
             categoryAlias () {
                 if (this.category == 'all') {
@@ -51,6 +60,6 @@
 
 <style>
     .post-title {
-        font-size: 150%;
+        font-size: 130%;
     }
 </style>

@@ -1,14 +1,33 @@
 <template>
     <div class="ui segment" id="post-detail" v-if="post">
+    <a v-link="{name: 'category', params: {category: 'all'}}">
+        <i class="blue chevron left link icon"></i>文章列表
+    </a>
+    <div class="ui divider"></div>
         <div class="discription meta">
-            {{post.date | unixtime}} <a href="{{href(post.id)}}" target="_blank">source</a>
+            <a class="ui mini label" 
+                v-link="{name:'category', params: {category:post.category}}" 
+                title="点击查看该分类文章">
+                分类
+                <div class="detail">{{categoryAlias}}</div>
+            </a>
+            <a class="ui mini label"  
+                title="文章发布时间">
+                发布时间
+                <div class="detail">{{post.date | unixtime}}</div>
+            </a>
+            <a class="ui mini label"  
+                title="欢迎欢迎"
+                href="{{href(post.id)}}" target="_blank">
+                纠错/交流/评论
+            </a>
         </div>
         {{{content}}}
     </div>
 </template>
 
 <script>
-    import { PostsMap, GHAddr } from '../../posts/map.js';
+    import { CategoryMap, PostsMap, GHAddr } from '../../posts/map.js';
     import _ from 'underscore';
     
     export default {
@@ -24,6 +43,11 @@
                 this.postId = transition.to.params.postId;
                 this.post = _.find(PostsMap, { id: parseInt(this.postId) });
                 this.content = require('../../posts/' + this.post.category + '/' + this.postId +'.md');
+            }
+        },
+        computed: {
+            categoryAlias () {
+                return CategoryMap[this.post.category]  || '未知';
             }
         },
         methods: {
