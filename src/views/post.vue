@@ -42,7 +42,18 @@
             data (transition) {
                 this.postId = transition.to.params.postId;
                 this.post = _.find(PostsMap, { id: parseInt(this.postId) });
-                this.content = require('../../posts/' + this.post.category + '/' + this.postId +'.md');
+                this.content = require('../../posts/' + this.post.category + '/' + this.postId +'.md');             
+            }
+        },
+        watch: {
+            postId (val) {
+                if (val) { // Init highlightJs
+                    $(function() {
+                        $('pre code').each(function(i, block) {
+                            hljs.highlightBlock(block);
+                        });
+                    });
+                }
             }
         },
         computed: {
