@@ -18,7 +18,7 @@
                             </a>
                         </strong>
                     </div>
-                    <div class="discription meta">
+                    <div class="discription meta title-foot">
                         {{post.date | unixtime}} | 
                         分类：{{post.categoryAlias}}
                     </div>
@@ -61,5 +61,8 @@
 <style>
     .post-title {
         font-size: 130%;
+    }
+    .title-foot {
+        font-family: "Microsoft YaHei";
     }
 </style>

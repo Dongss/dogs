@@ -19,7 +19,7 @@
             <a class="ui mini label"  
                 title="欢迎欢迎"
                 href="{{href(post.id)}}" target="_blank">
-                纠错/交流/评论
+                纠错/交流
             </a>
         </div>
         {{{content}}}
