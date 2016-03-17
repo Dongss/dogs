@@ -15,7 +15,7 @@
         },
         route: {
             data (transition) {
-                this.category = transition.to.params.category;
+                this.category = transition.to.params.category;               
             }
         },
         components: { PostListComponent }

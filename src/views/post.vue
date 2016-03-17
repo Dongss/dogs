@@ -42,7 +42,8 @@
             data (transition) {
                 this.postId = transition.to.params.postId;
                 this.post = _.find(PostsMap, { id: parseInt(this.postId) });
-                this.content = require('../../posts/' + this.post.category + '/' + this.postId +'.md');             
+                this.content = require('../../posts/' + this.post.category + '/' + this.postId +'.md');   
+                document.title = this.post.title + ' - Dogs Blog';       
             }
         },
         watch: {

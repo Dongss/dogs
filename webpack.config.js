@@ -1,16 +1,32 @@
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var entry = ['./src/main.js'];
-var buildPath = './dist/';
+
+const ENV = process.env.NODE_ENV || 'local';
+var entry = ['./src/main.js'];
+var buildPath;
+
+if (ENV === 'production') {
+    buildPath = 'build/dist/';
+} else {
+    buildPath = "dist/";
+}
 
 var plugins = [
 	new ExtractTextPlugin('style.css'),
 	new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery'
-    })
+    }),
+    new HtmlWebpackPlugin({
+        filename: '../index.html',
+        template: 'src/index.html',
+        inject: false,
+        cache: true
+    }),
 ];
 
 module.exports = {
