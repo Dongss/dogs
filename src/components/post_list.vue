@@ -30,8 +30,11 @@
 <script>
     import { CategoryMap, PostsMap } from '../../posts/map.js';
     import _ from 'underscore';
-    _.each(PostsMap, function(post) {
+    _.each(PostsMap, post => {
         post.categoryAlias = CategoryMap[post.category]
+    });
+    PostsMap = _.sortBy(PostsMap, post => {
+        return post.id * -1;
     });
         
     export default {
