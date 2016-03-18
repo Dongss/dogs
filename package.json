@@ -12,7 +12,8 @@
   },
   "scripts": {
     "dev": "webpack --progress --color --watch",
-    "deploy": "NODE_ENV=production webpack -p --config webpack.config.js"
+    "deploy": "NODE_ENV=production webpack -p --config webpack.config.js",
+    "deploy_win": "set NODE_ENV=production&&webpack -p --config webpack.config.js"
   },
   "devDependencies": {
     "babel-core": "^6.5.2",
