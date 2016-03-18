@@ -33,7 +33,7 @@
     _.each(PostsMap, post => {
         post.categoryAlias = CategoryMap[post.category]
     });
-    PostsMap = _.sortBy(PostsMap, post => {
+    let _PostsMap = _.sortBy(PostsMap, post => {
         return post.id * -1;
     });
         
@@ -53,9 +53,9 @@
             },
             posts () {
                 if (this.category == 'all') {
-                    return PostsMap;
+                    return _PostsMap;
                 }
-                return _.where(PostsMap, { category: this.category });
+                return _.where(_PostsMap, { category: this.category });
             }
         }       
     }
