@@ -24,6 +24,7 @@ var plugins = [
     new HtmlWebpackPlugin({
         filename: '../index.html',
         template: 'src/index.html',
+        favicon: 'src/assets/img/favicon.ico',
         inject: false,
         cache: true
     }),
