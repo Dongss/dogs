@@ -9,7 +9,7 @@
                 v-link="{name:'category', params: {category:post.category}}" 
                 title="点击查看该分类文章">
                 分类
-                <div class="detail">{{categoryAlias}}</div>
+                <div class="detail">{{post.category | category}}</div>
             </a>
             <a class="ui mini label"  
                 title="文章发布时间">
@@ -30,7 +30,7 @@
 
 <script> 
     import 'github-markdown-css';
-    import { CategoryMap, PostsMap, GHAddr } from '../../posts/map.js';
+    import { PostsMap, GHAddr } from '../../posts/map.js';
     import _ from 'underscore';
     
     export default {
@@ -58,11 +58,6 @@
                         });
                     });
                 }
-            }
-        },
-        computed: {
-            categoryAlias () {
-                return CategoryMap[this.post.category]  || '未知';
             }
         },
         methods: {

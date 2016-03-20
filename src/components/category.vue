@@ -8,7 +8,7 @@
             <a class="green item" 
                 v-for="category in categorys"
                 v-link="{name: 'category', params: {category: category.name}}">
-                {{category.alias}} ({{category.count}})
+                {{category.name | category}} ({{category.count}})
             </a>
         </div>
     </div>
@@ -24,7 +24,6 @@
                 let count = _.where(PostsMap, { category: key }).length;
                 return {
                     name: key,
-                    alias: val,
                     count: count
                 };
             });

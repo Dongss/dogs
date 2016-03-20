@@ -5,11 +5,12 @@
                 <div class="detail">
                     分类：           
                 </div>
-                {{categoryAlias}}       
+                {{category | category}}       
             </a> 
          </div>
             <div class="item"
-                v-for="post in posts">
+                v-for="post in posts
+                    | orderBy 'id' -1">
                 <div class="content">
                     <div class="header">
                         <strong>
@@ -20,7 +21,7 @@
                     </div>
                     <div class="discription meta title-foot">
                         {{post.date | unixtime}} | 
-                        分类：{{post.categoryAlias}}
+                        分类：{{post.category | category}}
                     </div>
                 </div>
          </div>
@@ -28,34 +29,17 @@
 </template>
 
 <script>
-    import { CategoryMap, PostsMap } from '../../posts/map.js';
+    import { PostsMap } from '../../posts/map.js';
     import _ from 'underscore';
-    _.each(PostsMap, post => {
-        post.categoryAlias = CategoryMap[post.category]
-    });
-    let _PostsMap = _.sortBy(PostsMap, post => {
-        return post.id * -1;
-    });
         
     export default {
         props: ['category'],
-        methods: {
-            category (category) {
-                return CategoryMap[this.category]  || '未知';
-            } 
-        },
         computed: {
-            categoryAlias () {
-                if (this.category == 'all') {
-                    return '全部分类';
-                }
-                return CategoryMap[this.category]  || '未知';
-            },
             posts () {
                 if (this.category == 'all') {
-                    return _PostsMap;
+                    return PostsMap;
                 }
-                return _.where(_PostsMap, { category: this.category });
+                return _.where(PostsMap, { category: this.category });
             }
         }       
     }
