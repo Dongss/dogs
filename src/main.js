@@ -10,6 +10,7 @@ require('../node_modules/semantic-ui-css/semantic.min.css');
 
 // Filters
 Vue.filter('unixtime', filters.unixtimeFormat);
+Vue.filter('category', filters.postCategoryAlias);
 
 Vue.use(VueRouter);
 
