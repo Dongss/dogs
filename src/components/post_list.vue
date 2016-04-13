@@ -14,7 +14,7 @@
                 <div class="content">
                     <div class="header">
                         <strong>
-                            <a class="post-title" v-link="{name:'post', params: {postId: post.id}}">
+                            <a class="post-title" href="{{href(post.id)}}">
                                 {{post.title}}
                             </a>
                         </strong>
@@ -41,7 +41,12 @@
                 }
                 return _.where(PostsMap, { category: this.category });
             }
-        }       
+        },
+        methods: {
+            href (id) {
+                return './posts/' + id + '.html';
+            }
+        }
     }
 </script>
 
