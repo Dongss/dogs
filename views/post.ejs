@@ -1,0 +1,11 @@
+<%- include('views/header') %>
+<div>
+    分类：<%= postInfo.categoryName %> | 发布日期: <%= postInfo.date %> 
+</div>
+<div class="markdown-body">
+    <%- content %>
+</div>
+<div>
+    <a href="<%= postInfo.link %>">contribute</a>
+</div>
+<%- include('views/footer') %>
