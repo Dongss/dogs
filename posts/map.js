@@ -13,7 +13,7 @@ let PostsMap = [
     { id: 1, title: '测试', category: 'others', date: 1457873783 }
 ];
 
-let GHAddr = 'https://github.com/Dongss/dogs/blob/master/';
+let GHAddr = 'https://github.com/Dongss/dogs/tree/master/';
 
 exports.CategoryMap = CategoryMap;
 exports.PostsMap = PostsMap;

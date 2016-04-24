@@ -1,0 +1,11 @@
+<%- include('views/header') %>
+<div class="text-center">
+    分类: <%= postInfo.categoryName %> | 发布日期: <%= postInfo.date %>
+</div>
+<div class="markdown-body">
+    <%- content %>
+</div>
+<div class="text-center">
+    作者: <a href="mailto:dongsoso@hotmail.com?subject=Dogs%20Blog%20Email">Dogs</a> | 纠错: <a href="<%= postInfo.link %>">Contribute</a>
+</div>
+<%- include('views/footer') %>
