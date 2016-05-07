@@ -39,10 +39,7 @@ module.exports = {
 	module: {
 		loaders: [{
 			test: /\.vue$/,
-			loader: 'vue',
-			query: {
-				css: ExtractTextPlugin.extract("css")
-			}
+			loader: 'vue'
 		}, { 
 			test: /\.js$/, 
 			exclude: /node_modules/, 
@@ -66,8 +63,13 @@ module.exports = {
         }, {
             test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
             loader: "url-loader?limit=10000&minetype=application/font-woff"
-        }],
+        }]		
 	},
+	vue: {
+		loaders: {
+			css: ExtractTextPlugin.extract("css")
+		}
+	},	
 	resolve: {
 		extension: ['', '.js']
 	},

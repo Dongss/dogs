@@ -1,12 +1,11 @@
 <template>
-    <div class="ui basic segment" id="welcome">
+    <div class="welcome">
         <span>
-        <h1>欢迎来到 Dogs Blog</h1>   
-        <h3>------- 技术改变世界，命运在你手中</h3>
-        <a v-link="{name: 'category', params: {category: 'all'}}" 
-            class="ui huge inverted download button">
-            查看最新文章
-        </a>
+            <h1>欢迎来到 Dogs Blog</h1>   
+            <a v-link="{name: 'category', params: {category: 'all'}}" 
+                class="ui huge inverted download button">
+                查看最新文章
+            </a>
         </span>
     </div>
 </template>

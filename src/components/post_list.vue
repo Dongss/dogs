@@ -1,30 +1,20 @@
 <template>
-    <div class="ui divided items">
-        <div class="item">
-            <a class="ui blue label">
-                <div class="detail">
-                    分类：           
-                </div>
-                {{category | category}}       
-            </a> 
-         </div>
-            <div class="item"
-                v-for="post in posts
-                    | orderBy 'id' -1">
-                <div class="content">
-                    <div class="header">
-                        <strong>
-                            <a class="post-title" href="{{href(post.id)}}">
-                                {{post.title}}
-                            </a>
-                        </strong>
-                    </div>
-                    <div class="discription meta title-foot">
-                        {{post.date | unixtime}} | 
-                        分类：{{post.category | category}}
-                    </div>
-                </div>
-         </div>
+    <div class="post-list">
+        当前分类：           
+        {{category | category}}       
+        <div class="post-info"
+            v-for="post in posts
+            | orderBy 'id' -1">
+            <div>
+                <a class="post-title" href="{{href(post.id)}}">
+                    {{post.title}}
+                </a>
+            </div>
+            <div class="post-ext-info">
+                {{post.date | unixtime}} | 
+                分类：{{post.category | category}}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -51,10 +41,18 @@
 </script>
 
 <style>
-    .post-title {
-        font-size: 130%;
+    .post-list {
+        margin-top: 20px;
     }
-    .title-foot {
-        font-family: "Microsoft YaHei";
+    .post-info {
+        padding: 10px 0;
+    }
+    .post-title {
+        color: blue;
+        font-size: 25px;
+    }
+    .post-ext-info {
+        font-size: 15px;
+        color: #888888;
     }
 </style>

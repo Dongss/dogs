@@ -1,9 +1,6 @@
 <template>
-	<div class="ui segment">
-		<h2>
-			<a href="#">Dogs Blog</a>
-			<a href="https://github.com/Dongss/dogs" class="float-right"><i class="blue github icon"></i></a>
-		</h2>
+	<div class="header">
+		<a href="#">Dogs Blog</a>
 	</div>
 </template>
 
@@ -14,7 +11,11 @@
 </script>
 
 <style>
-    .float-right {
-        float: right;
-    }
+	.header {
+		font-size: 30px;
+		background-color: black;
+	}
+	.header a {
+		color: white;
+	}
 </style>

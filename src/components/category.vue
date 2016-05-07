@@ -1,18 +1,16 @@
 <template>
-    <div class="ui segment">
-        <div class="ui vertical blue text menu">
-            <a class="item"
-                v-link="{name: 'category', params: {category:'all'}}">
+    <div class="category-container">
+        <ul>
+            <li v-link="{name: 'category', params: {category:'all'}}">
                 全部分类 ({{postsCount}})
-            </a>
-            <a class="green item" 
-                v-for="category in categorys"
+            </li>
+            <li  v-for="category in categorys"
                 v-link="{name: 'category', params: {category: category.name}}">
                 {{category.name | category}} ({{category.count}})
-            </a>
-        </div>
+            </li>
+           </ul>
     </div>
-</template>
+</template> 
 
 <script>
     import { CategoryMap, PostsMap } from '../../posts/map.js';
@@ -34,3 +32,18 @@
         }
     }
 </script>
+
+<style>
+    .category-container {
+        color: #585858;
+        float: left;   
+        min-width: 200px;
+    }
+    .category-container ul li {
+        margin: 10px 0;
+        cursor: pointer;
+    }.
+    .v-link-active {
+        color: blue;
+    }
+</style>

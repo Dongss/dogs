@@ -1,5 +1,5 @@
 <template>
-    <div class="ui segment" id="post-list">
+    <div class="post-list">
         <post-list-component :category="category"></post-list-component>
     </div>
 </template>
@@ -23,7 +23,7 @@
 </script>
 
 <style>
-    #post-list {
+    .post-list {
         width: 85%;
     }
 </style>

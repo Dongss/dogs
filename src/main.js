@@ -4,9 +4,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routerMap from './routers';
 import filters from './filters.js';
-import $ from 'jquery';
-require('../node_modules/semantic-ui-css/semantic.min.js');
-require('../node_modules/semantic-ui-css/semantic.min.css');
+import './assets/style.css';
 
 // Filters
 Vue.filter('unixtime', filters.unixtimeFormat);
@@ -17,8 +15,7 @@ Vue.use(VueRouter);
 let router = new VueRouter({
     hashbang: false,
     saveScrollPosition: true,
-    transitionOnLoad: true,
-    linkActiveClass: "active"
+    transitionOnLoad: true
 });
 
 let app = Vue.extend({});
