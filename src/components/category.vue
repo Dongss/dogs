@@ -42,8 +42,8 @@
     .category-container ul li {
         margin: 10px 0;
         cursor: pointer;
-    }.
-    .v-link-active {
+    }
+    .category-container .active {
         color: blue;
     }
 </style>

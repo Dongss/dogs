@@ -15,7 +15,8 @@ Vue.use(VueRouter);
 let router = new VueRouter({
     hashbang: false,
     saveScrollPosition: true,
-    transitionOnLoad: true
+    transitionOnLoad: true,
+    linkActiveClass: 'active'
 });
 
 let app = Vue.extend({});
