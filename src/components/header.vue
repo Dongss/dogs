@@ -12,7 +12,7 @@
 
 <style>
 	.header {
-		font-size: 30px;
+		font-size: 35px;
 		background-color: black;
 	}
 	.header a {
