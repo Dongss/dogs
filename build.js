@@ -60,9 +60,16 @@ var main = function(filename) {
     });
 };
 
+var deployAll = function() {
+    PostsMap.forEach(post => {
+        main(post.id);
+    });   
+};
+
 var help = function() {
     console.log('node deploy.js [fileName]');
     console.log('Example: node deploy.js 1');
+    console.log('Example for all: node deploy.js all');
 };
 
 if (require.main === module) {
@@ -77,5 +84,9 @@ if (require.main === module) {
     }
 
     var filename = process.argv[2];
-    main(filename);
+    if (filename === 'all') {
+        deployAll();
+    } else {
+        main(filename);
+    }
 }
