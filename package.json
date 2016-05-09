@@ -15,6 +15,10 @@
     "deploy": "NODE_ENV=production webpack -p --config webpack.config.js",
     "deploy_win": "set NODE_ENV=production&&webpack -p --config webpack.config.js"
   },
+  "author": {
+    "name": "Shaoshuai Dong",
+    "email": "dongsoso@hotmail.com"
+  },
   "devDependencies": {
     "babel-core": "^6.5.2",
     "babel-loader": "^6.2.3",
