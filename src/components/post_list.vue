@@ -43,6 +43,7 @@
 <style>
     .post-list {
         margin-top: 20px;
+        overflow: hidden;
     }
     .post-info {
         padding: 10px 0;
