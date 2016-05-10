@@ -1,5 +1,5 @@
 <template>
-    <div class="post-list">
+    <div class="post-list segment">
         当前分类：           
         {{category | category}}       
         <div class="post-info"
@@ -44,6 +44,7 @@
     .post-list {
         margin-top: 20px;
         overflow: hidden;
+        padding: 20px;
     }
     .post-info {
         padding: 10px 0;
