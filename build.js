@@ -46,6 +46,7 @@ var main = function(filename) {
                 filename: 'mdToHtml'
             });
 
+            // 将 gh-pages 分支作为 submodule，将 html 文件写入 submodule
             fs.writeFile(path.join('dogs', 'posts', filename + '.html'), html, {
                 encoding: 'utf8',
                 flag: 'w'
