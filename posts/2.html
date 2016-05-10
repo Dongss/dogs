@@ -6,7 +6,7 @@
         <title>
             Git 小技巧 - Dogs Blog
         </title>
-        <link rel="shortcut icon" href="./dist/favicon.ico">
+        <link rel="shortcut icon" href="/dist/favicon.ico">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css">
         <link rel="stylesheet" href="http://cdn.bootcss.com/highlight.js/9.2.0/styles/github-gist.min.css">
         <style>
@@ -92,13 +92,13 @@ PS1=&quot;[\[\e[1;35m\]\u\[\e[1;32m\]\w\[\e[0m\]] \[\e[0m\]\[\e[1;36m\]\$(git_br
 <li>Your branch is ahead: <code>#</code></li>
 </ul>
 <p>效果：</p>
-<p><a href="https://github.com/Dongss/dogs/blob/master/posts/images/2.1.png">2.1</a></p>
+<p><img src="https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/2.1.png" alt="图 2.1"></p>
 <h2 id="-commit-">分支、Commit 树</h2>
 <p>在 <code>.gitconfig</code> 文件添加：</p>
 <pre><code>    l = log --graph --all --pretty=format:&#39;%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset&#39;
     lg = log --color --graph --pretty=format:&#39;%C(bold white)%h%Creset -%C(bold green)%d%Creset %s %C(bold green)(%cr)%Creset %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit --date=relative
 </code></pre><p>通过 <code>git l</code> 可以清晰的看到 分支、commit 历史 (<code>git lg</code> 效果自行预览), 协同开发的时候比较有用：</p>
-<p><a href="https://github.com/Dongss/dogs/blob/master/posts/images/2.2.png">2.2</a></p>
+<p><img src="https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/2.2.png" alt="图 2.2"></p>
 <h2 id="git-stash">Git stash</h2>
 <p><a href="https://git-scm.com/docs/git-stash">About Git stash</a></p>
 <p>当前工作区有修改， 同时要切到别的分支做开发或 fix 时，这时是不能切换分支的。</p>
