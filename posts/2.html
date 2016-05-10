@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            Git 小技巧 - Dogs Blog
+        </title>
+        <link rel="shortcut icon" href="./dist/favicon.ico">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/highlight.js/9.2.0/styles/github-gist.min.css">
+        <style>
+            .markdown-body {
+                box-sizing: border-box;
+                min-width: 200px;
+                max-width: 980px;
+                margin: 0 auto;
+                padding: 45px;
+            }
+            .text-center {
+                text-align: center;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div>
+            <a href="../">返回主页</a>
+        </div>
+
+<div class="text-center">
+    分类: Others | 发布日期: 2016-05-09
+</div>
+<div class="markdown-body">
+    <h1 id="git-">Git 小技巧</h1>
+<h2 id="git-alias">Git alias</h2>
+<p><a href="https://git-scm.com/book/tr/v2/Git-Basics-Git-Aliases">About Git alias</a></p>
+<p>在 <code>.gitconfig</code> 文件添加 alias ：</p>
+<pre><code>[alias]
+    p = push origin  
+    s = status
+    c = commit
+</code></pre><p>使用就很方便了：</p>
+<pre><code>[dongshaoshuai~/js/dogs] (master) ~]$git s
+# On branch master
+# Changed but not updated:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#   modified:   build.js
+#   modified:   posts/map.js
+#
+# Untracked files:
+#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+#
+#   posts/others/2.md
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</code></pre><h2 id="-">显示分支名称和状态</h2>
+<p>在 <code>.bashrc</code> 添加：</p>
+<pre><code>function git_branch {
+    ref=$(git symbolic-ref HEAD 2&gt; /dev/null) || return;
+    echo &quot;(&quot;${ref#refs/heads/}&quot;) &quot;;
+}
+
+function parse_git_dirty {
+    local git_status=$(git status 2&gt; /dev/null | tail -n1) || $(git status 2&gt; /dev/null | head -n 2 | tail -n1);
+    if [[ &quot;$git_status&quot; != &quot;&quot; ]]; then
+        local git_now; # 标示
+        if [[ &quot;$git_status&quot; =~ nothing\ to\ commit || &quot;$git_status&quot; =~  Your\ branch\ is\ up\-to\-date\ with ]]; then
+            git_now=&quot;=&quot;;
+        elif [[ &quot;$git_status&quot; =~ Changes\ not\ staged || &quot;$git_status&quot; =~ no\ changes\ added ]]; then
+            git_now=&#39;~&#39;;
+        elif [[ &quot;$git_status&quot; =~ Changes\ to\ be\ committed ]]; then #Changes to be committed
+            git_now=&#39;*&#39;;
+        elif [[ &quot;$git_status&quot; =~ Untracked\ files ]]; then
+            git_now=&quot;+&quot;;
+        elif [[ &quot;$git_status&quot; =~ Your\ branch\ is\ ahead ]]; then
+            git_now=&quot;#&quot;;
+        fi
+        echo &quot;${git_now}&quot;;
+    fi
+}
+
+PS1=&quot;[\[\e[1;35m\]\u\[\e[1;32m\]\w\[\e[0m\]] \[\e[0m\]\[\e[1;36m\]\$(git_branch)\[\033[0;31m\]\$(parse_git_dirty)\[\033[0m\]]\$&quot;
+# PS1=&quot;[\[\033[1;32m\]\w\[\033[0m\]] \[\033[0m\]\[\033[1;36m\]\$(git_branch)\[\033[0;31m\]\$(parse_git_dirty)\[\034[0m\]$ &quot;
+</code></pre><p>状态对应标志枚举：</p>
+<ul>
+<li>nothing to commit: <code>=</code></li>
+<li>Changes not staged: <code>~</code></li>
+<li>Changes to be committed: <code>*</code></li>
+<li>Untracked files: <code>+</code></li>
+<li>Your branch is ahead: <code>#</code></li>
+</ul>
+<p>效果：</p>
+<p><a href="https://github.com/Dongss/dogs/blob/master/posts/images/2.1.png">2.1</a></p>
+<h2 id="-commit-">分支、Commit 树</h2>
+<p>在 <code>.gitconfig</code> 文件添加：</p>
+<pre><code>    l = log --graph --all --pretty=format:&#39;%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset&#39;
+    lg = log --color --graph --pretty=format:&#39;%C(bold white)%h%Creset -%C(bold green)%d%Creset %s %C(bold green)(%cr)%Creset %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit --date=relative
+</code></pre><p>通过 <code>git l</code> 可以清晰的看到 分支、commit 历史 (<code>git lg</code> 效果自行预览), 协同开发的时候比较有用：</p>
+<p><a href="https://github.com/Dongss/dogs/blob/master/posts/images/2.2.png">2.2</a></p>
+<h2 id="git-stash">Git stash</h2>
+<p><a href="https://git-scm.com/docs/git-stash">About Git stash</a></p>
+<p>当前工作区有修改， 同时要切到别的分支做开发或 fix 时，这时是不能切换分支的。</p>
+<p>可以使用 <code>git stash</code> 保存当前修改， 然后切换分支，处理完再切回来 <code>git stash pop</code> 将上一次保存的内容还原。</p>
+<p><code>git stash --help</code> 有详尽的说明。另外，不建议 stash 多次，多了容易乱。</p>
+
+</div>
+<div class="text-center">
+    作者: <a href="mailto:dongsoso@hotmail.com?subject=Dogs%20Blog%20Email">Dogs</a> | 纠错: <a href="https://github.com/Dongss/dogs/tree/master/posts/others/2.md">Contribute</a>
+</div>
+    </body>
+    <script src="http://cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+</html>
+
