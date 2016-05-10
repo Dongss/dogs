@@ -1,14 +1,12 @@
 <template>
-    <div class="category-container">
-        <ul>
-            <li v-link="{name: 'category', params: {category:'all'}}">
+    <div class="category-container segment">
+            <div v-link="{name: 'category', params: {category:'all'}}">
                 全部分类 ({{postsCount}})
-            </li>
-            <li  v-for="category in categorys"
+            </div>
+            <div  v-for="category in categorys"
                 v-link="{name: 'category', params: {category: category.name}}">
                 {{category.name | category}} ({{category.count}})
-            </li>
-           </ul>
+            </div>
     </div>
 </template> 
 
@@ -38,8 +36,10 @@
         color: #585858;
         float: left;   
         min-width: 200px;
+        max-width: 250px;
+        padding-left: 20px;
     }
-    .category-container ul li {
+    .category-container div {
         margin: 10px 0;
         cursor: pointer;
     }
