@@ -10,7 +10,7 @@ var entry = ['./src/main.js'];
 var buildPath;
 
 if (ENV === 'production') {
-    buildPath = 'build/dist/';
+    buildPath = 'dogs/dist/';
 } else {
     buildPath = "dist/";
 }

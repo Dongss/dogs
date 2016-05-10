@@ -46,7 +46,7 @@ var main = function(filename) {
                 filename: 'mdToHtml'
             });
 
-            fs.writeFile(path.join('build', 'posts', filename + '.html'), html, {
+            fs.writeFile(path.join('dogs', 'posts', filename + '.html'), html, {
                 encoding: 'utf8',
                 flag: 'w'
             }, err => {
