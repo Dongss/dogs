@@ -104,6 +104,14 @@ PS1=&quot;[\[\e[1;35m\]\u\[\e[1;32m\]\w\[\e[0m\]] \[\e[0m\]\[\e[1;36m\]\$(git_br
 <p>当前工作区有修改， 同时要切到别的分支做开发或 fix 时，这时是不能切换分支的。</p>
 <p>可以使用 <code>git stash</code> 保存当前修改， 然后切换分支，处理完再切回来 <code>git stash pop</code> 将上一次保存的内容还原。</p>
 <p><code>git stash --help</code> 有详尽的说明。另外，不建议 stash 多次，多了容易乱。</p>
+<h2 id="-">删除本地和远程分支</h2>
+<ul>
+<li>删除本地分支： <code>git branch -D &lt;branchName&gt;</code></li>
+<li>删除远程分支： <code>git push origin --delete &lt;branchName&gt;</code></li>
+</ul>
+<h2 id="git-submodules">Git submodules</h2>
+<p><a href="https://git-scm.com/book/en/v2/Git-Tools-Submodules">About Git submodules</a></p>
+<p>当一个项目包含另一个项目时，使用 Git submodules 相当有好处。</p>
 
 </div>
 <div class="text-center">
