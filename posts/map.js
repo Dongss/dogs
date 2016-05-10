@@ -10,7 +10,6 @@ let CategoryMap = {
 
 let PostsMap = [
     { id: 0, title: '千里之行', category: 'others', date: 1457873783 },
-    { id: 1, title: '测试', category: 'others', date: 1457873783 },
     { id: 2, title: 'Git 小技巧', category: 'others', date: 1462776305 }
 ];
 
