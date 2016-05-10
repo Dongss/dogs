@@ -40,7 +40,7 @@
         padding-left: 20px;
     }
     .category-container div {
-        margin: 10px 0;
+        margin: 20px 0;
         cursor: pointer;
     }
     .category-container .active {
