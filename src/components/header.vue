@@ -12,7 +12,8 @@
 
 <style>
 	.header {
-		font-size: 35px;
+		padding: 10px 0;
+		font-size: 30px;
 		background-color: black;
 	}
 	.header a {
