@@ -1,7 +1,5 @@
 <template>
-    <div class="post-list">
-        <post-list-component :category="category"></post-list-component>
-    </div>
+    <post-list-component :category="category"></post-list-component>
 </template>
 
 <script>
@@ -23,7 +21,4 @@
 </script>
 
 <style>
-    .post-list {
-        width: 85%;
-    }
 </style>
