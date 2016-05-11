@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            JavaScript 变量作用域 - Dogs Blog
+        </title>
+        <link rel="shortcut icon" href="./dist/favicon.ico">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/highlight.js/9.2.0/styles/github-gist.min.css">
+        <style>
+            .markdown-body {
+                box-sizing: border-box;
+                min-width: 200px;
+                max-width: 980px;
+                margin: 0 auto;
+                padding: 45px;
+            }
+            .text-center {
+                text-align: center;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div>
+            <a href="../">返回主页</a>
+        </div>
+
+<div class="text-center">
+    分类: JavaScript | 发布日期: 2016-05-11
+</div>
+<div class="markdown-body">
+    <h1 id="javascript-">JavaScript 变量作用域</h1>
+<pre><code>JavaScript has two scopes: global and local.  
+A variable that is declared outside a function definition is a global variable, and its value is accessible and modifiable throughout your program.  
+A variable that is declared inside a function definition is local.  
+It is created and destroyed every time the function is executed, and it cannot be accessed by any code outside the function.  
+JavaScript does not support block scope (in which a set of braces {. . .} defines a new scope), except in the special case of block-scoped variables. 
+</code></pre><h2 id="var-">var 变量的作用域和变量提升</h2>
+<p>JavaScript 中，在函数体内 var 声明的变量是函数级作用域，是局部变量，在本函数体内可以访问，而且是在函数体内任意位置可以访问。</p>
+<pre><code>// JS 代码
+function test() {
+    console.log(val);
+    var val = &#39;this is val&#39;;
+    console.log(val);
+
+    func();
+    function func() {
+        for (var i = 0, i &lt; 5, i++) {
+        }
+        console.log(&#39;i: &#39;, i);
+        console.log(&#39;this is func&#39;);
+    }
+}
+
+test();
+</code></pre><p>上述代码结果是：</p>
+<pre><code>undefined
+this is val
+i:  2
+this is func
+</code></pre><p>JavaScript 解析器预解析代码的时候， <code>test</code> 函数作如下解析：</p>
+<pre><code>function test() {
+    // 变量提升, 缺省值是 undefined
+    var val;
+
+    // 函数声明提升
+    function func() {
+        // 变量提升
+        var i;
+
+        for (i = 0, i &lt; 5, i++) {
+        }
+        console.log(&#39;i: &#39;, i);
+        console.log(&#39;this is func&#39;);
+    }
+
+    console.log(val);
+    // 变量赋值
+    val = &#39;this is val&#39;;
+    console.log(val);
+
+    func();
+}
+</code></pre><p>所以第一次 <code>console.log(val)</code> 时候并不会抛异常， 因为此时变量 <code>val</code> 是被声明过的，值是 <code>undefined</code>。<br>理解 变量提升 ，写代码时应注意 变量污染 的坑。</p>
+<pre><code>如果声明变量时不加 var 直接 `val = 1;`， 那么 val 是全局变量。
+</code></pre><h2 id="-">作用域链</h2>
+<p>作用域链包含了执行环境有权访问的所有变量和访问顺序。</p>
+<p>作为单线程语言的 JavaScript，初始化代码时会创建一个全局上下文，每一次函数调用都会创建一个执行上下文，执行上下文及包含关系：</p>
+<ul>
+<li>变量对象<ul>
+<li>变量</li>
+<li>函数声明</li>
+<li>参数(arguments)</li>
+</ul>
+</li>
+<li>作用域链<ul>
+<li>有权访问的变量和访问顺序（本作用域变量和所有父作用域变量）</li>
+</ul>
+</li>
+<li>this 值</li>
+</ul>
+<p>如下代码：</p>
+<pre><code>function func_1() {
+    var val_1 = 1;
+    // 抛异常： ReferenceError: val_2 is not defined
+    console.log(val_1, val_2);
+
+    function func_2() {
+        var val_2 = 2;
+        // 输出：1 2                                     
+        console.log(val_1, val_2);
+    }
+
+    func_2();
+}
+
+func_1();
+</code></pre><p>简言之， func_1 不能访问 func_2 中声明的变量， func_2 可以访问 func_1 中声明的变量。</p>
+<p>当在作用域内访问一个变量 <code>x</code> 时，JavaScript 的查找顺序是这样的：</p>
+<ol>
+<li>当前作用域 <code>var x</code> 的定义 =&gt; 2. <code>x</code> 形参 =&gt; 3. 函数自身名称是否是 <code>x</code> =&gt; 4. 上级作用域从 1 开始查找</li>
+</ol>
+<h2 id="es6-let-const">ES6 中的 let 和 const</h2>
+<pre><code>ES6 的 let 和 const 实现了块级所用域的变量声明方式，使用 let 和 const 声明变量能有效避免由于变量提升导致的变量污染的问题。
+</code></pre><p>用 let 和 const 声明的变量作用域是代码块，这个设计比较符合大多数人的思维方式。（代码块简单来说就是 <code>{}</code> 大括号包着的区域）</p>
+<pre><code>function test() {
+    if (true) {
+        var a = &#39;a&#39;;
+        let b = &#39;b&#39;;
+    }
+
+    // 输出： a
+    console.log(a);
+    // 抛异常：ReferenceError: b is not defined
+    console.log(b);
+}
+
+test();
+</code></pre><p>关于 const 的作用有必要正确理解：<br>严格来说， const 声明了一个指向变量的指针，并不是说 const 声明的变量不可改变， 而是该指针指向的地址不可改变。</p>
+<p>MDN 的例子很赞，这里直接拷过来看：</p>
+<pre><code>// NOTE: Constants can be declared with uppercase or lowercase, but a common
+// convention is to use all-uppercase letters.
+
+// define MY_FAV as a constant and give it the value 7
+const MY_FAV = 7;
+
+// this will fail silently in Firefox and Chrome (but does not fail in Safari)
+MY_FAV = 20;
+
+// will print 7
+console.log(&quot;my favorite number is: &quot; + MY_FAV);
+
+// trying to redeclare a constant throws an error 
+const MY_FAV = 20;
+
+// the name MY_FAV is reserved for constant above, so this will also fail
+var MY_FAV = 20; 
+
+// MY_FAV is still 7
+console.log(&quot;my favorite number is &quot; + MY_FAV);
+
+// Assigning to A const variable is a syntax error
+const A = 1; A = 2;
+
+// const requires an initializer
+const FOO; // SyntaxError: missing = in const declaration
+
+// const also works on objects
+const MY_OBJECT = {&quot;key&quot;: &quot;value&quot;};
+
+// Overwriting the object fails as above (in Firefox and Chrome but not in Safari)
+MY_OBJECT = {&quot;OTHER_KEY&quot;: &quot;value&quot;};
+
+// However, object keys are not protected,
+// so the following statement is executed without problems
+MY_OBJECT.key = &quot;otherValue&quot;; // Use Object.freeze() to make object immutable
+</code></pre>
+</div>
+<div class="text-center">
+    作者: <a href="mailto:dongsoso@hotmail.com?subject=Dogs%20Blog%20Email">Dogs</a> | 纠错: <a href="https://github.com/Dongss/dogs/tree/master/posts/javascript/3.md">Contribute</a>
+</div>
+    </body>
+    <script src="http://cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+</html>
+
