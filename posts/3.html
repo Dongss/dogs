@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8" />
         <title>
-            JavaScript 变量作用域 - Dogs Blog
+            JavaScript 变量作用域和this - Dogs Blog
         </title>
         <link rel="shortcut icon" href="../dist/favicon.ico">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css">
@@ -32,7 +32,7 @@
     分类: JavaScript | 发布日期: 2016-05-11
 </div>
 <div class="markdown-body">
-    <h1 id="javascript-">JavaScript 变量作用域</h1>
+    <h1 id="javascript-this">JavaScript 变量作用域和this</h1>
 <pre><code>JavaScript has two scopes: global and local.  
 A variable that is declared outside a function definition is a global variable, and its value is accessible and modifiable throughout your program.  
 A variable that is declared inside a function definition is local.  
@@ -180,7 +180,103 @@ MY_OBJECT = {&quot;OTHER_KEY&quot;: &quot;value&quot;};
 // However, object keys are not protected,
 // so the following statement is executed without problems
 MY_OBJECT.key = &quot;otherValue&quot;; // Use Object.freeze() to make object immutable
-</code></pre>
+</code></pre><h2 id="this">this</h2>
+<pre><code>In most cases, the value of this is determined by how a function is called. 
+It can&#39;t be set by assignment during execution, and it may be different each time the function is called. 
+</code></pre><p>简言之： this 总是指向调用该函数的对象。</p>
+<h3 id="-">全局上下文</h3>
+<pre><code>// 在浏览器中
+console.log(this === window); // true
+</code></pre><h3 id="-">函数上下文</h3>
+<p>在函数中访问 this 时， this 指向调用该函数的对象。</p>
+<p>1）全局对象</p>
+<pre><code>// 全局变量
+val = 1;
+
+function test() {
+    console.log(this.val);
+}
+
+test(); // 1
+</code></pre><p>上例中，调用 test 函数的对象并不是一个自己声明的函数或对象，此时 this 默认值为全局对象。</p>
+<p>2) 调用对象</p>
+<pre><code>var testObj = {
+    val: 1,
+    getVal: function() {
+        var val = 2;
+        return this.val;
+    }
+};
+
+console.log(testObj.getVal()); // 1
+</code></pre><p>上述代码运行输出 <code>1</code>, 顺藤摸瓜，<code>getVal()</code> 函数的调用者是 <code>testObj</code> 对象， 按照 <code>this 指向调用该函数的对象</code> 的原则， <code>getVal()</code> 中的 this 指向 <code>testObj</code> 对象, <code>testObj</code> 对象的 <code>val</code> 值是 1.</p>
+<p>3) 构造函数</p>
+<pre><code>&#39;use strict&#39;;
+
+function testFunc(val) {
+    this.a = val;
+    this.b = &#39;bb&#39;;
+}
+
+var testInstance = new testFunc(&#39;aa&#39;);
+
+console.log(testInstance.a); // aa
+console.log(testInstance.b); // bb
+</code></pre><p>当一个函数的调用者是构造函数（new 出来的对象）， this 指向新构造出来的对象 <code>testInstance</code></p>
+<p>4) call and apply<br>通过 call apply 将 this 指向特定对象：</p>
+<pre><code>function testFunc(val) {
+    this.a = val;
+    this.b = &#39;bb&#39;;
+}
+
+function execFunc() {
+    var a = &#39;exec aa&#39;;
+    var b = &#39;exec bb&#39;;
+
+    console.log(this.a, this.b);
+}
+
+var testInstance = new testFunc(&#39;aa&#39;);
+
+execFunc.call(testInstance); // aa bb
+execFunc.apply(testInstance); // aa bb
+</code></pre><p>通过 call apply 函数将 execFunc 的 this 值指向 testInstance 对象的 this 值。</p>
+<pre><code>注意: 以 `fun.apply() // or call` 为例 call apply 的第一个参数是 `func 函数运行时的 this 值` （第一个参数的解释版本真的多）。 
+二者的区别这里不说。
+</code></pre><h3 id="-">补充：</h3>
+<p>1) ES6 中的箭头函数 arrow function</p>
+<pre><code>An arrow function expression has a shorter syntax compared to function expressions and lexically binds the this value 
+(does not bind its own this, arguments, super, or new.target). 
+Arrow functions are always anonymous.
+</code></pre><pre><code>GLOBAL.a = &#39;global aa&#39;;
+
+var testObj = {
+    a: &#39;aa&#39;,
+    getValArrowFuc: function() {
+        var val = (() =&gt; this.a);
+        return val();
+    },                                 
+    getVal: function() {
+        var self = this;
+        var val = function() {
+            return self.a;
+        };
+        return val();
+    },
+    getValGlobal: function() {
+        var val = function() {
+            return this.a;
+        };
+        return val();
+    }
+};
+
+console.log(testObj.getValArrowFuc()); // aa
+console.log(testObj.getVal()); // aa
+console.log(testObj.getValGlobal()); // global aa
+</code></pre><p>箭头函数中的 this 值，就是词法作用域的 this 值。</p>
+<p>注： 以上所有不考虑 <code>Eval</code></p>
+
 </div>
 <div class="text-center">
     作者: <a href="mailto:dongsoso@hotmail.com?subject=Dogs%20Blog%20Email">Dogs</a> | 纠错: <a href="https://github.com/Dongss/dogs/tree/master/posts/javascript/3.md">Contribute</a>
