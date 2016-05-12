@@ -276,7 +276,20 @@ console.log(testObj.getValArrowFuc()); // aa
 console.log(testObj.getVal()); // aa
 console.log(testObj.getValGlobal()); // global aa
 </code></pre><p>箭头函数中的 this 值，就是词法作用域的 this 值。</p>
-<p>注： 以上所有不考虑 <code>Eval</code></p>
+<p>2) 严格模式下的 this</p>
+<pre><code>对于一个开启严格模式的函数，指定的 this 不再被封装为对象，而且如果没有指定 this 的话它值是 undefined.
+</code></pre><pre><code>&#39;use strict&#39;;
+/**
+ * from MDN
+ */
+function fun() { return this; }                
+
+console.log(fun() === undefined); // true
+console.log(fun.call(2) === 2); // true
+console.log(fun.apply(null) === null); // true
+console.log(fun.call(undefined) === undefined); // true
+console.log(fun.bind(true)() === true); // true
+</code></pre><p>注： 以上所有不考虑 <code>Eval</code></p>
 
 </div>
 <div class="text-center">
