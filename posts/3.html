@@ -38,7 +38,8 @@ A variable that is declared outside a function definition is a global variable, 
 A variable that is declared inside a function definition is local.  
 It is created and destroyed every time the function is executed, and it cannot be accessed by any code outside the function.  
 JavaScript does not support block scope (in which a set of braces {. . .} defines a new scope), except in the special case of block-scoped variables. 
-</code></pre><h2 id="var-">var 变量的作用域和变量提升</h2>
+</code></pre><h2 id="-">变量作用域和作用域链</h2>
+<h3 id="var-">var 变量的作用域和变量提升</h3>
 <pre><code>JavaScript 有两种作用域：全局和局部。  
 在函数定义之外声明的变量是全局变量，它的值可在整个程序中访问和修改。  
 在函数定义内声明的变量是局部变量。每当执行函数时，都会创建和销毁该变量，且无法通过函数之外的任何代码访问该变量。
@@ -89,7 +90,7 @@ this is func
 }
 </code></pre><p>所以第一次 <code>console.log(val)</code> 时候并不会抛异常， 因为此时变量 <code>val</code> 是被声明过的，值是 <code>undefined</code>。<br>理解 变量提升 ，写代码时应注意 变量污染 的坑。</p>
 <pre><code>如果声明变量时不加 var 直接 `val = 1;`， 那么 val 是全局变量。
-</code></pre><h2 id="-">作用域链</h2>
+</code></pre><h3 id="-">作用域链</h3>
 <p>作用域链包含了执行环境有权访问的所有变量和访问顺序。</p>
 <p>作为单线程语言的 JavaScript，初始化代码时会创建一个全局上下文，每一次函数调用都会创建一个执行上下文，执行上下文及包含关系：</p>
 <ul>
@@ -126,7 +127,7 @@ func_1();
 <ol>
 <li>当前作用域 <code>var x</code> 的定义 =&gt; 2. <code>x</code> 形参 =&gt; 3. 函数自身名称是否是 <code>x</code> =&gt; 4. 上级作用域从 1 开始查找</li>
 </ol>
-<h2 id="es6-let-const">ES6 中的 let 和 const</h2>
+<h3 id="es6-let-const">ES6 中的 let 和 const</h3>
 <pre><code>ES6 的 let 和 const 实现了块级所用域的变量声明方式，使用 let 和 const 声明变量能有效避免由于变量提升导致的变量污染的问题。
 </code></pre><p>用 let 和 const 声明的变量作用域是代码块，这个设计比较符合大多数人的思维方式。（代码块简单来说就是 <code>{}</code> 大括号包着的区域）</p>
 <pre><code>function test() {
