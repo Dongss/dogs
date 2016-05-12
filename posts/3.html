@@ -6,7 +6,7 @@
         <title>
             JavaScript 变量作用域 - Dogs Blog
         </title>
-        <link rel="shortcut icon" href="./dist/favicon.ico">
+        <link rel="shortcut icon" href="../dist/favicon.ico">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css">
         <link rel="stylesheet" href="http://cdn.bootcss.com/highlight.js/9.2.0/styles/github-gist.min.css">
         <style>
@@ -39,7 +39,10 @@ A variable that is declared inside a function definition is local.
 It is created and destroyed every time the function is executed, and it cannot be accessed by any code outside the function.  
 JavaScript does not support block scope (in which a set of braces {. . .} defines a new scope), except in the special case of block-scoped variables. 
 </code></pre><h2 id="var-">var 变量的作用域和变量提升</h2>
-<p>JavaScript 中，在函数体内 var 声明的变量是函数级作用域，是局部变量，在本函数体内可以访问，而且是在函数体内任意位置可以访问。</p>
+<pre><code>JavaScript 有两种作用域：全局和局部。  
+在函数定义之外声明的变量是全局变量，它的值可在整个程序中访问和修改。  
+在函数定义内声明的变量是局部变量。每当执行函数时，都会创建和销毁该变量，且无法通过函数之外的任何代码访问该变量。
+</code></pre><p>JavaScript 中，在函数体内 var 声明的变量是函数级作用域，是局部变量，在本函数体内可以访问，而且是在函数体内任意位置可以访问。</p>
 <pre><code>// JS 代码
 function test() {
     console.log(val);
@@ -97,7 +100,7 @@ this is func
 </ul>
 </li>
 <li>作用域链<ul>
-<li>有权访问的变量和访问顺序（本作用域变量和所有父作用域变量）</li>
+<li>有权访问的变量和访问顺序（本作用域变量和所有父作用域变量）。即函数内部属性 <code>scope</code> : 本函数有权访问的[变量、对象、函数]的集合</li>
 </ul>
 </li>
 <li>this 值</li>
