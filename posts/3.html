@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8" />
         <title>
-            JavaScript 变量作用域和this - Dogs Blog
+            JavaScript 变量作用域、this、闭包 - Dogs Blog
         </title>
         <link rel="shortcut icon" href="../dist/favicon.ico">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css">
@@ -32,18 +32,16 @@
     分类: JavaScript | 发布日期: 2016-05-11
 </div>
 <div class="markdown-body">
-    <h1 id="javascript-this">JavaScript 变量作用域和this</h1>
-<pre><code>JavaScript has two scopes: global and local.  
-A variable that is declared outside a function definition is a global variable, and its value is accessible and modifiable throughout your program.  
-A variable that is declared inside a function definition is local.  
-It is created and destroyed every time the function is executed, and it cannot be accessed by any code outside the function.  
-JavaScript does not support block scope (in which a set of braces {. . .} defines a new scope), except in the special case of block-scoped variables. 
-</code></pre><h2 id="-">变量作用域和作用域链</h2>
+    <h1 id="javascript-this-">JavaScript 变量作用域、this、闭包</h1>
+<blockquote>
+<p>JavaScript has two scopes: global and local.<br>A variable that is declared outside a function definition is a global variable, and its value is accessible and modifiable throughout your program.<br>A variable that is declared inside a function definition is local.<br>It is created and destroyed every time the function is executed, and it cannot be accessed by any code outside the function.<br>JavaScript does not support block scope (in which a set of braces {. . .} defines a new scope), except in the special case of block-scoped variables. </p>
+</blockquote>
+<h2 id="-scope-scope-chain">变量作用域 scope 和作用域链 scope chain</h2>
 <h3 id="var-">var 变量的作用域和变量提升</h3>
-<pre><code>JavaScript 有两种作用域：全局和局部。  
-在函数定义之外声明的变量是全局变量，它的值可在整个程序中访问和修改。  
-在函数定义内声明的变量是局部变量。每当执行函数时，都会创建和销毁该变量，且无法通过函数之外的任何代码访问该变量。
-</code></pre><p>JavaScript 中，在函数体内 var 声明的变量是函数级作用域，是局部变量，在本函数体内可以访问，而且是在函数体内任意位置可以访问。</p>
+<blockquote>
+<p>JavaScript 有两种作用域：全局和局部。<br>在函数定义之外声明的变量是全局变量，它的值可在整个程序中访问和修改。<br>在函数定义内声明的变量是局部变量。每当执行函数时，都会创建和销毁该变量，且无法通过函数之外的任何代码访问该变量。</p>
+</blockquote>
+<p>JavaScript 中，在函数体内 var 声明的变量是函数级作用域，是局部变量，在本函数体内可以访问，而且是在函数体内任意位置可以访问。</p>
 <pre><code>// JS 代码
 function test() {
     console.log(val);
@@ -89,8 +87,10 @@ this is func
     func();
 }
 </code></pre><p>所以第一次 <code>console.log(val)</code> 时候并不会抛异常， 因为此时变量 <code>val</code> 是被声明过的，值是 <code>undefined</code>。<br>理解 变量提升 ，写代码时应注意 变量污染 的坑。</p>
-<pre><code>如果声明变量时不加 var 直接 `val = 1;`， 那么 val 是全局变量。
-</code></pre><h3 id="-">作用域链</h3>
+<blockquote>
+<p>如果声明变量时不加 var 直接 <code>val = 1;</code>， 那么 val 是全局变量。</p>
+</blockquote>
+<h3 id="-">作用域链</h3>
 <p>作用域链包含了执行环境有权访问的所有变量和访问顺序。</p>
 <p>作为单线程语言的 JavaScript，初始化代码时会创建一个全局上下文，每一次函数调用都会创建一个执行上下文，执行上下文及包含关系：</p>
 <ul>
@@ -128,8 +128,10 @@ func_1();
 <li>当前作用域 <code>var x</code> 的定义 =&gt; 2. <code>x</code> 形参 =&gt; 3. 函数自身名称是否是 <code>x</code> =&gt; 4. 上级作用域从 1 开始查找</li>
 </ol>
 <h3 id="es6-let-const">ES6 中的 let 和 const</h3>
-<pre><code>ES6 的 let 和 const 实现了块级所用域的变量声明方式，使用 let 和 const 声明变量能有效避免由于变量提升导致的变量污染的问题。
-</code></pre><p>用 let 和 const 声明的变量作用域是代码块，这个设计比较符合大多数人的思维方式。（代码块简单来说就是 <code>{}</code> 大括号包着的区域）</p>
+<blockquote>
+<p>ES6 的 let 和 const 实现了块级所用域的变量声明方式，使用 let 和 const 声明变量能有效避免由于变量提升导致的变量污染的问题。</p>
+</blockquote>
+<p>用 let 和 const 声明的变量作用域是代码块，这个设计比较符合大多数人的思维方式。（代码块简单来说就是 <code>{}</code> 大括号包着的区域）</p>
 <pre><code>function test() {
     if (true) {
         var a = &#39;a&#39;;
@@ -182,13 +184,14 @@ MY_OBJECT = {&quot;OTHER_KEY&quot;: &quot;value&quot;};
 // so the following statement is executed without problems
 MY_OBJECT.key = &quot;otherValue&quot;; // Use Object.freeze() to make object immutable
 </code></pre><h2 id="this">this</h2>
-<pre><code>In most cases, the value of this is determined by how a function is called. 
-It can&#39;t be set by assignment during execution, and it may be different each time the function is called. 
-</code></pre><p>简言之： this 总是指向调用该函数的对象。</p>
-<h3 id="-">全局上下文</h3>
+<blockquote>
+<p>In most cases, the value of this is determined by how a function is called.<br>It can&#39;t be set by assignment during execution, and it may be different each time the function is called. </p>
+</blockquote>
+<p>简言之： this 总是指向调用该函数的对象。</p>
+<h3 id="-global-context">全局上下文 global context</h3>
 <pre><code>// 在浏览器中
 console.log(this === window); // true
-</code></pre><h3 id="-">函数上下文</h3>
+</code></pre><h3 id="-function-context">函数上下文 function context</h3>
 <p>在函数中访问 this 时， this 指向调用该函数的对象。</p>
 <p>1）全局对象</p>
 <pre><code>// 全局变量
@@ -242,14 +245,15 @@ var testInstance = new testFunc(&#39;aa&#39;);
 execFunc.call(testInstance); // aa bb
 execFunc.apply(testInstance); // aa bb
 </code></pre><p>通过 call apply 函数将 execFunc 的 this 值指向 testInstance 对象的 this 值。</p>
-<pre><code>注意: 以 `fun.apply() // or call` 为例 call apply 的第一个参数是 `func 函数运行时的 this 值` （第一个参数的解释版本真的多）。 
-二者的区别这里不说。
-</code></pre><h3 id="-">补充：</h3>
+<blockquote>
+<p>注意: 以 <code>fun.apply() // or call</code> 为例 call apply 的第一个参数是 <code>func 函数运行时的 this 值</code> （第一个参数的解释版本真的多）。<br>二者的区别这里不说。</p>
+</blockquote>
+<h3 id="-">补充：</h3>
 <p>1) ES6 中的箭头函数 arrow function</p>
-<pre><code>An arrow function expression has a shorter syntax compared to function expressions and lexically binds the this value 
-(does not bind its own this, arguments, super, or new.target). 
-Arrow functions are always anonymous.
-</code></pre><pre><code>GLOBAL.a = &#39;global aa&#39;;
+<blockquote>
+<p>An arrow function expression has a shorter syntax compared to function expressions and lexically binds the this value<br>(does not bind its own this, arguments, super, or new.target).<br>Arrow functions are always anonymous.</p>
+</blockquote>
+<pre><code>GLOBAL.a = &#39;global aa&#39;;
 
 var testObj = {
     a: &#39;aa&#39;,
@@ -277,8 +281,10 @@ console.log(testObj.getVal()); // aa
 console.log(testObj.getValGlobal()); // global aa
 </code></pre><p>箭头函数中的 this 值，就是词法作用域的 this 值。</p>
 <p>2) 严格模式下的 this</p>
-<pre><code>对于一个开启严格模式的函数，指定的 this 不再被封装为对象，而且如果没有指定 this 的话它值是 undefined.
-</code></pre><pre><code>&#39;use strict&#39;;
+<blockquote>
+<p>对于一个开启严格模式的函数，指定的 this 不再被封装为对象，而且如果没有指定 this 的话它值是 undefined.</p>
+</blockquote>
+<pre><code>&#39;use strict&#39;;
 /**
  * from MDN
  */
@@ -290,6 +296,49 @@ console.log(fun.apply(null) === null); // true
 console.log(fun.call(undefined) === undefined); // true
 console.log(fun.bind(true)() === true); // true
 </code></pre><p>注： 以上所有不考虑 <code>Eval</code></p>
+<h2 id="-closure">闭包 closure</h2>
+<blockquote>
+<p>Closures are functions whose inner functions refer to independent (free) variables.<br>In other words, the functions defined in the closure &#39;remember&#39; the environment in which they were created.</p>
+</blockquote>
+<p>闭包的构成：</p>
+<ul>
+<li>函数</li>
+<li>创建该函数的环境，环境由闭包创建时在作用域中的任何局部变量组成</li>
+</ul>
+<p>自执行函数表达式写法:</p>
+<pre><code>var test = (function() {
+    var val = 0;
+
+    var add = function(num) {
+        val += num;
+        return val;
+    };
+    return add;
+})();
+
+
+console.log(test(3)); // 3
+console.log(test(4)); // 7
+</code></pre><p>个人感觉这个写法可读性更好：</p>
+<pre><code>var test = function() {
+    var val = 0;
+
+    var add = function(num) {
+        val += num;
+        return val;
+    };
+    return add;
+};
+
+/**
+ * 此处 instance 是一个闭包。
+ * 由 add 函数， 和创建 add 函数时的环境(变量 val)组成
+ */
+var instance = test();
+
+console.log(instance(3)); // 3
+console.log(instance(4)); // 7
+</code></pre><p>闭包对性能有负面影响(尤其是内存占用)，如果不需要使用，则不使用。</p>
 
 </div>
 <div class="text-center">
