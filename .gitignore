@@ -3,3 +3,4 @@ build
 dist
 index.html
 .vscode
+deploy.sh
