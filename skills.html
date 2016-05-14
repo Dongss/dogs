@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            董少帅的个人简历
+        </title>
+        
+        <style type="text/css">
+            #skills {
+                width: 100%;
+                height: 500px;
+            }
+            .divider {
+                border-top: 1px solid rgba(34,36,38,.15);
+                border-bottom: 1px solid rgba(255,255,255,.1);
+                margin: 10px 0;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div class="header"><h1>董少帅技能图谱</h1></div>
+        <div class="divider"></div>
+        <div id="skills"></div>
+    </body>
+    
+    <script src="http://cdn.bootcss.com/echarts/3.1.9/echarts.min.js"></script>
+    
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('skills'));
+        var option = {           
+            tooltip: {},
+            legend: {
+                data: ['已Get技能', '期望Get技能']
+            },
+            radar: {
+                // shape: 'circle',
+                indicator: [
+                    { name: 'JavaScript', max: 5},
+                    { name: 'Node.js', max: 5},
+                    { name: 'HTML', max: 5},
+                    { name: 'CSS', max: 5},
+                    { name: 'Linux', max: 5},
+                    { name: 'Nginx', max: 5},
+                    { name: 'MySQL', max: 5},
+                    { name: 'MongoDB', max: 5},
+                    { name: 'Vue.js', max: 5},
+                    { name: 'webpack', max: 5},
+                    { name: 'Git', max: 5},
+                    { name: 'Unit test', max: 5}
+                ]
+            },
+            series: [{
+                name: '预算 vs 开销（Budget vs spending）',
+                type: 'radar',
+                // areaStyle: {normal: {}},
+                data : [
+                    {
+                        value : [4, 4, 3, 3, 3, 2, 3, 2, 4, 3, 3, 1],
+                        name : '已Get技能'
+                    },
+                    {
+                        value : [5, 5, 3, 4, 5, 4, 4, 4, 5, 4, 4, 4],
+                        name : '期望Get技能'
+                    }
+                ]
+            }]
+        };
+        
+        myChart.setOption(option);
+    </script>
+    
+</html>
+    
