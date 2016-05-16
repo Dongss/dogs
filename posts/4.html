@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            测试框架：ava - Dogs Blog
+        </title>
+        <link rel="shortcut icon" href="../dist/favicon.ico">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/highlight.js/9.2.0/styles/github-gist.min.css">
+        <style>
+            .markdown-body {
+                box-sizing: border-box;
+                min-width: 200px;
+                max-width: 980px;
+                margin: 0 auto;
+                padding: 45px;
+            }
+            .text-center {
+                text-align: center;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div>
+            <a href="../">返回主页</a>
+        </div>
+
+<div class="text-center">
+    分类: Node.js | 发布日期: 2016-05-16
+</div>
+<div class="markdown-body">
+    <h1 id="-ava">测试框架：ava</h1>
+<h3 id="-">简单测试</h3>
+<p>抄一个 <a href="https://github.com/alsotang/node-lessons/tree/master/lesson6">Node.js 包教不包会</a> 的例子：</p>
+<pre><code>var fibonacci = function (n) {
+    if (n === 0) {
+        return 0;
+    }
+
+    if (n === 1) {
+        return 1;
+    }
+
+    return fibonacci(n-1) + fibonacci(n-2);
+};
+
+if (require.main === module) {
+    // 如果是直接执行 main.js，则进入此处
+    // 如果 main.js 被其他文件 require，则此处不会执行。
+    var n = Number(process.argv[2]);                        
+    console.log(&#39;fibonacci(&#39; + n + &#39;) is&#39;, fibonacci(n));
+}
+
+exports.fibonacci = fibonacci;
+</code></pre><p>简单测试一下：</p>
+<pre><code>[dongshaoshuai~/test] ]$node main.js 10
+fibonacci(10) is 55
+</code></pre><p>首先全局安装 ava：<code>npm install ava -g</code></p>
+<p>创建测试文件 <code>main.test.js</code>:</p>
+<pre><code>import test from &#39;ava&#39;;
+import {fibonacci} from &#39;./main.js&#39;;
+
+test(&#39;main&#39;, t =&gt; {
+    // 断言
+    t.is(fibonacci(10), 55);
+});
+</code></pre><p><a href="https://github.com/sindresorhus/ava#assertions">ava 断言</a></p>
+<p>执行 <code>ava main.test.js</code>:</p>
+<pre><code>[dongshaoshuai~/test] ]$ava main.test.js
+
+   1 passed
+</code></pre><h3 id="-">覆盖率</h3>
+<p>安装 <a href="https://github.com/sindresorhus/ava/blob/master/docs/recipes/code-coverage.md">NYC</a> <code>npm install nyc -g</code></p>
+<p>运行 <code>nyc ava main.test.js</code>:</p>
+<pre><code>[dongshaoshuai~/test] ]$nyc ava main.test.js
+
+   1 passed
+----------|----------|----------|----------|----------|----------------|
+File      |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
+----------|----------|----------|----------|----------|----------------|
+ test/    |       80 |    83.33 |      100 |       80 |                |
+  main.js |       80 |    83.33 |      100 |       80 |          18,19 |
+----------|----------|----------|----------|----------|----------------|
+All files |       80 |    83.33 |      100 |       80 |                |
+----------|----------|----------|----------|----------|----------------|
+</code></pre><h3 id="-">完善测试用例</h3>
+<p>对  fibonacci 函数的几个要求：</p>
+<ul>
+<li>当 n === 0 时，返回 0；n === 1时，返回 1</li>
+<li>n &gt; 1 时，返回 <code>fibonacci(n) === fibonacci(n-1) + fibonacci(n-2)</code>，如 <code>fibonacci(10) === 55</code></li>
+<li>n 也不可小于 0，否则抛错，因为没意义</li>
+<li>n 也不可小于 0，否则抛错，因为没意义</li>
+</ul>
+<p>完善测试用例：</p>
+<pre><code>import test from &#39;ava&#39;;
+import {fibonacci} from &#39;./main.js&#39;;
+
+test(&#39;should equal 0 when n === 0&#39;, t =&gt; {
+    t.is(fibonacci(0), 0);
+});
+
+test(&#39;should equal 1 when n === 1&#39;, t =&gt; {
+    t.is(fibonacci(1), 1);
+});
+
+test(&#39;should equal 55 when n === 10&#39;, t =&gt; {
+    t.is(fibonacci(10), 55);
+});
+
+test(&#39;should throw when n &lt; 0&#39;, t =&gt; {
+    t.throws(() =&gt; fibonacci(-1), &#39;n should &gt;= 0&#39;);
+});
+
+test(&#39;should throw when n isnt Number&#39;, t =&gt; {
+    t.throws(() =&gt; fibonacci(&#39;hha&#39;), &#39;n should be a Number&#39;);
+});
+</code></pre><p>执行 <code>nyc ava main.test.js</code>:</p>
+<pre><code>[dongshaoshuai~/test/test] ]$nyc ava main.test.js
+
+   3 passed
+   2 failed
+
+  1. should throw when n &lt; 0
+  Maximum call stack size exceeded
+      Test.fn (main.test.js:17:7)
+    processEmit [as emit] (/data/home/dongshaoshuai/.nvm/versions/node/v5.3.0/lib/node_modules/nyc/node_modules/signal-exit/index.js:146:32)
+    processEmit [as emit] (/data/home/dongshaoshuai/.nvm/versions/node/v5.3.0/lib/node_modules/nyc/node_modules/signal-exit/index.js:146:32)
+
+
+  2. should throw when n isnt Number
+  Maximum call stack size exceeded
+      Test.fn (main.test.js:21:7)
+    processEmit [as emit] (/data/home/dongshaoshuai/.nvm/versions/node/v5.3.0/lib/node_modules/nyc/node_modules/signal-exit/index.js:146:32)
+    processEmit [as emit] (/data/home/dongshaoshuai/.nvm/versions/node/v5.3.0/lib/node_modules/nyc/node_modules/signal-exit/index.js:146:32)
+
+----------|----------|----------|----------|----------|----------------|
+File      |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
+----------|----------|----------|----------|----------|----------------|
+ test/    |       80 |    83.33 |      100 |       80 |                |
+  main.js |       80 |    83.33 |      100 |       80 |          26,27 |
+----------|----------|----------|----------|----------|----------------|
+All files |       80 |    83.33 |      100 |       80 |                |
+----------|----------|----------|----------|----------|----------------|
+</code></pre><p>看到最后两个用例没有通过，修改 <code>main.js</code>：</p>
+<pre><code>var fibonacci = function (n) {
+    if (typeof n !== &#39;number&#39;) {
+        throw new Error(&#39;n should be a Number&#39;);
+    }
+
+    if (n &lt; 0) {
+        throw new Error(&#39;n should &gt;= 0&#39;);
+    }
+
+    if (n === 0) {
+        return 0;
+    }   
+
+    if (n === 1) {
+        return 1;
+    }   
+
+    return fibonacci(n-1) + fibonacci(n-2);
+};  
+
+if (require.main === module) {
+  // 如果是直接执行 main.js，则进入此处
+  // 如果 main.js 被其他文件 require，则此处不会执行。
+  var n = Number(process.argv[2]);
+  console.log(&#39;fibonacci(&#39; + n + &#39;) is&#39;, fibonacci(n));
+} 
+
+exports.fibonacci = fibonacci;
+</code></pre><p>重新测试：</p>
+<pre><code>[dongshaoshuai~/test/test] ]$nyc ava main.test.js
+
+   5 passed
+
+----------|----------|----------|----------|----------|----------------|
+File      |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
+----------|----------|----------|----------|----------|----------------|
+ test/    |    85.71 |       90 |      100 |    85.71 |                |
+  main.js |    85.71 |       90 |      100 |    85.71 |          24,25 |
+----------|----------|----------|----------|----------|----------------|
+All files |    85.71 |       90 |      100 |    85.71 |                |
+----------|----------|----------|----------|----------|----------------|
+</code></pre><h3 id="-npm-">使用 npm 脚本测试</h3>
+<p><code>ava --init</code> 会在 package.json 创建测试脚本，修改一下：</p>
+<pre><code>&quot;scripts&quot;: {
+  &quot;test&quot;: &quot;ava main.test.js&quot; 
+}
+</code></pre><p>之后可 <code>npm test</code> 来测试。</p>
+<h3 id="-html-">生成 html 报告</h3>
+<blockquote>
+<p>NYC 在.nyc_ouput文件夹中为每个进程创建一个json的覆盖率文件。</p>
+</blockquote>
+<p>添加生成 html 报告的 npm 脚本：</p>
+<pre><code>&quot;scripts&quot;: {
+  &quot;test&quot;: &quot;nyc ava main.test.js&quot;,         
+  &quot;report&quot;: &quot;nyc report --reporter=html&quot;
+}
+</code></pre><p><code>npm run report</code> 会在项目根目录下的 <code>coverage</code> 目录下生成 html 报告。</p>
+<h3 id="-">托管覆盖率报告</h3>
+<blockquote>
+<p>Travis CI &amp; Coveralls<br>首先，你需要登录 coveralls.io 并激活你的项目库。<br>一旦完成，添加 coveralls 到开发依赖库：<br>$ npm install coveralls --save-dev<br>然后添加下面的代码到你的.travis.yml：</p>
+<pre><code>after_success:
+- &#39;./node_modules/.bin/nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls&#39;
+</code></pre><p>你的覆盖率报告将在你的 Travis 完成后很快地出现在 coveralls 上面。</p>
+</blockquote>
+
+</div>
+<div class="text-center">
+    作者: <a href="mailto:dongsoso@hotmail.com?subject=Dogs%20Blog%20Email">Dogs</a> | 纠错: <a href="https://github.com/Dongss/dogs/tree/master/posts/nodejs/4.md">Contribute</a>
+</div>
+    </body>
+    <script src="http://cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+</html>
+
