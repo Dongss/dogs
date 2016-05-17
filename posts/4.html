@@ -193,12 +193,12 @@ File      |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
 ----------|----------|----------|----------|----------|----------------|
 All files |    85.71 |       90 |      100 |    85.71 |                |
 ----------|----------|----------|----------|----------|----------------|
-</code></pre><h3 id="使用-npm-脚本测试">使用-npm-脚本测试</h3><p><code>ava --init</code> 会在 package.json 创建测试脚本，修改一下：</p>
+</code></pre><h3 id="使用-npm-脚本测试">使用 npm 脚本测试</h3><p><code>ava --init</code> 会在 package.json 创建测试脚本，修改一下：</p>
 <pre><code>&quot;scripts&quot;: {
   &quot;test&quot;: &quot;ava main.test.js&quot; 
 }
 </code></pre><p>之后可 <code>npm test</code> 来测试。</p>
-<h3 id="生成-html-报告">生成-html-报告</h3><blockquote>
+<h3 id="生成-html-报告">生成 html 报告</h3><blockquote>
 <p>NYC 在.nyc_ouput文件夹中为每个进程创建一个json的覆盖率文件。</p>
 </blockquote>
 <p>添加生成 html 报告的 npm 脚本：</p>

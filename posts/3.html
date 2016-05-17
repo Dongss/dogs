@@ -32,7 +32,7 @@
     分类: JavaScript | 发布日期: 2016-05-11
 </div>
 <div class="markdown-body">
-    <h1 id="javascript-变量作用域、this、闭包">javascript-变量作用域、this、闭包</h1><!-- START doctoc generated TOC please keep comment here to allow auto update -->
+    <h1 id="javascript-变量作用域、this、闭包">JavaScript 变量作用域、this、闭包</h1><!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 <ul>
 <li><a href="#%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8%E5%9F%9F-scope-%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE-scope-chain">变量作用域 scope 和作用域链 scope chain</a><ul>
@@ -44,16 +44,16 @@
 <li><a href="#this">this</a><ul>
 <li><a href="#%E5%85%A8%E5%B1%80%E4%B8%8A%E4%B8%8B%E6%96%87-global-context">全局上下文 global context</a></li>
 <li><a href="#%E5%87%BD%E6%95%B0%E4%B8%8A%E4%B8%8B%E6%96%87-function-context">函数上下文 function context</a></li>
-<li><a href="#%E8%A1%A5%E5%85%85%EF%BC%9A">补充：</a></li>
+<li><a href="#%E8%A1%A5%E5%85%85">补充</a></li>
 </ul>
 </li>
 <li><a href="#%E9%97%AD%E5%8C%85-closure">闭包 closure</a></li>
 </ul>
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-<h2 id="变量作用域-scope-和作用域链-scope-chain">变量作用域-scope-和作用域链-scope-chain</h2><blockquote>
+<h2 id="变量作用域-scope-和作用域链-scope-chain">变量作用域 scope 和作用域链 scope chain</h2><blockquote>
 <p>JavaScript has two scopes: global and local.<br>A variable that is declared outside a function definition is a global variable, and its value is accessible and modifiable throughout your program.<br>A variable that is declared inside a function definition is local.<br>It is created and destroyed every time the function is executed, and it cannot be accessed by any code outside the function.<br>JavaScript does not support block scope (in which a set of braces {. . .} defines a new scope), except in the special case of block-scoped variables. </p>
 </blockquote>
-<h3 id="var-变量的作用域和变量提升">var-变量的作用域和变量提升</h3><blockquote>
+<h3 id="var-变量的作用域和变量提升">var 变量的作用域和变量提升</h3><blockquote>
 <p>JavaScript 有两种作用域：全局和局部。<br>在函数定义之外声明的变量是全局变量，它的值可在整个程序中访问和修改。<br>在函数定义内声明的变量是局部变量。每当执行函数时，都会创建和销毁该变量，且无法通过函数之外的任何代码访问该变量。</p>
 </blockquote>
 <p>JavaScript 中，在函数体内 var 声明的变量是函数级作用域，是局部变量，在本函数体内可以访问，而且是在函数体内任意位置可以访问。</p>
@@ -141,7 +141,7 @@ func_1();
 <ol>
 <li>当前作用域 <code>var x</code> 的定义 =&gt; 2. <code>x</code> 形参 =&gt; 3. 函数自身名称是否是 <code>x</code> =&gt; 4. 上级作用域从 1 开始查找</li>
 </ol>
-<h3 id="es6-中的-let-和-const">es6-中的-let-和-const</h3><blockquote>
+<h3 id="es6-中的-let-和-const">ES6 中的 let 和 const</h3><blockquote>
 <p>ES6 的 let 和 const 实现了块级所用域的变量声明方式，使用 let 和 const 声明变量能有效避免由于变量提升导致的变量污染的问题。</p>
 </blockquote>
 <p>用 let 和 const 声明的变量作用域是代码块，这个设计比较符合大多数人的思维方式。（代码块简单来说就是 <code>{}</code> 大括号包着的区域）</p>
@@ -200,9 +200,9 @@ MY_OBJECT.key = &quot;otherValue&quot;; // Use Object.freeze() to make object im
 <p>In most cases, the value of this is determined by how a function is called.<br>It can&#39;t be set by assignment during execution, and it may be different each time the function is called. </p>
 </blockquote>
 <p>简言之： this 总是指向调用该函数的对象。</p>
-<h3 id="全局上下文-global-context">全局上下文-global-context</h3><pre><code>// 在浏览器中
+<h3 id="全局上下文-global-context">全局上下文 global context</h3><pre><code>// 在浏览器中
 console.log(this === window); // true
-</code></pre><h3 id="函数上下文-function-context">函数上下文-function-context</h3><p>在函数中访问 this 时， this 指向调用该函数的对象。</p>
+</code></pre><h3 id="函数上下文-function-context">函数上下文 function context</h3><p>在函数中访问 this 时， this 指向调用该函数的对象。</p>
 <p>1）全局对象</p>
 <pre><code>// 全局变量
 val = 1;
@@ -258,7 +258,7 @@ execFunc.apply(testInstance); // aa bb
 <blockquote>
 <p>注意: 以 <code>fun.apply() // or call</code> 为例 call apply 的第一个参数是 <code>func 函数运行时的 this 值</code> （第一个参数的解释版本真的多）。<br>二者的区别这里不说。</p>
 </blockquote>
-<h3 id="补充：">补充：</h3><p>1) ES6 中的箭头函数 arrow function</p>
+<h3 id="补充">补充</h3><p>1) ES6 中的箭头函数 arrow function</p>
 <blockquote>
 <p>An arrow function expression has a shorter syntax compared to function expressions and lexically binds the this value<br>(does not bind its own this, arguments, super, or new.target).<br>Arrow functions are always anonymous.</p>
 </blockquote>
@@ -305,7 +305,7 @@ console.log(fun.apply(null) === null); // true
 console.log(fun.call(undefined) === undefined); // true
 console.log(fun.bind(true)() === true); // true
 </code></pre><p>注： 以上所有不考虑 <code>Eval</code></p>
-<h2 id="闭包-closure">闭包-closure</h2><blockquote>
+<h2 id="闭包-closure">闭包 closure</h2><blockquote>
 <p>Closures are functions whose inner functions refer to independent (free) variables.<br>In other words, the functions defined in the closure &#39;remember&#39; the environment in which they were created.</p>
 </blockquote>
 <p>闭包的构成：</p>
