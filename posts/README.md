@@ -17,3 +17,10 @@
 
 * images: 文章中引用的图片。引用链接类似 `https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/2.2.png`
 * map.js: 文章枚举（ID，分类，日期，标题）, 分类枚举（ID，名称）
+
+在 markdown 文件里加以下内容， 会在这个位置生成目录
+
+```
+<!-- START doctoc -->
+<!-- END doctoc -->
+```
