@@ -17,6 +17,11 @@
                 margin: 0 auto;
                 padding: 45px;
             }
+            .markdown-body-mobile {
+                box-sizing: border-box;
+                margin: 0 auto;
+                width: 100%;
+            }
             .text-center {
                 text-align: center;
             }
@@ -123,8 +128,14 @@ PS1=&quot;[\[\e[1;35m\]\u\[\e[1;32m\]\w\[\e[0m\]] \[\e[0m\]\[\e[1;36m\]\$(git_br
 </div>
     </body>
     <script src="http://cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
-    <script>
+    <script type="text/javascript">
         hljs.initHighlightingOnLoad();
+    </script>
+    <script type="text/javascript">
+    // for mobile
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        document.getElementsByClassName("markdown-body").className = "markdown-body-mobile";
+    }
     </script>
 </html>
 
