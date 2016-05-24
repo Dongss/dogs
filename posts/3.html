@@ -70,7 +70,7 @@ function test() {
 
     func();
     function func() {
-        for (var i = 0, i &lt; 5, i++) {
+        for (var i = 0; i &lt; 5; i++) {
         }
         console.log(&#39;i: &#39;, i);
         console.log(&#39;this is func&#39;);
@@ -81,7 +81,7 @@ test();
 </code></pre><p>上述代码结果是：</p>
 <pre><code>undefined
 this is val
-i:  2
+i:  5
 this is func
 </code></pre><p>JavaScript 解析器预解析代码的时候， <code>test</code> 函数作如下解析：</p>
 <pre><code>function test() {
