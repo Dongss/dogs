@@ -16,7 +16,8 @@ const GHAddr = Map.GHAddr;
 var renderer = new marked.Renderer();
 renderer.heading = function (text, level) {
     // 支持中文标题的目录生成
-    let escapedText = text.toLowerCase().replace(/\ +/g, '-');
+    let escapedText = text.toLowerCase().replace(/[\.\(\)\[\]\,]/g, '');
+    escapedText = escapedText.toLowerCase().replace(/\ +/g, '-');
     let html = `<h${level} id="${escapedText}">${text}</h${level}>`;
     return html;
 };
