@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            JavaScript 继承与原型链 - Dogs Blog
+        </title>
+        <link rel="shortcut icon" href="../dist/favicon.ico">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/highlight.js/9.2.0/styles/github-gist.min.css">
+        <style>
+            .markdown-body {
+                box-sizing: border-box;
+                min-width: 200px;
+                max-width: 980px;
+                margin: 0 auto;
+                padding: 45px;
+            }
+            .markdown-body-mobile {
+                box-sizing: border-box;
+                margin: 0 auto;
+                width: 100%;
+            }
+            .text-center {
+                text-align: center;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div>
+            <a href="../">返回主页</a>
+        </div>
+
+<div class="text-center">
+    分类: JavaScript | 发布日期: 2016-05-25
+</div>
+<div class="markdown-body">
+    <h1 id="javascript-原型、原型链与继承">JavaScript 原型、原型链与继承</h1><!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<ul>
+<li><a href="#%E5%8E%9F%E5%9E%8B-prototype-%E4%B8%8E-%E5%8E%9F%E5%9E%8B%E9%93%BE-prototype-chain">原型 prototype 与 原型链 prototype chain</a><ul>
+<li><a href="#%E5%88%A9%E7%94%A8%E5%8E%9F%E5%9E%8B%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF">利用原型实现继承</a></li>
+<li><a href="#%E5%8E%9F%E5%9E%8B%E9%93%BE">原型链</a></li>
+</ul>
+</li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95">创建对象和原型链的几种方法</a><ul>
+<li><a href="#%E9%80%9A%E8%BF%87-js-%E8%AF%AD%E6%B3%95%E5%88%9B%E5%BB%BA">通过 JS 语法创建</a></li>
+<li><a href="#%E9%80%9A%E8%BF%87%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%88%9B%E5%BB%BA">通过构造函数创建</a></li>
+<li><a href="#%E9%80%9A%E8%BF%87-objectcreate-%E5%88%9B%E5%BB%BA">通过 Object.create 创建</a></li>
+<li><a href="#%E9%80%9A%E8%BF%87-class-%E5%85%B3%E9%94%AE%E5%AD%97-es6">通过 class 关键字 [ES6]</a></li>
+</ul>
+</li>
+<li><a href="#%E5%85%B6%E4%BB%96">其他</a><ul>
+<li><a href="#hasownproperty">hasOwnProperty()</a></li>
+<li><a href="#objectgetprototypeof-es6">Object.getPrototypeOf() [ES6]</a></li>
+<li><a href="#objectsetprototypeof-es6">Object.setPrototypeOf() [ES6]</a></li>
+</ul>
+</li>
+</ul>
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<h2 id="原型-prototype-与-原型链-prototype-chain">原型 prototype 与 原型链 prototype chain</h2><blockquote>
+<p>JavaScript only has one construct: objects. Each object has an internal link to another object called its prototype.<br>That prototype object has a prototype of its own, and so on until an object is reached with null as its prototype.<br>null, by definition, has no prototype, and acts as the final link in this prototype chain.</p>
+</blockquote>
+<h3 id="利用原型实现继承">利用原型实现继承</h3><pre><code>var myObj = {};
+
+function myFunc() {
+}
+
+console.log(myObj.prototype); // undefined
+console.log(myFunc.prototype); // myFunc {}
+</code></pre><p>通过 prototype 我们可以动态的向对象添加属性和方法，并且是可以继承的。</p>
+<pre><code>function myFunc(val) {
+    this.val = val;
+}
+
+myFunc.prototype.getVal = function() {
+    return this.val;
+};
+
+var myInstance = new myFunc(1);
+
+// myInstance 调用原型属性
+console.log(myInstance.getVal()); // 1
+
+// 访问 myInstance 的原型
+console.log(Object.getPrototypeOf(myInstance)); // myFunc { getVal: [Function] }
+
+// 为 myInstance 添加属性 val
+myInstance.val = 100;
+// getVal 中的 this 指向 myInstance 实例  
+console.log(myInstance.getVal()); // 100
+</code></pre><p>当继承的函数 getVal 被调用时， this 指向 myInstance 实例， 而不是原型 myFunc。</p>
+<h3 id="原型链">原型链</h3><blockquote>
+<p>根据 ECMAScript 标准，someObject.[[Prototype]] 符号是用于指派 someObject 的原型。<br>这个等同于 JavaScript 的 <strong>proto</strong>  属性（现已弃用）。<br>从 ECMAScript 6 开始, [[Prototype]] 可以用 Object.getPrototypeOf() 和 Object.setPrototypeOf() 访问器来访问。</p>
+</blockquote>
+<p>当一个对象访问一个属性时，查找的顺序是：</p>
+<p>该对象自身属性 =》 该对象的原型的属性 =》 该对象的原型的原型属性 ... 直到找到匹配的属性或到达原型链末端（prototype 为 undefined）</p>
+<pre><code>var objA = function () {
+    this.a = &#39;a&#39;;
+    this.b = &#39;b&#39;;
+};
+
+var myInstance = new objA();
+myInstance.a = &#39;a in myInstance&#39;;
+
+// myInstance 自身的属性有 a， 访问并停止查找属性
+console.log(myInstance.a); // a in myInstance
+
+// myInstance 自身的属性没有 b，访问 myInstance 的原型 objA， objA 有属性 b， 访问并停止查找属性
+console.log(myInstance.b); // b
+
+// myInstance 自身和原型链上每个原型都没有属性 c，结果为 undefined
+console.log(myInstance.c); // undefined
+</code></pre><h2 id="创建对象和原型链的几种方法">创建对象和原型链的几种方法</h2><h3 id="通过-js-语法创建">通过 JS 语法创建</h3><pre><code>var obj = {
+    a: 1
+};
+// 继承于 Object.prototype
+// 原型链：obj =&gt; Object.prototype =&gt; undefined
+console.log(Object.getPrototypeOf(obj)); // {}
+
+var arr = [1];
+// 继承于 Array.prototype
+// 原型链：arr =&gt; Array.prototype =&gt; undefined
+console.log(Object.getPrototypeOf(arr)); // []
+
+function func() {
+}
+// 继承于 Function.prototype
+// 原型链：func =&gt; Function.prototype =&gt; undefined      
+console.log(Object.getPrototypeOf(func)); // [Function]
+</code></pre><h3 id="通过构造函数创建">通过构造函数创建</h3><p>在 JavaScript 中， 用 new 操作符来作用与一个函数时，这个函数就是构造函数 constructor。</p>
+<pre><code>var func = function() {
+    this.val = 1;  
+};
+
+func.prototype.getVal = function() {
+    return this.val;
+};
+
+var instance = new func();
+
+// instance 是构造函数 func 的一个实例对象
+// instance 自身具有 val 属性
+// instance.[[Prototype]] 指向 func.prototype
+</code></pre><h3 id="通过-objectcreate-创建">通过 Object.create 创建</h3><pre><code>var a = {
+    a: &#39;a&#39;               
+};
+
+var b = Object.create(a);
+// b 继承于 a.prototype
+// 原型链：b =&gt; a =&gt; Object.prototype =&gt; undefined
+
+console.log(b.a) // a
+</code></pre><h3 id="通过-class-关键字-es6">通过 class 关键字 [ES6]</h3><p>ES6 中的 class 只是基于原型继承的一种语法糖:</p>
+<pre><code>&#39;use strict&#39;;
+
+class Person {
+    constructor(firstName, lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+}
+
+class Student extends Person {
+    constructor(firstName, lastName) {
+        super(firstName, lastName);
+    }
+    get name() {
+        return this.firstName + &#39; &#39; + this.lastName;
+    }
+    set name(newFirstName) {
+        this.firstName = newFirstName;
+    }
+}
+
+var me = new Student(&#39;Dog&#39;, &#39;Dong&#39;);
+
+console.log(me.name); // Dog Dong
+me.name = &#39;Dog2&#39;;                                    
+console.log(me.name); // Dog2 Dong
+</code></pre><h2 id="其他">其他</h2><h3 id="hasownproperty">hasOwnProperty()</h3><p>检测某个对象自身（不含原型链）是否含有某属性。</p>
+<pre><code>var objA = {
+    valA: &#39;val a&#39;
+};
+
+var objB = Object.create(objA);
+objB.valB = &#39;val b&#39;;
+
+console.log(objA.hasOwnProperty(&#39;valA&#39;)); // true
+console.log(objB.hasOwnProperty(&#39;valA&#39;)); // false
+console.log(objA.hasOwnProperty(&#39;valB&#39;)); // false
+console.log(objB.hasOwnProperty(&#39;valB&#39;)); // true
+</code></pre><blockquote>
+<p>在原型链上查找属性是很耗时的，尤其是访问一个不存在的属性时，整个原型链会被遍历。<br>当我们只想访问对象自身属性时，可以通过 hasOwnProperty 来判断对象是否有该属性，避免遍历原型链。</p>
+</blockquote>
+<h3 id="objectgetprototypeof-es6">Object.getPrototypeOf() [ES6]</h3><p>返回对象的原型。</p>
+<pre><code>var objA = {
+    valA: &#39;val a&#39;
+};
+
+var objB = Object.create(objA);
+
+console.log(Object.getPrototypeOf(objB)); // { valA: &#39;val a&#39; }
+</code></pre><h3 id="objectsetprototypeof-es6">Object.setPrototypeOf() [ES6]</h3><p>设置对象的原型。</p>
+<pre><code>var objA = {
+    valA: &#39;val a&#39;
+};
+
+var objB = {};
+Object.setPrototypeOf(objB, objA);
+
+console.log(Object.getPrototypeOf(objB)); // { valA: &#39;val a&#39; }
+</code></pre>
+</div>
+<div class="text-center">
+    作者: <a href="mailto:dongsoso@hotmail.com?subject=Dogs%20Blog%20Email">Dogs</a> | 纠错: <a href="https://github.com/Dongss/dogs/tree/master/posts/javascript/6.md">Contribute</a>
+</div>
+    </body>
+    <script src="http://cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script type="text/javascript">
+    // for mobile
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        document.getElementsByClassName("markdown-body").className = "markdown-body-mobile";
+    }
+    </script>
+</html>
+
