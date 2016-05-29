@@ -14,7 +14,7 @@ let PostsMap = [
     { id: 3, title: 'JavaScript 变量作用域、this、闭包', category: 'javascript', date: 1462950925 },
     { id: 4, title: '测试框架：ava', category: 'nodejs', date: 1463365165 },
     { id: 5, title: 'JavaScript Array 常用属性和方法', category: 'javascript', date: 1464072499 },
-    { id: 6, title: 'JavaScript 继承与原型链', category: 'javascript', date: 1464141196 }
+    { id: 6, title: 'JavaScript 原型、原型链与继承', category: 'javascript', date: 1464141196 }
 ];
 
 let GHAddr = 'https://github.com/Dongss/dogs/tree/master/';
