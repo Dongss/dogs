@@ -4,9 +4,11 @@
     @if $is-mobile != 1 {
         min-width: 200px;
         max-width: 980px;
-    } 
+        padding: 45px;
+    } @else {
+        padding: 10px;
+    }
     box-sizing: border-box;
-    padding: 45px;
     margin: 0 auto;
     width: 100%;
 }
@@ -51,7 +53,7 @@
 
 // mobile
 @media screen and (max-width: 600px) {
-    .markdown-body-mobile {
+    .markdown-body {
         @include markdown-body(1);
     }
     .header {
