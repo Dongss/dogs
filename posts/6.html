@@ -4,38 +4,23 @@
     <head>
         <meta charset="utf-8" />
         <title>
-            JavaScript 继承与原型链 - Dogs Blog
+            JavaScript 原型、原型链与继承 - Dogs Blog
         </title>
         <link rel="shortcut icon" href="../dist/favicon.ico">
+        <link rel="stylesheet" href="../dist/post.style.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css">
         <link rel="stylesheet" href="http://cdn.bootcss.com/highlight.js/9.2.0/styles/github-gist.min.css">
-        <style>
-            .markdown-body {
-                box-sizing: border-box;
-                min-width: 200px;
-                max-width: 980px;
-                margin: 0 auto;
-                padding: 45px;
-            }
-            .markdown-body-mobile {
-                box-sizing: border-box;
-                margin: 0 auto;
-                width: 100%;
-            }
-            .text-center {
-                text-align: center;
-            }
-        </style>
     </head>
     
     <body>
-        <div>
-            <a href="../">返回主页</a>
+        <div class="header">
+            <button class="label reverse"><a href="../#/category/all">返回列表</a></button>
         </div>
 
-<div class="text-center">
+<div class="post-header">
     分类: JavaScript | 发布日期: 2016-05-25
 </div>
+<div class="divider"></div>
 <div class="markdown-body">
     <h1 id="javascript-原型、原型链与继承">JavaScript 原型、原型链与继承</h1><!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -214,19 +199,15 @@ Object.setPrototypeOf(objB, objA);
 console.log(Object.getPrototypeOf(objB)); // { valA: &#39;val a&#39; }
 </code></pre>
 </div>
-<div class="text-center">
-    作者: <a href="mailto:dongsoso@hotmail.com?subject=Dogs%20Blog%20Email">Dogs</a> | 纠错: <a href="https://github.com/Dongss/dogs/tree/master/posts/javascript/6.md">Contribute</a>
+<div class="divider"></div>
+<div class="footer">
+    作者/版权: <a href="mailto:dongsoso@hotmail.com?subject=Dogs%20Blog%20Email">Dogs</a> | 纠错/贡献: <a href="https://github.com/Dongss/dogs/tree/master/posts/javascript/6.md">Contribute</a>
 </div>
     </body>
     <script src="http://cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script src="../dist/post.build.js"></script>
     <script type="text/javascript">
         hljs.initHighlightingOnLoad();
-    </script>
-    <script type="text/javascript">
-    // for mobile
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-        document.getElementsByClassName("markdown-body").className = "markdown-body-mobile";
-    }
     </script>
 </html>
 
