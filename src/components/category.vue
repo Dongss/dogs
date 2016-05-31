@@ -39,15 +39,26 @@
         float: left;   
         min-width: 200px;
         max-width: 250px;
-        padding-left: 20px;
+        padding: 10px 0;
+        font-family: 'Microsoft Yahei';
+
+        a {
+            text-decoration: none;
+        }
 
         div {
-            margin: 20px 0;
+            padding: 10px 0 10px 20px;
             cursor: pointer;
         }
 
+        div:hover {
+            background-color: $color-hover-bg;
+            color: $color-hover;
+        }
+
         .active {
-            color: $color-active;
+            color: $color-main;
+            background-color: $color-hover-bg;
         }
     }
 </style>

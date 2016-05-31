@@ -4,11 +4,28 @@
 $color-main: #00b5ad;
 $color-main-reverse: #fff;
 $color-active: blue;
+$color-hover-bg: rgba(0,0,0,.05);
+$color-hover: #00b5ad;
 $color-category: #585858;
 $color-footer: #5344A0;
-$color-post-title: blue;
+$color-post-title: #525252;
 $color-post-ext-info: #888888;
-$color-header-bg: black;
-$color-header-a: white;
 $color-welcome: whitesmoke;
 $color-welcome-bg: #5A81EF;
+
+@mixin labeld($bg-color: $color-main, $color: $color-main-reverse) {
+    background-color: $bg-color;
+    border-color: $bg-color;
+    color: $color;
+    border: 0 solid transparent;
+    border-radius: .28571429rem;
+    transition: background .1s ease;
+    padding: .5833em .833em;
+    font-weight: 700;
+    font-size: 80%;
+
+    .detail {
+        opacity: .8;
+        margin-left: 1em;
+    }
+}

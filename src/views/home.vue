@@ -18,9 +18,3 @@
 		components: { headerComponent, containerComponent, footerComponent }
 	}
 </script>
-
-<style>
-    a { 
-        text-decoration: none; 
-    } 
-</style>

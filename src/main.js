@@ -5,6 +5,7 @@ import VueRouter from 'vue-router';
 import routerMap from './routers';
 import filters from './filters.js';
 import './assets/main.scss';
+import './assets/common.scss';
 
 // Filters
 Vue.filter('unixtime', filters.unixtimeFormat);

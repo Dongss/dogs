@@ -16,10 +16,11 @@
 	.header {
 		padding: 10px 0;
 		font-size: 30px;
-		background-color: $color-header-bg;
+		background-color: $color-main;
 
         a {
-            color: $color-header-a;
+            color: $color-main-reverse;
+            text-decoration: none;
         }
 	}
 </style>

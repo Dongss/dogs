@@ -1,3 +1,6 @@
+@import './base.scss';
+
+// markdown css
 .markdown-body {
     box-sizing: border-box;
     min-width: 200px;
@@ -10,6 +13,42 @@
     margin: 0 auto;
     width: 100%;
 }
-.text-center {
+
+// css
+body {
+    margin: 0;
+}
+
+.header {
+    background-color: $color-main;
+    height: 40px;
+    padding: 0 10px;
+
+    button {
+        margin-top: 5px;
+        height: 70%;
+    }
+
+    a {
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: $color-main;
+    }
+}
+
+.footer {
     text-align: center;
+    padding: 10px 0;
+}
+
+.post-header{
+    padding-top: 10px;
+    text-align: center;
+}
+
+.label.reverse {
+    @include labeld($color-main-reverse, $color-main);
 }

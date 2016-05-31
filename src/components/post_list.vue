@@ -1,10 +1,15 @@
 <template>
     <div class="post-list segment">
-        当前分类：           
-        {{category | category}}       
+        <div class="head">
+            <span class="label">
+                当前分类
+                <span class="detail">{{category | category}}</span>
+            </span>
+        </div>
         <div class="post-info"
             v-for="post in posts
             | orderBy 'id' -1">
+        <div class="divider"></div>
             <div>
                 <a class="post-title" href="{{href(post.id)}}">
                     {{post.title}}
@@ -47,16 +52,28 @@
         margin-top: 20px;
         overflow: hidden;
         padding: 20px;
-    }
-    .post-info {
-        padding: 10px 0;
-    }
-    .post-title {
-        color: $color-post-title;
-        font-size: 25px;
-    }
-    .post-ext-info {
-        font-size: 15px;
-        color: $color-post-ext-info;
+
+        .head {
+            padding-bottom: 10px;
+        }
+
+        .post-info {
+            padding: 5px 0;
+
+            .post-title {
+                color: $color-post-title;
+                font-size: 22px;
+                text-decoration: none;
+            }
+
+            .post-title:hover {
+                text-decoration: underline;
+            }
+
+            .post-ext-info {
+                font-size: 15px;
+                color: $color-post-ext-info;
+            }
+        }
     }
 </style>
