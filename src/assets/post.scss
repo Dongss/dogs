@@ -4,9 +4,9 @@
     @if $is-mobile != 1 {
         min-width: 200px;
         max-width: 980px;
-        padding: 45px;
     } 
     box-sizing: border-box;
+    padding: 45px;
     margin: 0 auto;
     width: 100%;
 }
