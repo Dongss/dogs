@@ -6,23 +6,28 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var entry = ['./src/main.js'];
 
 const ENV = process.env.NODE_ENV || 'local';
-var entry = ['./src/main.js'];
-var buildPath;
+var entry = {
+    main: './src/main.js',
+    post: './src/post.js'
+};
+var buildPath, htmlFilename;
 
 if (ENV === 'production') {
     buildPath = 'dogs/dist/';
+    htmlFilename = '../index.html';
 } else {
     buildPath = "dist/";
+    htmlFilename = '../index.html';
 }
 
 var plugins = [
-	new ExtractTextPlugin('style.css'),
+	new ExtractTextPlugin('[name].style.css'),
 	new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery'
     }),
     new HtmlWebpackPlugin({
-        filename: '../index.html',
+        filename: htmlFilename,
         template: 'src/index.html',
         favicon: 'src/assets/img/favicon.ico',
         inject: false,
@@ -34,7 +39,7 @@ module.exports = {
 	entry: entry,
 	output:  {
         path: buildPath,
-		filename: 'build.js'
+		filename: '[name].build.js'
 	},
 	module: {
 		loaders: [{
@@ -51,6 +56,9 @@ module.exports = {
 		}, { 
 			test: /\.css$/, 
 			loader: ExtractTextPlugin.extract("style-loader", "css-loader") 
+        }, {
+            test: /\.scss$/,
+            loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
 		}, { 
 			test: /\.md$/, 
 			loader: "html!markdown" 

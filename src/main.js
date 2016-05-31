@@ -4,7 +4,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routerMap from './routers';
 import filters from './filters.js';
-import './assets/style.css';
+import './assets/main.scss';
 
 // Filters
 Vue.filter('unixtime', filters.unixtimeFormat);

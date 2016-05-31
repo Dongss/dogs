@@ -1,0 +1,28 @@
+/* 通用样式 */
+
+
+/* 定制样式 */
+body {
+    margin: 0;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    font-size: 15px;
+    line-height: normal;
+    font-family: Arial, Helvetica;
+}
+
+.divider {
+    border-top: 1px solid rgba(34,36,38,.15);
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    margin: 10px 0;
+}
+
+.segment {  
+    border-style: solid;
+    margin: 10px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #D8D8D8;
+}
