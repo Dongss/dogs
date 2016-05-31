@@ -75,7 +75,8 @@ module.exports = {
 	},
 	vue: {
 		loaders: {
-			css: ExtractTextPlugin.extract("css")
+            css: ExtractTextPlugin.extract("css"),
+            sass: ExtractTextPlugin.extract("css!sass")
 		}
 	},	
 	resolve: {

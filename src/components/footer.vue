@@ -12,12 +12,15 @@
     }
 </script>
 
-<style>
+<style lang="sass">
+    @import "../assets/base.scss";
+
     .footer {
         text-align: center;
-        color: #5344A0;
-    }
-    .footer a {
-        color:  #5344A0;
+        color: $color-footer;
+
+        a {
+            color:  $color-footer;
+        }
     }
 </style>

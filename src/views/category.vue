@@ -19,6 +19,3 @@
         components: { PostListComponent }
     }
 </script>
-
-<style>
-</style>

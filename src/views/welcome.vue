@@ -16,10 +16,12 @@
     }
 </script>
 
-<style>
+<style lang="sass">
+    @import "../assets/base.scss";
+
     #welcome {
         width: 85%;
-        color: whitesmoke;
-        background-color: #5A81EF;
+        color: $color-welcome;
+        background-color: $color-welcome-bg;
     }
 </style>

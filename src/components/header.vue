@@ -10,13 +10,16 @@
 	}
 </script>
 
-<style>
+<style lang="sass">
+    @import "../assets/base.scss";
+
 	.header {
 		padding: 10px 0;
 		font-size: 30px;
-		background-color: black;
-	}
-	.header a {
-		color: white;
+		background-color: $color-header-bg;
+
+        a {
+            color: $color-header-a;
+        }
 	}
 </style>

@@ -31,19 +31,23 @@
     }
 </script>
 
-<style>
+<style lang="sass">
+    @import "../assets/base.scss";
+
     .category-container {
-        color: #585858;
+        color: $color-category;
         float: left;   
         min-width: 200px;
         max-width: 250px;
         padding-left: 20px;
-    }
-    .category-container div {
-        margin: 20px 0;
-        cursor: pointer;
-    }
-    .category-container .active {
-        color: blue;
+
+        div {
+            margin: 20px 0;
+            cursor: pointer;
+        }
+
+        .active {
+            color: $color-active;
+        }
     }
 </style>

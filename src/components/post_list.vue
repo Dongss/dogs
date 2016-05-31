@@ -40,7 +40,9 @@
     }
 </script>
 
-<style>
+<style lang="sass">
+    @import "../assets/base.scss";
+
     .post-list {
         margin-top: 20px;
         overflow: hidden;
@@ -50,11 +52,11 @@
         padding: 10px 0;
     }
     .post-title {
-        color: blue;
+        color: $color-post-title;
         font-size: 25px;
     }
     .post-ext-info {
         font-size: 15px;
-        color: #888888;
+        color: $color-post-ext-info;
     }
 </style>
