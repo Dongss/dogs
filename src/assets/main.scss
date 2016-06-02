@@ -1,3 +1,5 @@
+@import './base.scss';
+
 /* 定制样式 */
 body {
     margin: 0;
@@ -8,4 +10,5 @@ body {
     font-size: 15px;
     line-height: normal;
     font-family: Arial, Helvetica;
+    background-color: $color-body-bg;
 }

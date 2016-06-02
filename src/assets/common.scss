@@ -10,10 +10,17 @@
     margin: 10px 0;
 }
 
-.segment {  
+.segment {
     border-style: solid;
     margin: 10px;
     border-radius: 5px;
     border-width: 1px;
     border-color: #D8D8D8;
+    background-color: $color-main-reverse;
+
+    .segment-head {
+        padding: 10px 0 10px 20px;
+        background-color: $color-main;
+        color: $color-main-reverse;
+    }
 }

@@ -1,12 +1,15 @@
 <template>
     <div class="category-container segment">
-            <div v-link="{name: 'category', params: {category:'all'}}">
-                全部分类 ({{postsCount}})
-            </div>
-            <div  v-for="category in categorys"
-                v-link="{name: 'category', params: {category: category.name}}">
-                {{category.name | category}} ({{category.count}})
-            </div>
+        <div class="segment-head">
+            文章分类
+        </div>
+        <div class="category" v-link="{name: 'category', params: {category:'all'}}">
+            全部分类 ({{postsCount}})
+        </div>
+        <div class="category" v-for="category in categorys"
+            v-link="{name: 'category', params: {category: category.name}}">
+            {{category.name | category}} ({{category.count}})
+        </div>
     </div>
 </template> 
 
@@ -39,19 +42,18 @@
         float: left;   
         min-width: 200px;
         max-width: 250px;
-        padding: 10px 0;
         font-family: 'Microsoft Yahei';
 
         a {
             text-decoration: none;
         }
 
-        div {
+        .category {
             padding: 10px 0 10px 20px;
             cursor: pointer;
         }
 
-        div:hover {
+        .category:hover {
             background-color: $color-hover-bg;
             color: $color-hover;
         }

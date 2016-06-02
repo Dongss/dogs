@@ -11,6 +11,7 @@
     box-sizing: border-box;
     margin: 0 auto;
     width: 100%;
+    background-color: $color-main-reverse;
 }
 
 @mixin header($is-mobile) {
@@ -63,9 +64,12 @@
 
 body {
     margin: 0;
+    background-color: $color-body-bg;
 }
 
 .footer {
+    background-color: $color-main;
+    color: $color-main-reverse;
     text-align: center;
     padding: 10px 0;
 }
