@@ -1,9 +1,11 @@
 <template>
+    <category-component></category-component>
     <post-list-component :category="category"></post-list-component>
 </template>
 
 <script>
     import PostListComponent from '../components/post_list.vue';
+    import CategoryComponent from '../components/category.vue';
     
     export default {
         data () {
@@ -16,6 +18,6 @@
                 this.category = transition.to.params.category;               
             }
         },
-        components: { PostListComponent }
+        components: { PostListComponent, CategoryComponent }
     }
 </script>
