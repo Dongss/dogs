@@ -72,6 +72,10 @@ body {
     color: $color-main-reverse;
     text-align: center;
     padding: 10px 0;
+
+    a {
+        color: $color-main-reverse;
+    }
 }
 
 .post-header{
