@@ -1,6 +1,6 @@
 <template>
 	<div class="header">
-		<a href="#">Dogs Blog</a>
+        <strong><a href="#">Dogs Blog</a></strong>
 	</div>
 </template>
 
