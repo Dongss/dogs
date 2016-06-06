@@ -41,30 +41,40 @@
 <style lang="sass">
     @import "../assets/base.scss";
 
-    .category-container {
-        color: $color-category;
-        float: left;   
-        min-width: 200px;
-        max-width: 250px;
-        font-family: 'Microsoft Yahei';
+    // pc
+    @media screen and (min-width: 599px) {
+        .category-container {
+            color: $color-category;
+            float: left;   
+            min-width: 200px;
+            max-width: 250px;
+            font-family: 'Microsoft Yahei';
 
-        a {
-            text-decoration: none;
+            a {
+                text-decoration: none;
+            }
+
+            .category {
+                padding: 10px 0 10px 20px;
+                cursor: pointer;
+            }
+
+            .category:hover {
+                background-color: $color-hover-bg;
+                color: $color-hover;
+            }
+
+            .active {
+                color: $color-main;
+                background-color: $color-hover-bg;
+            }
         }
+    }
 
-        .category {
-            padding: 10px 0 10px 20px;
-            cursor: pointer;
-        }
-
-        .category:hover {
-            background-color: $color-hover-bg;
-            color: $color-hover;
-        }
-
-        .active {
-            color: $color-main;
-            background-color: $color-hover-bg;
+    // mobile
+    @media screen and (max-width: 600px) {
+        .category-container {
+            display: none;
         }
     }
 </style>
