@@ -52,11 +52,11 @@
     // mobile
     @media screen and (max-width: 600px) {
         .welcome-detail{
-            @include webcome-val($color-main, $color-body-bg, 30rem);
+            @include webcome-val($color-main, $color-body-bg, 20rem);
         }
 
         .welcome-detail-reverse {
-            @include webcome-val($color-body-bg, $color-main, 30rem);
+            @include webcome-val($color-body-bg, $color-main, 20rem);
         }
     }
 </style>
