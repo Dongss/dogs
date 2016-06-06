@@ -25,7 +25,6 @@
 
 <script>
     import { PostsMap } from '../../posts/map.js';
-    import _ from 'underscore';
         
     export default {
         props: ['category'],
@@ -34,7 +33,9 @@
                 if (this.category == 'all') {
                     return PostsMap;
                 }
-                return _.where(PostsMap, { category: this.category });
+                return PostsMap.filter(post => {
+                    return post.category === this.category;
+                });
             }
         },
         methods: {

@@ -15,17 +15,21 @@
 
 <script>
     import { CategoryMap, PostsMap } from '../../posts/map.js';
-    import _ from 'underscore';
     
     export default {
         data () {
-            let categorys = _.map(CategoryMap, (val, key) => {
-                let count = _.where(PostsMap, { category: key }).length;
-                return {
-                    name: key,
+            let categorys = [];
+            for (let category in CategoryMap) {
+                let count = PostsMap.filter(post => {
+                    return post.category === category;
+                }).length;
+
+                categorys.push({
+                    name: category,
                     count: count
-                };
-            });
+                });
+            }
+
             return {               
                 categorys: categorys,
                 postsCount: PostsMap.length
