@@ -26,8 +26,8 @@
 <style lang="sass">
     @import "../assets/base.scss";
 
-    @mixin webcome-val($color, $bg-color) {
-        height: 330px;
+    @mixin webcome-val($color, $bg-color, $height) {
+        height: $height;
         text-align: center;
         padding-top: 50px;
         background-color: $bg-color;
@@ -38,11 +38,25 @@
         }
     }
 
-    .welcome-detail{
-        @include webcome-val($color-main, $color-body-bg);
+    // pc
+    @media screen and (min-width: 599px) {
+        .welcome-detail{
+            @include webcome-val($color-main, $color-body-bg, 330px);
+        }
+
+        .welcome-detail-reverse {
+            @include webcome-val($color-body-bg, $color-main, 330px);
+        }
     }
 
-    .welcome-detail-reverse {
-        @include webcome-val($color-body-bg, $color-main);
+    // mobile
+    @media screen and (max-width: 600px) {
+        .welcome-detail{
+            @include webcome-val($color-main, $color-body-bg, 30rem);
+        }
+
+        .welcome-detail-reverse {
+            @include webcome-val($color-body-bg, $color-main, 30rem);
+        }
     }
 </style>
