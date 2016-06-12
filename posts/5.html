@@ -15,6 +15,7 @@
     
     <body>
         <div class="header">
+            <a href="../">Dogs Blog</a>
             <button class="label reverse"><a href="../#/category/all">返回列表</a></button>
         </div>
 
@@ -31,7 +32,13 @@
 <li><a href="#arrayprototype">Array.prototype</a></li>
 </ul>
 </li>
-<li><a href="#array-%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95">Array 对象方法</a></li>
+<li><a href="#array-%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95">Array 对象方法</a><ul>
+<li><a href="#arrayfrom-es6">Array.from() [ES6]</a></li>
+<li><a href="#arrayisarray">Array.isArray()</a></li>
+<li><a href="#arrayobserve-es7">Array.observe() [ES7]</a></li>
+<li><a href="#arrayof--es6">Array.of()  [ES6]</a></li>
+</ul>
+</li>
 <li><a href="#array-%E6%95%B0%E7%BB%84%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7">Array 数组实例属性</a><ul>
 <li><a href="#arrayprototypeconstructor">Array.prototype.constructor</a></li>
 <li><a href="#arrayprototypelength">Array.prototype.length</a></li>
@@ -82,8 +89,45 @@
 </code></pre><h3 id="arrayprototype">Array.prototype</h3><p>允许为所有数组对象附加属性, 所有的数组实例都继承于 Array.prototype, Array.prototype 其实也是个数组。</p>
 <pre><code>&gt; Array.prototype
 []
-</code></pre><h2 id="array-对象方法">Array 对象方法</h2><p>Array.from() [ES6], Array.isArray(), Array.observe(), Array.of() [ES6] 这里不讲。。</p>
-<h2 id="array-数组实例属性">Array 数组实例属性</h2><p>前面说了，所有数组实例继承自 Array.prototype。</p>
+</code></pre><h2 id="array-对象方法">Array 对象方法</h2><h3 id="arrayfrom-es6">Array.from() [ES6]</h3><p>从类数组或者迭代对象中创建一个新的数组实例。</p>
+<pre><code>// Set 对象
+&gt; Array.from(new Set([&quot;foo&quot;, &quot;test&quot;]));
+[ &#39;foo&#39;, &#39;test&#39; ]
+
+// Map 对象
+&gt; var m = new Map([[1, 2], [3, 4], [5, 6]]);
+undefined
+&gt; Array.from(m);
+[ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ]
+
+// 字符串
+&gt; Array.from(&quot;foo&quot;);
+[ &#39;f&#39;, &#39;o&#39;, &#39;o&#39; ]
+
+// Array 的 map 方法
+&gt; Array.from([1, 2, 3], x =&gt; x + x);
+[ 2, 4, 6 ]
+
+// 连续数字
+&gt; Array.from({length:5}, (v, k) =&gt; k); 
+[ 0, 1, 2, 3, 4 ]
+&gt;
+</code></pre><h3 id="arrayisarray">Array.isArray()</h3><p>判断一个一个对象是否为数组，返回 Boolean。</p>
+<pre><code>&gt; Array.isArray([]);
+true
+&gt; Array.isArray();
+false
+&gt;
+</code></pre><h3 id="arrayobserve-es7">Array.observe() [ES7]</h3><p>异步监听数组发生的变化。 未实践。</p>
+<h3 id="arrayof-es6">Array.of()  [ES6]</h3><p>将多个参数组成一个数组并返回。</p>
+<pre><code>&gt; Array.of(1, 2, 3);
+[ 1, 2, 3 ]
+&gt; Array.of(4);
+[ 4 ]
+&gt; Array.of(undefined);
+[ undefined ]
+&gt;
+</code></pre><h2 id="array-数组实例属性">Array 数组实例属性</h2><p>前面说了，所有数组实例继承自 Array.prototype。</p>
 <h3 id="arrayprototypeconstructor">Array.prototype.constructor</h3><p>值为 Array。</p>
 <h3 id="arrayprototypelength">Array.prototype.length</h3><p>Array.prototype 是个数组，它的 length 属性值为 0</p>
 <pre><code>[dongshaoshuai~] ]$node
