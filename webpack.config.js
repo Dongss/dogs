@@ -22,10 +22,6 @@ if (ENV === 'production') {
 
 var plugins = [
 	new ExtractTextPlugin('[name].style.css'),
-	new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery'
-    }),
     new HtmlWebpackPlugin({
         filename: htmlFilename,
         template: 'src/index.html',
