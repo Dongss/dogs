@@ -30,7 +30,11 @@
 <li><a href="#%E7%8E%AF%E5%A2%83">环境</a></li>
 <li><a href="#%E4%B8%8B%E8%BD%BD%E4%BD%BF%E7%94%A8%E9%95%9C%E5%83%8F">下载使用镜像</a></li>
 <li><a href="#%E5%9F%BA%E4%BA%8E-nodejs-%E9%95%9C%E5%83%8F%E5%88%9B%E5%BB%BA%E6%9C%8D%E5%8A%A1%E9%95%9C%E5%83%8F">基于 Node.Js 镜像创建服务镜像</a></li>
-<li><a href="#%E5%9F%BA%E4%BA%8E-nodejs-%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8-pm2">基于 Node.Js 镜像使用 pm2</a></li>
+<li><a href="#%E5%9F%BA%E4%BA%8E-nodejs-%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8-pm2">基于 Node.Js 镜像使用 pm2</a><ul>
+<li><a href="#%E4%BD%BF%E7%94%A8-pm2">使用 pm2</a></li>
+<li><a href="#%E5%B0%86-pm2%E3%80%81log4js-%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95%E5%88%B0%E5%AE%BF%E4%B8%BB%E6%9C%BA%E6%96%87%E4%BB%B6">将 pm2、log4js 日志记录到宿主机文件</a></li>
+</ul>
+</li>
 </ul>
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <h2 id="环境">环境</h2><ul>
@@ -81,7 +85,7 @@ node                latest              47abb70784d6        8 days ago          
     }
 }
 </code></pre><p>在src目录下新建<code>index.js</code>:</p>
-<pre><code> let express = require(&#39;express&#39;);
+<pre><code> const express = require(&#39;express&#39;);
 
  // Creates an Express application
  let app = express();
@@ -133,11 +137,10 @@ Date: Fri, 15 Jul 2016 10:49:54 GMT
 Connection: keep-alive
 
 Hello world --- from nodejs docker image
-</code></pre><h2 id="基于-nodejs-镜像使用-pm2">基于 Node.Js 镜像使用 pm2</h2><p>创建 <code>Dockerfile</code>:</p>
+</code></pre><h2 id="基于-nodejs-镜像使用-pm2">基于 Node.Js 镜像使用 pm2</h2><h3 id="使用-pm2">使用 pm2</h3><p>创建 <code>Dockerfile</code>:</p>
 <pre><code>From node:6.3
 
 RUN npm install pm2 -g --registry=https://registry.npm.taobao.org
-RUN pm2 dump
 RUN mkdir -p /usr/src/node-app
 WORKDIR /usr/src/node-app
 
@@ -164,14 +167,14 @@ test/
     &quot;description&quot;: &quot;Node.js test app on node docker image&quot;, 
     &quot;author&quot;: &quot;Shaoshuai Dong &lt;dongsoso@hotmail.com&gt;&quot;,      
     &quot;scripts&quot;: {                                            
-        &quot;start&quot;: &quot;pm2 startOrGracefulReload ./pm2.json&quot;     
+        &quot;start&quot;: &quot;pm2 startOrGracefulReload ./pm2.json --no-daemon&quot;     
     },                                                      
     &quot;dependencies&quot;: {                                       
         &quot;express&quot;: &quot;^4.13.4&quot;                                
     }                                                       
 }
 </code></pre><p><code>index.js</code></p>
-<pre><code>let express = require(&#39;express&#39;);
+<pre><code>const express = require(&#39;express&#39;);
 
 // Creates an Express application
 let app = express();
@@ -232,8 +235,132 @@ Hello world --- from nodejs docker image
 ┌──────────┬────┬──────┬─────┬────────┬─────────┬────────┬─────────────┬──────────┐
 │ App name │ id │ mode │ pid │ status │ restart │ uptime │ memory      │ watching │
 ├──────────┼────┼──────┼─────┼────────┼─────────┼────────┼─────────────┼──────────┤
-│ index    │ 0  │ fork │ 17  │ online │ 0       │ 9m     │ 23.730 MB   │ disabled │
+│ app-test │ 0  │ fork │ 17  │ online │ 0       │ 9m     │ 23.730 MB   │ disabled │
 └──────────┴────┴──────┴─────┴────────┴─────────┴────────┴─────────────┴──────────┘
+</code></pre><h3 id="将-pm2、log4js-日志记录到宿主机文件">将 pm2、log4js 日志记录到宿主机文件</h3><p>这里介绍将 pm2 日志和程序日志记录在宿主机文件之中, 目标是：</p>
+<ul>
+<li>pm2 out logs =&gt; <code>/data/logs/app-test-out.log</code></li>
+<li>pm2 error logs =&gt; <code>/data/logs/app-test-err.log</code></li>
+<li>logs by log4js =&gt; <code>/data/logs/hello.log</code></li>
+</ul>
+<pre><code>./
+├── Dockerfile
+└── src
+    ├── index.js
+    ├── package.json
+    └── pm2.json
+</code></pre><p>Dockerfile</p>
+<pre><code>From node:6.3
+
+RUN npm install pm2 -g --registry=https://registry.npm.taobao.org
+RUN mkdir -p /usr/src/node-app
+WORKDIR /usr/src/node-app
+
+COPY src/. /usr/src/node-app/
+
+RUN npm install --registry=https://registry.npm.taobao.org
+
+EXPOSE  8080
+
+CMD [&quot;npm&quot;, &quot;start&quot;]
+</code></pre><p>index.js</p>
+<pre><code>const express = require(&#39;express&#39;);
+const log4js = require(&#39;log4js&#39;);
+
+// Creates an Express application
+let app = express();
+
+// Init logger
+log4js.configure({
+    appenders: [{
+        type: &quot;dateFile&quot;,
+        pattern: &quot;-yyyyMMddhh.log&quot;,
+        filename: &quot;/data/logs/hello.log&quot;,
+        category: &quot;hello&quot;
+    }],
+    levels: {
+        action: &quot;INFO&quot;,                                            
+        alarm_api: &quot;INFO&quot;
+    }
+});
+
+global.logger = log4js.getLogger(&#39;hello&#39;);
+
+// Assigns settings
+app.set(&#39;port&#39;, 8080);
+
+// Routes HTTP GET requests 
+app.get(&#39;/&#39;, (req, res) =&gt; {
+    console.info(&#39;On request: hello world&#39;);
+    global.logger.info(req.method, req.path);
+    res.send(&#39;Hello world --- from nodejs docker image\n&#39;);
+});
+
+// Binds and listens
+app.listen(app.get(&#39;port&#39;), () =&gt; {
+    console.info(&quot;Listen port %s for app&quot;, app.get(&quot;port&quot;));
+});
+</code></pre><p>package.json</p>
+<pre><code>{
+    &quot;name&quot;: &quot;docker-node-test&quot;,
+    &quot;private&quot;: true,
+    &quot;version&quot;: &quot;0.0.1&quot;,
+    &quot;description&quot;: &quot;Node.js test app on node docker image&quot;,
+    &quot;author&quot;: &quot;Shaoshuai Dong &lt;dongsoso@hotmail.com&gt;&quot;,
+    &quot;scripts&quot;: {
+        &quot;start&quot;: &quot;pm2 startOrGracefulReload ./pm2.json --no-daemon&quot;
+    },
+    &quot;dependencies&quot;: {
+        &quot;express&quot;: &quot;^4.13.4&quot;,
+        &quot;log4js&quot;: &quot;^0.6.33&quot;                                        
+    }
+}
+</code></pre><p>pm2.json</p>
+<pre><code>{
+    &quot;apps&quot;: [
+        {
+            &quot;name&quot;: &quot;app-test&quot;,
+            &quot;script&quot;: &quot;index.js&quot;,
+            &quot;args&quot;: [],
+            &quot;watch&quot;: false,
+            &quot;merge_logs&quot;: true,
+            &quot;error_file&quot;: &quot;/data/logs/app-test-err.log&quot;,
+            &quot;out_file&quot;: &quot;/data/logs/app-test-out.log&quot;,   
+            &quot;log_date_format&quot;: &quot;YYYY-MM-DD HH:mm:ss.SSS&quot;,
+            &quot;max_memory_restart&quot;: &quot;100M&quot;,
+            &quot;env&quot;: {
+                &quot;NODE_ENV&quot;: &quot;local&quot;                          
+            }
+        }
+    ]
+}
+</code></pre><p>创建镜像 <code>docker build --tag=&quot;node/app-test:0.1&quot; ./</code></p>
+<p>运行容器 <code>docker run -p 8081:8080 -v /data/logs:/data/logs --name hello node/app-test:0.1</code></p>
+<p>使用 <code>-v</code> 参数在容器上挂载宿主机上的指定目录</p>
+<p>查看容器和测试:</p>
+<pre><code>[root@dss test]# docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                    NAMES
+63eb2a3aea8b        node/app-test:0.1   &quot;npm start&quot;         17 seconds ago      Up 16 seconds       0.0.0.0:8081-&gt;8080/tcp   hello
+[root@dss test]# curl localhost:8081
+Hello world --- from nodejs docker image
+[root@dss test]#
+</code></pre><p>在宿主机上查看日志</p>
+<pre><code>[root@dss test]# ls /data/logs/
+app-test-err.log app-test-out.log hello.log
+[root@dss test]# cat /data/logs/app-test-out.log 
+2016-07-18 05:56:56.406: Listen port 8080 for app
+2016-07-18 05:57:21.289: On request: hello world
+[root@dss test]# cat /data/logs/hello.log 
+[2016-07-18 05:57:21.290] [INFO] hello - GET /
+</code></pre><p>命令 <code>docker inspect hello</code> 可以看到容器的 volume 配置</p>
+<pre><code>...
+ &quot;Volumes&quot;: {
+     &quot;/data/logs&quot;: &quot;/data/logs&quot;
+ },
+ &quot;VolumesRW&quot;: {
+     &quot;/data/logs&quot;: true
+ },
+...
 </code></pre>
 </div>
 <div class="footer">
