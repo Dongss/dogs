@@ -5,7 +5,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <title>
-            Start Node.Js process with PM2 in a Docker container - Dogs Blog
+            Build Node.Js web server in Docker containers: nodejs+pm2+mongodb+redis - Dogs Blog
         </title>
         <link rel="shortcut icon" href="../dist/favicon.ico">
         <link rel="stylesheet" href="../dist/post.style.css">
@@ -15,7 +15,6 @@
     
     <body>
         <div class="header">
-            <a href="../">Dogs Blog</a>
             <button class="label reverse"><a href="../#/category/all">返回列表</a></button>
         </div>
 
@@ -655,7 +654,8 @@ app.listen(app.get(&#39;port&#39;), () =&gt; {
     console.info(&#39;Listen port %s for app&#39;, app.get(&#39;port&#39;));
     console.info(&#39;NODE_ENV&#39;, ENV);
 });
-</code></pre><p>创建镜像 <code>docker build --tag=&quot;centos/node-app:0.1&quot; ./</code><br>运行容器 <code>docker run -d -p 8181:8080 -v /data/logs:/data/logs --link mongo:mongo --link redis:redis --name app centos/node-app:0.1</code></p>
+</code></pre><p>创建镜像 <code>docker build --tag=&quot;centos/node-app:0.1&quot; ./</code></p>
+<p>运行容器 <code>docker run -d -p 8181:8080 -v /data/logs:/data/logs --link mongo:mongo --link redis:redis --name app centos/node-app:0.1</code></p>
 <p>查看服务状态</p>
 <pre><code>[root@dss app]# docker exec app pm2 list
 ┌──────────┬────┬──────┬─────┬────────┬─────────┬────────┬─────────────┬──────────┐
