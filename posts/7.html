@@ -367,7 +367,22 @@ app-test-err.log app-test-out.log hello.log
      &quot;/data/logs&quot;: true
  },
 ...
-</code></pre><p>Docker volumes 默认是 read-write 模式，也可以设置为 read-only 模式。</p>
+</code></pre><p><code>Data volumes</code> 有如下特性：</p>
+<ul>
+<li>当容器被创建时 volumes 会被初始化</li>
+<li>Data volumes 可以在容器间共享复用</li>
+<li>对 data volume 的修改直接生效</li>
+<li>更新镜像时， 原来 data volume 的修改不会被影响</li>
+<li>即使容器被删除， 对应的 data volumes 依然会存在</li>
+</ul>
+<p>使用 <code>Volume</code> 可以将容器与容器产生的数据分离，容器产生的数据可以持久化。</p>
+<p>Docker volumes 使用 <code>-v</code> 指定和 在 Dockerfile 指定 <code>VOLUME</code> 的区别：</p>
+<ul>
+<li><code>-v /data/logs:/data/logs</code>: 将宿主机的 <code>/data/logs</code> 目录挂载到容器的 <code>/data/logs</code> 目录(如果目录不存在会被创建)， 宿主机和容器共享该目录，二者对该目录下的修改相互受影响。</li>
+<li>Dockerfile 指定 <code>VOLUME /data/logs</code>: 在宿主机创建一个目录(默认是 <code>/var/lib/docker/volumes/</code>)并挂载到容器的 <code>/data/logs</code> 目录(如果目录不存在会被创建), 宿主机和容器共享该目录，二者对该目录下的修改相互受影响。</li>
+<li><code>-v /data/logs</code>: 同上， 在宿主机创建一个目录(默认是 <code>/var/lib/docker/volumes/</code>)并挂载到容器的 <code>/data/logs</code> 目录(如果目录不存在会被创建), 宿主机和容器共享该目录，二者对该目录下的修改相互受影响。</li>
+</ul>
+<p>Docker volumes 默认是 read-write 模式，也可以设置为 read-only 模式。</p>
 <h2 id="应用实践-nodejs&amp;mongodb&amp;redis">应用实践 nodejs&amp;mongodb&amp;redis</h2><p>目标</p>
 <ul>
 <li>container: nodejs <ul>
