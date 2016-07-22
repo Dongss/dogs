@@ -41,6 +41,10 @@
 <li><a href="#%E6%B5%8B%E8%AF%95">测试</a></li>
 </ul>
 </li>
+<li><a href="#%E5%85%B6%E4%BB%96">其他</a><ul>
+<li><a href="#%E4%BF%AE%E6%94%B9%E9%95%9C%E5%83%8F%E3%80%81%E5%AE%B9%E5%99%A8%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95">修改镜像、容器存储目录</a></li>
+</ul>
+</li>
 </ul>
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <h2 id="环境">环境</h2><ul>
@@ -428,7 +432,8 @@ c9ddd14992e6        centos/mongo:0.1    &quot;mongod&quot;               5 secon
 <pre><code>[dongshaoshuai~/test] ]$mongo --port 27017 --host x.x.x.x
 ^[[AMongoDB shell version: 3.0.6
 connecting to: x.x.x.x:27017/test
-</code></pre><h3 id="基于-centos-镜像创建-redis-镜像">基于 centos 镜像创建 redis 镜像</h3><p>Dockerfile</p>
+</code></pre><p>也可以通过 Robomongo 远程连接（如果mongodb 版本 &gt;= v3，Robomongo 的版本需 &gt; v0.8.5）</p>
+<h3 id="基于-centos-镜像创建-redis-镜像">基于 centos 镜像创建 redis 镜像</h3><p>Dockerfile</p>
 <pre><code>From centos:6
 MAINTAINER Shaoshuai Dong &lt;dongsoso@hotmail.com&gt;
 
@@ -697,7 +702,16 @@ app.listen(app.get(&#39;port&#39;), () =&gt; {
 [2016-07-20 02:32:16.476] [INFO] app - GET /mongo/find
 [2016-07-20 02:32:16.477] [INFO] app - Find data success: [ { _id: 578ded8321be5919003c0dd8, name: &#39;mmmm&#39;, __v: 0 },
   { _id: 578df6f638a6a11b008a9bd0, name: &#39;mmmmmm&#39;, __v: 0 } ]
-</code></pre>
+</code></pre><h2 id="其他">其他</h2><h3 id="修改镜像、容器存储目录">修改镜像、容器存储目录</h3><p>docker 镜像、容器默认存储在 <code>/var/lib/docker</code>，对于云主机通常系统盘不大，最好存储在数据盘。</p>
+<p>通过 <code>--graph</code> 参数可以指定存储位置。修改 <code>/etc/sysconfig/docker</code> 文件：</p>
+<pre><code># 数据盘
+other_args=&quot;--graph=/data/docker&quot;
+</code></pre><p>停止 docker 服务 <code>service docker stop</code></p>
+<p>copy 数据至数据盘 <code>cp -r /var/lib/docker /data/docker/</code></p>
+<p>移除、备份原数据 <code>mv /var/lib/docker /data/bak/docker.bak</code></p>
+<p>重新启动 docker 服务 <code>service docker start</code></p>
+<p>测试镜像和容器是否正常 <code>docker images</code>, <code>docker ps -a</code> </p>
+
 </div>
 <div class="footer">
     作者/版权: <a href="mailto:dongsoso@hotmail.com?subject=Dogs%20Blog%20Email">Dogs</a> | 纠错/贡献: <a href="https://github.com/Dongss/dogs/tree/master/posts/ops/7.md">Contribute</a>
