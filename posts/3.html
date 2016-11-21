@@ -35,10 +35,11 @@
 <li><a href="#this">this</a><ul>
 <li><a href="#%E5%85%A8%E5%B1%80%E4%B8%8A%E4%B8%8B%E6%96%87-global-context">全局上下文 global context</a></li>
 <li><a href="#%E5%87%BD%E6%95%B0%E4%B8%8A%E4%B8%8B%E6%96%87-function-context">函数上下文 function context</a></li>
-<li><a href="#%E8%A1%A5%E5%85%85%EF%BC%9A%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E3%80%81%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84-this">补充：箭头函数、严格模式下的 this</a></li>
+<li><a href="#%E8%A1%A5%E5%85%85%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84-this">补充：箭头函数、严格模式下的 this</a></li>
 </ul>
 </li>
 <li><a href="#%E9%97%AD%E5%8C%85-closure">闭包 closure</a></li>
+<li><a href="#%E6%9F%AF%E9%87%8C%E5%8C%96-curry">柯里化 Curry</a></li>
 </ul>
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <h2 id="变量作用域-scope-和作用域链-scope-chain">变量作用域 scope 和作用域链 scope chain</h2><blockquote>
@@ -375,6 +376,50 @@ test();
 4
 </code></pre><p>这里我们将 i 赋值成一个局部变量，可在闭包内访问（每次循环创建一个闭包， i 作为该闭包作用域下的局部变量，不跟随外层 i 的值改变）。</p>
 <p>闭包对性能有负面影响(尤其是内存占用)，如果不需要使用，则不使用。</p>
+<h2 id="柯里化-curry">柯里化 Curry</h2><p>什么是柯里化：</p>
+<p>简单来说，就是构建一种可以实现参数部分应用的函数。直观点，一个函数需要 n 多参数，通过柯里化实现，我们可以多次调用函数每次只传部分参数，最终实现完整功能。</p>
+<p>试用场景：</p>
+<p>最典型的场景是要实现一个函数，本函数的一部分参数每次都是一样的。</p>
+<p>例子一，hello world：</p>
+<pre><code>function hello() {
+  console.log(&#39;hello world&#39;);
+}
+
+hello(); // hello world
+</code></pre><p>需求改为：say hello to anyone</p>
+<pre><code>// curry
+function hello() {
+  return function(name) {
+    console.log(&#39;hello &#39; + name);
+  };
+}                                  
+
+hello();
+hello()(&#39;Allen&#39;); // hello Allen
+var b = hello(); 
+b(&#39;Bob&#39;); // hello Bob
+b(&#39;John&#39;); // hello John
+</code></pre><p>需求又改为：say anyword to anyone</p>
+<pre><code>// curry
+function hello(word) {
+  return function(name) {
+    console.log(word, &#39;,&#39;, name);
+  };
+}
+
+var b = hello(&#39;Hi&#39;);
+b(&#39;Bob&#39;); // Hi , Bob
+b(&#39;John&#39;); // Hi , John
+
+var c = hello(&#39;Bye&#39;);          
+c(&#39;John&#39;); // Bye , John
+</code></pre><p>需求又改了：word + line + name</p>
+<p>// flexible curry !<br>function hello(word) {<br>  return function(name) {<br>    return function(line) {<br>      console.log(word, &#39;,&#39;, name, &#39;,&#39;, line);<br>    };<br>  };<br>}</p>
+<p>var b = hello(&#39;Hi&#39;);<br>var toBob = b(&#39;Bob&#39;);<br>var toAllen = b(&#39;toAllen&#39;);</p>
+<p>toBob(&#39;good day tody !&#39;); // Hi , Bob , good day tody !<br>toBob(&#39;Have you eaten yet ?&#39;); // Hi , Bob , Have you eaten yet ?<br>toAllen(&#39;get out of here !&#39;); // Hi , toAllen , get out of here !</p>
+<p>var c = hello(&#39;Bye&#39;);<br>c(&#39;John&#39;)(&#39;see you tomorrow ~&#39;); // Bye , John , see you tomorrow ~</p>
+<p>var d = hello(&#39;Hey&#39;)(&#39;Shawn&#39;);<br>d(&#39;this is my daily report .&#39;); // Hey , Shawn , this is my daily report .<br>d(&#39;this is my monthly report .&#39;); // Hey , Shawn , this is my monthly report .<br>```</p>
+<p>我们最终实现的柯里化函数使用非常灵活。</p>
 
 </div>
 <div class="footer">
