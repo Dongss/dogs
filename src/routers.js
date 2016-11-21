@@ -1,10 +1,10 @@
 'use strict';
 
 export default function(router) {
-	router.map({
-		'/': {
-			name: 'home',
-			component: require('./views/home.vue'),
+    router.map({
+        '/': {
+            name: 'home',
+            component: require('./views/home.vue'),
             subRoutes: {
                 '/': {
                     name: 'welcome',
@@ -13,8 +13,8 @@ export default function(router) {
                 '/category/:category': {
                     name: 'category',
                     component: require('./views/category.vue')
-                 }
+                }
             }
-		}      
-	});
+        }      
+    });
 }
