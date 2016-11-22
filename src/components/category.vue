@@ -19,7 +19,7 @@
 export default {
     data () {
         let categorys = [];
-        for (let category of CategoryMap) {
+        for (let category in CategoryMap) {
             let count = PostsMap.filter(post => {
                 return post.category === category;
             }).length;

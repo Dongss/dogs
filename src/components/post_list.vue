@@ -29,6 +29,9 @@ export default {
     props: ['category'],
     computed: {
         posts () {
+            if (!this.category) {
+                return [];
+            }
             if (this.category === 'all') {
                 return PostsMap;
             }
