@@ -16,26 +16,25 @@
 <script>
     import { CategoryMap, PostsMap } from '../../posts/map.js';
     
-    export default {
-        data () {
-            let categorys = [];
-            for (let category in CategoryMap) {
-                let count = PostsMap.filter(post => {
-                    return post.category === category;
-                }).length;
+export default {
+    data () {
+        let categorys = [];
+        for (let category of CategoryMap) {
+            let count = PostsMap.filter(post => {
+                return post.category === category;
+            }).length;
 
-                categorys.push({
-                    name: category,
-                    count: count
-                });
-            }
-
-            return {               
-                categorys: categorys,
-                postsCount: PostsMap.length
-            };
+            categorys.push({
+                name: category,
+                count: count
+            });
         }
+        return {
+            categorys: categorys,
+            postsCount: PostsMap.length
+        };
     }
+};
 </script>
 
 <style lang="sass">

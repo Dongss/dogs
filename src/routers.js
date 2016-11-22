@@ -1,6 +1,6 @@
 'use strict';
 
-export default function(router) {
+export default function (router) {
     router.map({
         '/': {
             name: 'home',
@@ -15,6 +15,6 @@ export default function(router) {
                     component: require('./views/category.vue')
                 }
             }
-        }      
+        }
     });
 }

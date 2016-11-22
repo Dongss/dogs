@@ -24,26 +24,25 @@
 </template>
 
 <script>
-    import { PostsMap } from '../../posts/map.js';
-        
-    export default {
-        props: ['category'],
-        computed: {
-            posts () {
-                if (this.category == 'all') {
-                    return PostsMap;
-                }
-                return PostsMap.filter(post => {
-                    return post.category === this.category;
-                });
+import { PostsMap } from '../../posts/map.js';
+export default {
+    props: ['category'],
+    computed: {
+        posts () {
+            if (this.category === 'all') {
+                return PostsMap;
             }
-        },
-        methods: {
-            href (id) {
-                return './posts/' + id + '.html';
-            }
+            return PostsMap.filter(post => {
+                return post.category === this.category;
+            });
+        }
+    },
+    methods: {
+        href (id) {
+            return './posts/' + id + '.html';
         }
     }
+};
 </script>
 
 <style lang="sass">

@@ -1,12 +1,12 @@
 'use strict';
 
 import moment from 'moment';
-import {CategoryMap} from '../posts/map.js';
+import { CategoryMap } from '../posts/map.js';
 
 export default {
-    unixtimeFormat(unix) {
+    unixtimeFormat (unix) {
         return moment.unix(unix).format('YYYY-MM-DD');
-    }, postCategoryAlias(value) {
+    }, postCategoryAlias (value) {
         if (value === 'all') {
             return '全部分类';
         }

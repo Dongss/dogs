@@ -13,14 +13,14 @@ Vue.filter('category', filters.postCategoryAlias);
 
 Vue.use(VueRouter);
 
-let router = new VueRouter({
+const router = new VueRouter({
     hashbang: false,
     saveScrollPosition: true,
     transitionOnLoad: true,
     linkActiveClass: 'active'
 });
 
-let app = Vue.extend({});
+const app = Vue.extend({});
 
 routerMap(router);
 
