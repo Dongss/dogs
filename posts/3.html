@@ -35,7 +35,7 @@
 <li><a href="#this">this</a><ul>
 <li><a href="#%E5%85%A8%E5%B1%80%E4%B8%8A%E4%B8%8B%E6%96%87-global-context">全局上下文 global context</a></li>
 <li><a href="#%E5%87%BD%E6%95%B0%E4%B8%8A%E4%B8%8B%E6%96%87-function-context">函数上下文 function context</a></li>
-<li><a href="#%E8%A1%A5%E5%85%85%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84-this">补充：箭头函数、严格模式下的 this</a></li>
+<li><a href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0-%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84-this">箭头函数, 严格模式下的 this</a></li>
 </ul>
 </li>
 <li><a href="#%E9%97%AD%E5%8C%85%E4%B8%8E%E6%9F%AF%E9%87%8C%E5%8C%96">闭包与柯里化</a><ul>
@@ -253,7 +253,7 @@ execFunc.apply(testInstance); // aa bb
 <blockquote>
 <p>注意: 以 <code>fun.apply() // or call</code> 为例 call apply 的第一个参数是 <code>func 函数运行时的 this 值</code> （第一个参数的解释版本真的多）。<br>二者的区别这里不说。</p>
 </blockquote>
-<h3 id="补充：箭头函数、严格模式下的-this">补充：箭头函数、严格模式下的 this</h3><p>1) ES6 中的箭头函数 arrow function</p>
+<h3 id="箭头函数-严格模式下的-this">箭头函数, 严格模式下的 this</h3><p>1) ES6 中的箭头函数 arrow function</p>
 <blockquote>
 <p>An arrow function expression has a shorter syntax compared to function expressions and lexically binds the this value<br>(does not bind its own this, arguments, super, or new.target).<br>Arrow functions are always anonymous.</p>
 </blockquote>
