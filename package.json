@@ -1,6 +1,6 @@
 {
   "name": "dogs",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "董少帅的个人博客记录",
   "main": "index.html",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/Dongss/dogs"
   },
   "engines": {
-    "node": "^5.3.0"
+    "node": ">= 5.3.0"
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint src/",
