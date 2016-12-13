@@ -247,7 +247,7 @@ Hello world --- from nodejs docker image
 ├──────────┼────┼──────┼─────┼────────┼─────────┼────────┼─────────────┼──────────┤
 │ app-test │ 0  │ fork │ 17  │ online │ 0       │ 9m     │ 23.730 MB   │ disabled │
 └──────────┴────┴──────┴─────┴────────┴─────────┴────────┴─────────────┴──────────┘
-</code></pre><h3 id="将-pm2、log4js-日志记录到宿主机文件">将 pm2、log4js 日志记录到宿主机文件</h3><p>这里介绍将 pm2 日志和程序日志记录在宿主机文件之中, 目标是：</p>
+</code></pre><h3 id="将-pm2log4js-日志记录到宿主机文件">将 pm2、log4js 日志记录到宿主机文件</h3><p>这里介绍将 pm2 日志和程序日志记录在宿主机文件之中, 目标是：</p>
 <ul>
 <li>pm2 out logs =&gt; <code>/data/logs/app-test-out.log</code></li>
 <li>pm2 error logs =&gt; <code>/data/logs/app-test-err.log</code></li>
@@ -387,7 +387,7 @@ app-test-err.log app-test-out.log hello.log
 <li><code>-v /data/logs</code>: 同上， 在宿主机创建一个目录(默认是 <code>/var/lib/docker/volumes/</code>)并挂载到容器的 <code>/data/logs</code> 目录(如果目录不存在会被创建), 宿主机和容器共享该目录，二者对该目录下的修改相互受影响。</li>
 </ul>
 <p>Docker volumes 默认是 read-write 模式，也可以设置为 read-only 模式。</p>
-<h2 id="应用实践-nodejs&amp;mongodb&amp;redis">应用实践 nodejs&amp;mongodb&amp;redis</h2><p>目标</p>
+<h2 id="应用实践-nodejsmongodbredis">应用实践 nodejs&amp;mongodb&amp;redis</h2><p>目标</p>
 <ul>
 <li>container: nodejs <ul>
 <li>pm2</li>
@@ -702,7 +702,7 @@ app.listen(app.get(&#39;port&#39;), () =&gt; {
 [2016-07-20 02:32:16.476] [INFO] app - GET /mongo/find
 [2016-07-20 02:32:16.477] [INFO] app - Find data success: [ { _id: 578ded8321be5919003c0dd8, name: &#39;mmmm&#39;, __v: 0 },
   { _id: 578df6f638a6a11b008a9bd0, name: &#39;mmmmmm&#39;, __v: 0 } ]
-</code></pre><h2 id="其他">其他</h2><h3 id="修改镜像、容器存储目录">修改镜像、容器存储目录</h3><p>docker 镜像、容器默认存储在 <code>/var/lib/docker</code>，对于云主机通常系统盘不大，最好存储在数据盘。</p>
+</code></pre><h2 id="其他">其他</h2><h3 id="修改镜像容器存储目录">修改镜像、容器存储目录</h3><p>docker 镜像、容器默认存储在 <code>/var/lib/docker</code>，对于云主机通常系统盘不大，最好存储在数据盘。</p>
 <p>通过 <code>--graph</code> 参数可以指定存储位置。修改 <code>/etc/sysconfig/docker</code> 文件：</p>
 <pre><code># 数据盘
 other_args=&quot;--graph=/data/docker&quot;
