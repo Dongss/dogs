@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>
+            NPM Magic - Dogs Blog
+        </title>
+        <link rel="shortcut icon" href="../dist/favicon.ico">
+        <link rel="stylesheet" href="../dist/post.style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/highlight.js/9.2.0/styles/github-gist.min.css">
+    </head>
+    
+    <body>
+        <div class="header">
+            <button class="label reverse"><a href="../#/category/all">返回列表</a></button>
+        </div>
+
+<div class="post-header">
+    分类: Node.js | 发布日期: 2016-12-28
+</div>
+<div class="divider"></div>
+<div class="markdown-body">
+    <h1 id="npm-magic">NPM Magic</h1><!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<ul>
+<li><a href="#packagejson">package.json</a></li>
+<li><a href="#packages-version-management">packages version management</a><ul>
+<li><a href="#install">install</a></li>
+<li><a href="#view">view</a></li>
+<li><a href="#uninstall">uninstall</a></li>
+<li><a href="#packages-version-controll">packages version controll</a></li>
+</ul>
+</li>
+<li><a href="#npm-scripts">npm scripts</a><ul>
+<li><a href="#usage">usage</a></li>
+<li><a href="#arguments">arguments</a></li>
+<li><a href="#environment---path">environment - path</a></li>
+<li><a href="#environment---variables-of-packagejson">environment - variables of package.json</a></li>
+<li><a href="#environment---npm-configuration">environment - npm configuration</a></li>
+<li><a href="#hook">hook</a></li>
+<li><a href="#execution-sequence">execution sequence</a></li>
+<li><a href="#wildcards">wildcards</a></li>
+<li><a href="#exiting">exiting</a></li>
+</ul>
+</li>
+</ul>
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<h2 id="packagejson">package.json</h2><ul>
+<li>package.json 最起码要包含 <code>name</code> 和 <code>version</code></li>
+<li>快速初始化 package.json: <code>npm init --yes</code></li>
+<li><code>dependencies</code>: 生产环境依赖的包</li>
+<li><code>devDependencies</code>: 开发、测试环境依赖的包</li>
+</ul>
+<h2 id="packages-version-management">packages version management</h2><h3 id="install">install</h3><p><code>npm install moment</code>, or <code>npm install moment --save</code>, or <code>npm install moment --save-dev</code></p>
+<h3 id="view">view</h3><p><code>npm outdated</code></p>
+<p><img src="ps://raw.githubusercontent.com/Dongss/dogs/master/posts/images/10.1.png" alt="图 10.1"></p>
+<h3 id="uninstall">uninstall</h3><p><code>npm uninstall moment</code>, or <code>npm uninstall --save moment</code></p>
+<h3 id="packages-version-controll">packages version controll</h3><p>npm 中的模块版本都需要遵循 <a href="https://docs.npmjs.com/getting-started/semantic-versioning">semver 规范</a>, <code>1.2.3</code>: 1 主版本号， 2 次版本号， 3 补丁号</p>
+<pre><code>dependencies: {
+    &quot;bunyan&quot;: &quot;1.x&quot;,
+    &quot;lodash&quot;: &quot;*&quot;,
+    &quot;express&quot;: &quot;~4.0.0&quot;,
+    &quot;ava&quot;: &quot;0.16.0&quot;
+}
+</code></pre><ul>
+<li>*: 任意版本</li>
+<li>1.1.1: 指定版本</li>
+<li>~1: &gt;= 1.0.0 &amp;&amp; &lt; 2.0.0 (相当于 1.x)</li>
+<li>~1.1: &gt;= 1.1.0 &amp;&amp; &lt; 1.2.0 (相当于 1.1.x)</li>
+<li>~1.1.0: &gt;= 1.1.0 &amp;&amp; &lt; 1.2.0 (相当于 1.1.x)</li>
+<li>^1.2.3: &gt;= 1.2.3 &lt;2.0.0</li>
+<li>^0.0.3: &gt;= 0.0.3 &lt; 0.0.4</li>
+<li>^0.0: &gt;= 0.0.0 &lt; 0.1.0</li>
+<li>^0.x: &gt;= 0.0.0 &lt; 1.0.0</li>
+</ul>
+<p><code>^</code> 和 <code>~</code>：</p>
+<ul>
+<li>~ 前缀表示，安装大于指定的这个版本，并且匹配到 x.y.z 中 z 最新的版本</li>
+<li>^ 前缀在 ^0.y.z 时的表现和 ~0.y.z 是一样的，然而 ^1.y.z 的时候，就会 匹配到 y 和 z 都是最新的版本</li>
+</ul>
+<p><a href="https://cnpmjs.org/package/semver">具体可以看这里</a></p>
+<h2 id="npm-scripts">npm scripts</h2><p>我们可以通过 <code>npm run myScript</code> 来通过 npm 运行一个脚本或命令:</p>
+<pre><code>&quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node index.js&quot;
+}
+</code></pre><h3 id="usage">usage</h3><p>以下 script 可以直接 <code>npm xxx</code> 运行， 可以不加 <code>run</code>:</p>
+<ul>
+<li>prepublish: Run BEFORE the package is published. (Also run on local npm install without any arguments.)</li>
+<li>publish, postpublish: Run AFTER the package is published.</li>
+<li>preinstall: Run BEFORE the package is installed</li>
+<li>install, postinstall: Run AFTER the package is installed.</li>
+<li>preuninstall, uninstall: Run BEFORE the package is uninstalled.</li>
+<li>postuninstall: Run AFTER the package is uninstalled.</li>
+<li>preversion, version: Run BEFORE bump the package version.</li>
+<li>postversion: Run AFTER bump the package version.</li>
+<li>pretest, test, posttest: Run by the npm test command.</li>
+<li>prestop, stop, poststop: Run by the npm stop command.</li>
+<li>prestart, start, poststart: Run by the npm start command.</li>
+<li>prerestart, restart, postrestart: Run by the npm restart command. Note: npm restart will run the stop and start scripts if no restart script is provided.</li>
+</ul>
+<p>例如， typescript 写的 module 如果要发布到 npm，可以使用 <code>prepublish</code>，在 <code>npm publish</code> 之前会先执行 <code>tsc</code> 命令:</p>
+<pre><code>&quot;scripts&quot;: {
+    &quot;prepublish&quot;: &quot;tsc&quot;
+}
+</code></pre><p>npm 对两个脚本提供了默认值，可以不定义直接使用:</p>
+<ul>
+<li><code>&quot;start&quot;: &quot;node server.js&quot;</code></li>
+<li><code>&quot;install&quot;: &quot;node-gyp rebuild&quot;</code></li>
+</ul>
+<h3 id="arguments">arguments</h3><p>向 npm script 传递参数时， 用 <code>--</code> 表明。</p>
+<p>如 <code>&quot;test&quot;: &quot;mocha test/*.js&quot;</code>， 传参 <code>npm test -- --grep &#39;my test&#39;</code>， 相当于 <code>&quot;test&quot;: &quot;mocha test/*.js --grep &#39;my test&#39;&quot;</code>。</p>
+<h3 id="environment---path">environment - path</h3><p><code>npm run</code> 会将当前 <code>node_modules/.bin</code> 目录加入 <code>PATH</code> 变量, 执行结束后再恢复 <code>PATH</code>, 如果本目录下已安装的 module 有可执行脚本，我们可以直接使用。<br>不必全局安装或者使用 <code>/node_modules/.bin</code> 路径：</p>
+<pre><code>&quot;test&quot;: &quot;mocha test/*.js&quot;
+</code></pre><p>不需要全局安装 <code>mocha</code> 或者 <code>./node_modules/.bin/mocha test/*.js</code>。</p>
+<h3 id="environment---variables-of-packagejson">environment - variables of package.json</h3><p>package.json 中的字段都可以通过 <code>npm_package_</code> 前缀访问。</p>
+<p>例如 package.json:</p>
+<pre><code>{
+    &quot;name&quot;: &quot;test&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;scripts&quot;: {
+        &quot;go&quot;: &quot;node index.js&quot;
+    }
+}
+</code></pre><p>index.js:</p>
+<pre><code>console.log(process.env.npm_package_name);     
+console.log(process.env.npm_package_version);
+</code></pre><p><code>npm run go</code> 输出:</p>
+<pre><code>test
+1.0.0
+</code></pre><h3 id="environment---npm-configuration">environment - npm configuration</h3><p>我们可以通过 <code>npm_config_</code> 前缀访问 npm configuration。</p>
+<p>例如：<code>npm config get userconfig</code> 输出为 <code>/home/ubuntu/.npmrc</code>，可以通过环境变量访问 <code>&quot;test&quot;: &quot;echo $npm_config_userconfig&quot;</code></p>
+<h3 id="hook">hook</h3><p>npm 脚本有 <code>pre</code> 和 <code>post</code> 两个钩子。</p>
+<pre><code>&quot;prego&quot;: &quot;echo &#39;before go&#39;&quot;,
+&quot;go&quot;: &quot;node index.js&quot;,
+&quot;postgo&quot;: &quot;echo &#39;after go&#39;&quot;,
+</code></pre><p><code>npm run go</code> 会顺序执行 <code>npm run prego</code> =&gt; <code>npm run go</code> =&gt; <code>npm run postgo</code>。</p>
+<p>利用 hook 可以做一些准备和清理操作:</p>
+<pre><code>&quot;lint&quot;: &quot;tslint &#39;src/*.js&#39;&quot;,
+&quot;prebuild&quot;: &quot;npm run lint&quot;,
+&quot;build&quot;: &quot;tsc&quot;
+</code></pre><h3 id="execution-sequence">execution sequence</h3><ul>
+<li><code>&amp;</code> 并行执行， 如 <code>npm run lint &amp; npm run tsc</code></li>
+<li><code>&amp;&amp;</code> 串行执行， 如 <code>npm run lint &amp;&amp; npm run test</code></li>
+</ul>
+<h3 id="wildcards">wildcards</h3><p>npm script 中可以使用 shell 通配符。</p>
+<ul>
+<li><code>*</code> 代表任意文件， 如 <code>&quot;test&quot;: &quot;mocha test/*.js&quot;</code></li>
+<li><code>**</code> 代表任意目录， 如 <code>&quot;test&quot;: &quot;mocha test/**/*.js&quot;</code></li>
+</ul>
+<h3 id="exiting">exiting</h3><p>如果 npm script 的 exit code 不是 0， 会认为执行失败， 终止进程。</p>
+
+</div>
+<div class="footer">
+    作者/版权: <a href="mailto:dongsoso@hotmail.com?subject=Dogs%20Blog%20Email">Dogs</a> | 纠错/贡献: <a href="https://github.com/Dongss/dogs/tree/master/posts/nodejs/10.md">GitHub</a>
+</div>
+    </body>
+    <script src="http://cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script src="../dist/post.build.js"></script>
+    <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
+    </script>
+</html>
+
