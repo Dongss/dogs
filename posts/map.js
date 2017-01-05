@@ -17,7 +17,8 @@ let PostsMap = [
     { id: 6, title: 'JavaScript 原型、原型链与继承', category: 'javascript', date: 1464141196 },
     { id: 7, title: 'Build Node.Js web server in Docker containers: nodejs+pm2+mongodb+redis', category: 'ops', date: 1468747033 },
     { id: 8, title: 'JavaScript Function、函数声明、函数表达式', category: 'javascript', date: 1479877601 },
-    { id: 9, title: 'Promise Magic', category: 'javascript', date: 1480585712 }
+    { id: 9, title: 'Promise Magic', category: 'javascript', date: 1480585712 },
+    { id: 10, title: 'NPM Magic', category: 'nodejs', date: 1482912684 }
 ];
 
 let GHAddr = 'https://github.com/Dongss/dogs/tree/master/';
