@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>
+            Graylog 安装使用 - Dogs Blog
+        </title>
+        <link rel="shortcut icon" href="../dist/favicon.ico">
+        <link rel="stylesheet" href="../dist/post.style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/highlight.js/9.2.0/styles/github-gist.min.css">
+    </head>
+    
+    <body>
+        <div class="header">
+            <button class="label reverse"><a href="../#/category/all">返回列表</a></button>
+        </div>
+
+<div class="post-header">
+    分类: OPS | 发布日期: 2017-01-17
+</div>
+<div class="divider"></div>
+<div class="markdown-body">
+    <h1 id="graylog-安装使用">Graylog 安装使用</h1><!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<ul>
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a><ul>
+<li><a href="#docker-%E5%AE%89%E8%A3%85">docker 安装</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE">修改配置</a></li>
+</ul>
+</li>
+<li><a href="#%E6%8E%A5%E5%85%A5-syslog">接入 syslog</a></li>
+<li><a href="#gelf-http-%E4%B8%BA%E4%BE%8B">GELF (http 为例)</a></li>
+<li><a href="#%E6%94%B6%E9%9B%86%E6%9C%8D%E5%8A%A1%E6%97%A5%E5%BF%97-nodejs-%E4%B8%BA%E4%BE%8B">收集服务日志( nodejs 为例)</a></li>
+<li><a href="#alerts">Alerts</a></li>
+</ul>
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<h2 id="简介">简介</h2><p><a href="https://www.graylog.org/">Graylog</a> 是一个简单易用、功能较全面的日志管理工具，相比 ELK 组合， 优点：</p>
+<ul>
+<li>部署维护简单</li>
+<li>查询语法简单易懂(对比ES的语法...)</li>
+<li>内置简单的告警</li>
+<li>可以将搜索结果导出为 json</li>
+<li>提供简单的聚合统计功能</li>
+<li>UI 比较友好</li>
+</ul>
+<p>当然， 拓展性上比 ELK 差很多。</p>
+<p>整套依赖：</p>
+<ul>
+<li><code>Graylog</code> 提供 graylog 对外接口， CPU 密集</li>
+<li><code>Elasticsearch</code> 日志文件的持久化存储和检索， IO 密集</li>
+<li><code>MongoDB</code> 只是存储一些 Graylog 的配置</li>
+</ul>
+<p>Graylog 最简单的架构：</p>
+<p><img src="http://docs.graylog.org/en/2.1/_images/architec_small_setup.png" alt="图 11.0.1"></p>
+<p>Graylog 集群架构：</p>
+<p><img src="http://docs.graylog.org/en/2.1/_images/architec_bigger_setup.png" alt="图 11.0.2"></p>
+<h2 id="安装">安装</h2><h3 id="docker-安装">docker 安装</h3><p>环境：centos 7.0 64位</p>
+<p>Graylog 官方提供了 docker 镜像：</p>
+<pre><code>docker pull mongo:3
+docker pull elasticsearch:2
+docker pull graylog2/server:2.1.2-1
+</code></pre><p>docker-compose 拉起服务：</p>
+<pre><code>version: &#39;2&#39;
+services:
+  mongo:
+    image: &quot;mongo:3&quot;
+    volumes:
+        - /data/mongo:/data/db
+  elasticsearch:
+    image: &quot;elasticsearch:2&quot;
+    volumes:
+        - /data/elasticsearch:/usr/share/elasticsearch/data
+    command: &quot;elasticsearch -Des.cluster.name=&#39;graylog&#39;&quot;
+  graylog:
+    image: graylog2/server:2.1.2-1
+    environment:
+      GRAYLOG_WEB_ENDPOINT_URI: http://x.x.x.x:9000/api
+    depends_on:
+      - mongo
+      - elasticsearch
+    ports:
+      - &quot;9000:9000&quot;
+      - &quot;514:514&quot;
+      - &quot;515:515&quot;
+</code></pre><p><code>docker-compose -f graylog.yml up -d</code></p>
+<p>浏览器访问 <code>http://x.x.x.x:9000</code>， 默认账户名和密码均为 <code>admin</code>， 可得：</p>
+<p><img src="https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/11.1.png" alt="图 11.1"></p>
+<h3 id="修改配置">修改配置</h3><p>Graylog 配置文件默认装在容器内的 <code>/usr/share/graylog/data/config/graylog.conf</code>， 可以通过 volume 挂载自己的配置。</p>
+<p>其他如 <code>log4j2</code>, <code>journal</code>, <code>plugin</code> 也都在 <code>/usr/share/graylog/data/config/</code> 目录。</p>
+<p>例如修改时区，只需要修改配置文件:</p>
+<pre><code># Default is UTC             
+root_timezone = Asia/Shanghai
+</code></pre><h2 id="接入-syslog">接入 syslog</h2><p>首先在 webui 创建 input：</p>
+<p><img src="https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/11.2.png" alt="图 11.2"></p>
+<p>以 rsyslog 为例：</p>
+<p><code>/etc/rsyslog.d/graylog.conf</code>:</p>
+<pre><code>*.* @@x.x.x.x:514;RSYSLOG_SyslogProtocol23Format
+</code></pre><p><code>service rsyslog restart</code></p>
+<p>即可查看该 input 的 message：</p>
+<p><img src="https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/11.3.png" alt="图 11.3"></p>
+<h2 id="gelf-http-为例">GELF (http 为例)</h2><p>GELF (Graylog Extended Log Format) 可以接收结构化的事件， 支持压缩(GZIP’d or ZLIB’d)和分块。</p>
+<p>GELF message：</p>
+<ul>
+<li>version <code>string</code></li>
+<li>host <code>string</code></li>
+<li>short_message <code>string</code></li>
+<li>full_message <code>string</code></li>
+<li>timestamp <code>number</code></li>
+<li>level <code>number</code></li>
+<li>facility <code>string</code></li>
+<li>line <code>number</code></li>
+<li>file <code>string</code></li>
+<li><em>[additional field] <code>string</code> or <code>number</code>, 通过 `</em>` 前缀添加自定义的字段</li>
+</ul>
+<p>新建一个 <code>GELF HTTP</code> input:</p>
+<p><img src="https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/11.6.png" alt="图 11.6"></p>
+<p>推送日志：</p>
+<p><code>curl -XPOST http://106.75.62.142:12201/gelf -p0 -d &#39;{&quot;message&quot;:&quot;这是一条消息&quot;, &quot;host&quot;:&quot;172.3.3.3&quot;, &quot;facility&quot;:&quot;test&quot;, &quot;topic&quot;: &quot;meme&quot;}&#39;</code></p>
+<p>查看推送的日志：</p>
+<p><img src="https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/11.7.png" alt="图 11.7"></p>
+<h2 id="收集服务日志-nodejs-为例">收集服务日志( nodejs 为例)</h2><p>log4js, bunyan， winston 等等 nodejs 日志框架都可以， 这里我们以 bunyan 为例， 因为 bunyan 可以将日志以 json 的形式打印。</p>
+<pre><code>const express = require(&#39;express&#39;);
+const bodyParser = require(&#39;body-parser&#39;);
+const bunyan = require(&#39;bunyan&#39;);
+
+const log = bunyan.createLogger({
+    name: &#39;server-bunyan&#39;,
+    level: &#39;debug&#39;,
+    streams: [{
+        type: &#39;rotating-file&#39;,
+        path: &#39;/data/logs/server-bunyan.log&#39;,
+        period: &#39;1d&#39;,
+        count: 3
+    }]
+});
+
+
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get(&#39;/hello&#39;, (req, res) =&gt; {
+    log.info({                                           
+        query: req.query
+    }, &#39;hello&#39;);
+    res.send(&#39;hello world&#39;);
+});
+
+app.listen(5004, &#39;0.0.0.0&#39;, () =&gt; {
+    log.info(&#39;app listening on 5004&#39;);
+});
+</code></pre><p>rsyslog:</p>
+<pre><code> module(load=&quot;imfile&quot; PollingInterval=&quot;10&quot;)
+
+ # input
+ input(type=&quot;imfile&quot; File=&quot;/data/logs/server.log&quot; Tag=&quot;server&quot; ruleset=&quot;push_remote&quot;)
+ input(type=&quot;imfile&quot; File=&quot;/data/logs/detail.log&quot; Tag=&quot;detail&quot; ruleset=&quot;push_remote&quot;)
+ input(type=&quot;imfile&quot; File=&quot;/data/logs/server-bunyan.log&quot; Tag=&quot;bunyan_server&quot; ruleset=&quot;push_remote&quot;)
+
+ # template
+ template(name=&quot;mytpl&quot; type=&quot;string&quot; string=&quot;node1 %programname% %msg%\n&quot; )                          
+
+ # output
+ ruleset(name=&quot;push_remote&quot;) {
+   action(
+     type=&quot;omfwd&quot;
+     protocol=&quot;tcp&quot;
+     target=&quot;x.x.x.x&quot;
+     port=&quot;515&quot;
+     template=&quot;mytpl&quot;
+
+     action.resumeRetryCount=&quot;-1&quot;
+     action.resumeInterval=&quot;1&quot;
+
+     queue.filename=&quot;push-remote&quot;
+     queue.size=&quot;100000&quot;
+     queue.highwatermark=&quot;60000&quot;
+     queue.lowwatermark=&quot;2000&quot;
+     queue.maxdiskspace=&quot;100g&quot;
+     queue.saveonshutdown=&quot;on&quot;
+     queue.type=&quot;LinkedList&quot;
+     queue.maxfilesize=&quot;128m&quot;
+   )
+ }
+</code></pre><p>新建 input， 监听 515 端口，这里我们体验一下 graylog 的 Extractor，给改 input 添加一个 Extractor：</p>
+<p><img src="https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/11.5.png" alt="图 11.5"></p>
+<p>我们加了一个抓取器，来提取 <code>node</code>, <code>topic</code> 两个字段。</p>
+<p>在 webui 查看该 input 的 message：</p>
+<p><img src="https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/11.4.png" alt="图 11.4"></p>
+<h2 id="alerts">Alerts</h2><p>Graylog 内置的告警条件：</p>
+<ul>
+<li>消息数量</li>
+<li>字段值(number)</li>
+<li>字段内容</li>
+</ul>
+<p>内置告警方式：</p>
+<ul>
+<li>Email</li>
+<li>HTTP 回调</li>
+</ul>
+<p>体验一下 HTTP 回调。</p>
+<p>新建一个 Stream， 进入 <code>manager alerts</code>, 新建一个告警条件：</p>
+<p><img src="https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/11.8.png" alt="图 11.8"></p>
+<p>创建一个 HTTP 回调：</p>
+<p><img src="https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/11.9.png" alt="图 11.9"></p>
+<p>告警以 post 方式请求回调, 请求的 body 内容：</p>
+<pre><code>{
+    &quot;check_result&quot;: {
+        &quot;result_description&quot;: &quot;Stream had 0 messages in the last 1 minutes with trigger condition less than 10 messages. (Current grace time: 1 minutes)&quot;,
+        &quot;triggered_condition&quot;: {
+            &quot;id&quot;: &quot;6bacc1c1-1eac-49f9-9ac8-998ea851f101&quot;,
+            &quot;type&quot;: &quot;message_count&quot;,
+            &quot;created_at&quot;: &quot;2017-01-17T05:25:13.592Z&quot;,
+            &quot;creator_user_id&quot;: &quot;admin&quot;,
+            &quot;title&quot;: &quot;日志一分钟内少于10条&quot;,
+            &quot;parameters&quot;: {
+                &quot;grace&quot;: 1,
+                &quot;threshold_type&quot;: &quot;less&quot;,
+                &quot;threshold&quot;: 10,
+                &quot;time&quot;: 1,
+                &quot;backlog&quot;: 0
+            }
+        },
+        &quot;triggered_at&quot;: &quot;2017-01-17T05:44:11.921Z&quot;,
+        &quot;triggered&quot;: true,
+        &quot;matching_messages&quot;: []
+    },
+    &quot;stream&quot;: {
+        &quot;creator_user_id&quot;: &quot;admin&quot;,
+        &quot;outputs&quot;: [],
+        &quot;alert_receivers&quot;: {
+            &quot;emails&quot;: [
+                &quot;dongsoso@hotmail.com&quot;
+            ],
+            &quot;users&quot;: [
+                &quot;dongsoso@hotmail.com&quot;
+            ]
+        },
+        &quot;matching_type&quot;: &quot;AND&quot;,
+        &quot;description&quot;: &quot;alert&quot;,
+        &quot;created_at&quot;: &quot;2017-01-17T05:21:58.852Z&quot;,
+        &quot;disabled&quot;: false,
+        &quot;rules&quot;: [],
+        &quot;alert_conditions&quot;: [
+            {
+                &quot;creator_user_id&quot;: &quot;admin&quot;,
+                &quot;created_at&quot;: &quot;2017-01-17T05:25:13.592Z&quot;,
+                &quot;id&quot;: &quot;6bacc1c1-1eac-49f9-9ac8-998ea851f101&quot;,
+                &quot;type&quot;: &quot;message_count&quot;,
+                &quot;title&quot;: &quot;日志一分钟内少于10条&quot;,
+                &quot;parameters&quot;: {
+                    &quot;grace&quot;: 1,
+                    &quot;threshold_type&quot;: &quot;less&quot;,
+                    &quot;threshold&quot;: 10,
+                    &quot;time&quot;: 1,
+                    &quot;backlog&quot;: 0
+                }
+            }
+        ],
+        &quot;id&quot;: &quot;587da9f62ab79c0001352b7a&quot;,
+        &quot;title&quot;: &quot;test&quot;,
+        &quot;content_pack&quot;: null
+    }
+}
+</code></pre><p>查看告警历史:</p>
+<p><img src="https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/11.10.png" alt="图 11.10"></p>
+<p>更多更好用的功能等待发现...</p>
+
+</div>
+<div class="footer">
+    作者/版权: <a href="mailto:dongsoso@hotmail.com?subject=Dogs%20Blog%20Email">Dogs</a> | 纠错/贡献: <a href="https://github.com/Dongss/dogs/tree/master/posts/ops/11.md">GitHub</a>
+</div>
+    </body>
+    <script src="http://cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script src="../dist/post.build.js"></script>
+    <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
+    </script>
+</html>
+
