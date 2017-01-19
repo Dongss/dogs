@@ -18,7 +18,6 @@
         text-align: center;
         background-color: $color-main;
         padding: 10px 0;
-
         a {
             color:  $color-main-reverse;
         }
