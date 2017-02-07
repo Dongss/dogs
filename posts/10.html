@@ -42,6 +42,7 @@
 <li><a href="#hook">hook</a></li>
 <li><a href="#execution-sequence">execution sequence</a></li>
 <li><a href="#wildcards">wildcards</a></li>
+<li><a href="#bash">bash</a></li>
 <li><a href="#exiting">exiting</a></li>
 </ul>
 </li>
@@ -148,7 +149,15 @@ console.log(process.env.npm_package_version);
 <li><code>*</code> 代表任意文件， 如 <code>&quot;test&quot;: &quot;mocha test/*.js&quot;</code></li>
 <li><code>**</code> 代表任意目录， 如 <code>&quot;test&quot;: &quot;mocha test/**/*.js &quot;</code></li>
 </ul>
-<h3 id="exiting">exiting</h3><p>如果 npm script 的 exit code 不是 0， 会认为执行失败， 终止进程。</p>
+<h3 id="bash">bash</h3><p>npm script 执行 bash 命令</p>
+<p><code>&quot;bash&quot;: &quot;echo $(pwd)&quot;,</code></p>
+<pre><code>npm run bash
+
+&gt; test@1.0.0 bash /data/data/dongss/tmp
+&gt; echo $(pwd)
+
+/data/data/dongss/tmp
+</code></pre><h3 id="exiting">exiting</h3><p>如果 npm script 的 exit code 不是 0， 会认为执行失败， 终止进程。</p>
 <h2 id="practical-usage">practical usage</h2><h3 id="with-docker">with docker</h3><p>背景：</p>
 <ul>
 <li>typescript 项目</li>
