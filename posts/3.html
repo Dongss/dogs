@@ -238,6 +238,9 @@ console.log(testInstance.b); // bb
     this.b = &#39;bb&#39;;
 }
 
+a = &#39;global a&#39;;
+b = &#39;global b&#39;;
+
 function execFunc() {
     var a = &#39;exec aa&#39;;
     var b = &#39;exec bb&#39;;
@@ -247,6 +250,7 @@ function execFunc() {
 
 var testInstance = new testFunc(&#39;aa&#39;);
 
+execFunc(); // global a global b
 execFunc.call(testInstance); // aa bb
 execFunc.apply(testInstance); // aa bb
 </code></pre><p>通过 call apply 函数将 execFunc 的 this 值指向 testInstance 对象的 this 值。</p>
