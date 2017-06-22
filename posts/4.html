@@ -32,6 +32,7 @@
 <li><a href="#%E4%BD%BF%E7%94%A8-npm-%E8%84%9A%E6%9C%AC%E6%B5%8B%E8%AF%95">使用 npm 脚本测试</a></li>
 <li><a href="#%E7%94%9F%E6%88%90-html-%E6%8A%A5%E5%91%8A">生成 html 报告</a></li>
 <li><a href="#%E6%89%98%E7%AE%A1%E8%A6%86%E7%9B%96%E7%8E%87%E6%8A%A5%E5%91%8A">托管覆盖率报告</a></li>
+<li><a href="#mock">Mock</a></li>
 </ul>
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <h3 id="简单测试">简单测试</h3><p>抄一个 <a href="https://github.com/alsotang/node-lessons/tree/master/lesson6">Node.js 包教不包会</a> 的例子：</p>
@@ -204,7 +205,27 @@ All files |    85.71 |       90 |      100 |    85.71 |                |
 - &#39;./node_modules/.bin/nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls&#39;
 </code></pre><p>你的覆盖率报告将在你的 Travis 完成后很快地出现在 coveralls 上面。</p>
 </blockquote>
-<p><a href="https://github.com/sindresorhus/ava">More about ava</a></p>
+<h3 id="mock">Mock</h3><p>avajs 本身不带 mock 功能，可以借助 <a href="https://github.com/sinonjs/sinon">Sinon.JS</a> mock 函数。</p>
+<p>mock.js:</p>
+<pre><code>var test = require(&#39;ava&#39;);
+var sinon = require(&#39;sinon&#39;);
+
+var tt = {
+  f: function () {}
+}
+
+test(&#39;my test&#39;, function(t) {
+  var m = sinon.mock(tt);
+  m.expects(&#39;f&#39;).once();     
+  tt.f();
+  m.verify();
+  t.pass();
+})
+</code></pre><p><code>ava mock.js</code>:</p>
+<pre><code>[vagrant@dss /data/test] ]$ava mock.js 
+
+  1 passed
+</code></pre><p><a href="https://github.com/sindresorhus/ava">More about ava</a></p>
 
 </div>
 <div class="footer">
