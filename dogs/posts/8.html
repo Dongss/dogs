@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>
+            JavaScript Function、函数声明、函数表达式 - Dogs Blog
+        </title>
+        <link rel="shortcut icon" href="../dist/favicon.ico">
+        <link rel="stylesheet" href="../dist/post.style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/highlight.js/9.2.0/styles/github-gist.min.css">
+    </head>
+    
+    <body>
+        <div class="header">
+            <button class="label reverse"><a href="../#/category/all">返回列表</a></button>
+        </div>
+
+<div class="post-header">
+    分类: JavaScript | 发布日期: 2016-11-23
+</div>
+<div class="divider"></div>
+<div class="markdown-body">
+    <h1 id="javascript-function函数声明函数表达式">JavaScript Function、函数声明、函数表达式</h1><p><a href="https://juejin.im/entry/585b592e128fe1006dda8fb2/detail"><img src="https://badge.juejin.im/entry/585b592e128fe1006dda8fb2/likes.svg?style=flat-square" alt="juejin"></a></p>
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<ul>
+<li><a href="#function-%E5%AF%B9%E8%B1%A1">Function 对象</a></li>
+<li><a href="#%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E-function-statement">函数声明 function statement</a></li>
+<li><a href="#%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F-function-expression">函数表达式 function expression</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96">其他</a><ul>
+<li><a href="#%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87">函数声明提升</a></li>
+<li><a href="#%E5%AE%9E%E5%8F%82%E4%B8%8E%E5%BD%A2%E5%8F%82">实参与形参</a></li>
+<li><a href="#arguments-%E5%AF%B9%E8%B1%A1">arguments 对象</a></li>
+<li><a href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0es6">箭头函数(ES6)</a></li>
+</ul>
+</li>
+</ul>
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<h2 id="function-对象">Function 对象</h2><p>Function 构造器会创建一个新的 Function 对象。 在 JavaScript 中每个函数都是一个 Function 对象。</p>
+<pre><code>// 使用 Function 构造函数创建函数
+new Function ([arg1[, arg2[, ...argN]],] functionBody)
+</code></pre><p>例子</p>
+<pre><code>var func = new Function(&#39;a&#39;, &#39;b&#39;, &#39;return a + b&#39;);
+func(2, 3) // 5
+</code></pre><p>使用 Function 构造器生成的 Function 对象是在函数创建时解析的。<br>这比你使用函数声明或者函数表达式(function)并在你的代码中调用更为低效，因为使用后者创建的函数是跟其他代码一起解析的。<br>所以不推荐使用 Function 构造函数来创建函数。</p>
+<h2 id="函数声明-function-statement">函数声明 function statement</h2><p>函数声明是用指定的参数声明一个函数。一个被函数声明创建的函数是一个 Function 对象，具有 Function 对象的所有属性、方法和行为。</p>
+<pre><code>// 函数声明语法
+function name([param[, param[, ... param]]]) { statements }
+</code></pre><ul>
+<li><code>name</code>: 函数名，可以省略。当省略函数名的时候，该函数就成为了匿名函数。</li>
+<li><code>param</code>: 传递给函数的参数的名称，一个函数最多可以有255个参数。</li>
+<li><code>statements</code>: 组成函数体的声明语句。</li>
+</ul>
+<h2 id="函数表达式-function-expression">函数表达式 function expression</h2><p>在函数表达式中我们可以忽略函数名称创建匿名函数，并将该匿名函数赋值给变量。</p>
+<pre><code>var add = function(a, b) {
+    return a + b;  
+};
+
+add(2, 3) // 5
+</code></pre><p>当然， 也可以创建命名函数表达式 Named function expression:</p>
+<pre><code>var add = function func(a, b) {
+    return a + b;  
+};
+
+add(2, 3) // 5
+</code></pre><p>命名函数表达式中函数名称只能作为函数体作用域内的局部变量，外部不可访问。</p>
+<pre><code>var a = function pp(v) {
+    v++;
+    if (v&gt;3) {
+        return v;
+    } else {
+        return pp(v);
+    }
+}
+
+a(1); // 4
+pp(1); // ReferenceError: pp is not defined
+</code></pre><h2 id="其他">其他</h2><h3 id="函数声明提升">函数声明提升</h3><p>PS: <a href="./3.html#var-%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8F%98%E9%87%8F%E6%8F%90%E5%8D%87">JavaScript 变量提升</a></p>
+<p>对于函数声明创建的函数，可以在本作用域内任意位置访问。</p>
+<pre><code>a(); // 1
+
+function a() {
+    return 1;  
+}
+
+a(); // 1
+</code></pre><p>而函数表达式不会。</p>
+<pre><code>console.log(a); // undefined (只是变量提升)
+a(1); // TypeError: a is not a function
+
+var a = function(v) {
+    console.log(v);     
+};
+</code></pre><h3 id="实参与形参">实参与形参</h3><p>调用函数时，传递给函数的值被称为函数的实参（值传递），对应位置的函数参数名叫作形参。有一点非常需要注意：</p>
+<ul>
+<li>如果实参是一个包含原始值(数字，字符串，布尔值)的变量，则就算函数在内部改变了对应形参的值，返回后，该实参变量的值也不会改变。</li>
+<li>如果实参是一个对象引用，则对应形参会和该实参指向同一个对象。假如函数在内部改变了对应形参的值，返回后，实参指向的对象的值也会改变。</li>
+</ul>
+<p>实参是原始值：</p>
+<pre><code>function func(v) {
+    v = 3;
+}
+
+var a = 1;
+func(a);
+console.log(a); // 1
+</code></pre><p>实参是对象引用(1)：</p>
+<pre><code>function func(v) {
+    v.c = 3;
+}
+
+var a = {
+    b: 1,
+    c: 2
+};
+
+func(a);
+console.log(a); // { b: 1, c: 3 }
+</code></pre><p>实参是对象引用(2)：</p>
+<pre><code>function func(v) {
+      v[1] = 3;
+}
+
+var a = [1, 2];
+
+func(a);
+console.log(a); // [ 1, 3 ]
+</code></pre><h3 id="arguments-对象">arguments 对象</h3><p>arguments 对象是函数内部的局部变量，是一个类数组对象，代表传给一个 function 的参数列表。</p>
+<pre><code>function func(a, b) {
+    console.log(arguments);
+}
+
+func(22, 33); // { &#39;0&#39;: 22, &#39;1&#39;: 33 }
+console.log(arguments[0]); // 22
+console.log(arguments.length); // 2
+</code></pre><p>注意： arguments 对象并不是一个真正的 Array。它类似于数组，但没有数组所特有的属性和方法，除了 length。例如，它没有 pop 方法。<br>如果需要，可以将其转换成数组再对新的数组进行处理，例如：<br><code>var args = Array.prototype.slice.call(arguments);</code></p>
+<h3 id="箭头函数es6">箭头函数(ES6)</h3><p>箭头函数就是个简写形式的函数表达式，具有更精简的语法，箭头函数总是匿名的。<br>除了精简语法，一大特性是：箭头函数拥有词法作用域的 this 值。<a href="./3.html#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0-%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84-this">详情</a></p>
+<p>一个简单的例子：</p>
+<pre><code>var a = [1, 2, 3];
+// ES5
+var b = a.map(function(v) {
+    return v;
+});
+// ES6
+var c = a.map(v =&gt; v);
+console.log(b) // [ 1, 2, 3 ]
+console.log(c) // [ 1, 2, 3 ]
+</code></pre>
+</div>
+<div class="footer">
+    作者/版权: <a href="mailto:dongsoso@hotmail.com?subject=Dogs%20Blog%20Email">Dogs</a> | 纠错/贡献: <a href="https://github.com/Dongss/dogs/tree/master/posts/javascript/8.md">GitHub</a>
+</div>
+    </body>
+    <script src="http://cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script src="../dist/post.build.js"></script>
+    <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
+    </script>
+</html>
+

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>
+            NPM Magic - Dogs Blog
+        </title>
+        <link rel="shortcut icon" href="../dist/favicon.ico">
+        <link rel="stylesheet" href="../dist/post.style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/highlight.js/9.2.0/styles/github-gist.min.css">
+    </head>
+    
+    <body>
+        <div class="header">
+            <button class="label reverse"><a href="../#/category/all">返回列表</a></button>
+        </div>
+
+<div class="post-header">
+    分类: Node.js | 发布日期: 2016-12-28
+</div>
+<div class="divider"></div>
+<div class="markdown-body">
+    <h1 id="npm-magic">NPM Magic</h1><p><a href="https://juejin.im/entry/5876f2bada2f60006797c22c/detail"><img src="https://badge.juejin.im/entry/5876f2bada2f60006797c22c/likes.svg?style=flat-square" alt="juejin"></a></p>
+<p><img src="https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/10.2.png" alt="图 10.2"><br><!-- START doctoc generated TOC please keep comment here to allow auto update --><br><!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --></p>
+<ul>
+<li><a href="#packagejson">package.json</a></li>
+<li><a href="#packages-version-management">packages version management</a><ul>
+<li><a href="#install">install</a></li>
+<li><a href="#view">view</a></li>
+<li><a href="#uninstall">uninstall</a></li>
+<li><a href="#packages-version-controll">packages version controll</a></li>
+</ul>
+</li>
+<li><a href="#npm-scripts">npm scripts</a><ul>
+<li><a href="#usage">usage</a></li>
+<li><a href="#arguments">arguments</a></li>
+<li><a href="#environment---path">environment - path</a></li>
+<li><a href="#environment---variables-of-packagejson">environment - variables of package.json</a></li>
+<li><a href="#environment---npm-configuration">environment - npm configuration</a></li>
+<li><a href="#hook">hook</a></li>
+<li><a href="#execution-sequence">execution sequence</a></li>
+<li><a href="#wildcards">wildcards</a></li>
+<li><a href="#bash">bash</a></li>
+<li><a href="#exiting">exiting</a></li>
+</ul>
+</li>
+<li><a href="#practical-usage">practical usage</a><ul>
+<li><a href="#with-docker">with docker</a></li>
+</ul>
+</li>
+</ul>
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<h2 id="packagejson">package.json</h2><ul>
+<li>package.json 最起码要包含 <code>name</code> 和 <code>version</code> </li>
+<li>快速初始化 package.json: <code>npm init --yes</code> </li>
+<li><code>dependencies</code>: 生产环境依赖的包 * <code>devDependencies</code>: 开发、测试环境依赖的包</li>
+</ul>
+<h2 id="packages-version-management">packages version management</h2><h3 id="install">install</h3><p><code>npm install moment</code>,<br>or<code>npm install moment --save</code>,<br>or<code>npm install moment --save-dev</code></p>
+<h3 id="view">view</h3><p><code>npm outdated</code></p>
+<p><img src="https://raw.githubusercontent.com/Dongss/dogs/master/posts/images/10.1.png" alt="图 10.1"></p>
+<h3 id="uninstall">uninstall</h3><p><code>npm uninstall moment</code>,<br>or<code>npm uninstall --save moment</code></p>
+<h3 id="packages-version-controll">packages version controll</h3><p>npm 中的模块版本都需要遵循 <a href="https://docs.npmjs.com/getting-started/semantic-versioning">semver规范</a>, <code>1.2.3</code>: 1 主版本号， 2 次版本号， 3 补丁号</p>
+<pre><code>dependencies: {
+    &quot;bunyan&quot;: &quot;1.x&quot;,
+    &quot;lodash&quot;: &quot;*&quot;,
+    &quot;express&quot;: &quot;~4.0.0&quot;,
+    &quot;ava&quot;: &quot;0.16.0&quot;
+}
+</code></pre><ul>
+<li><code>*</code>: 任意版本 </li>
+<li><code>1.1.1</code>: 指定版本 </li>
+<li><code>~1</code>: &gt;= 1.0.0 &amp;&amp; &lt; 2.0.0(相当于1.x) </li>
+<li><code>~1.1</code>: &gt;= 1.1.0 &amp;&amp; &lt; 1.2.0(相当于1.1.x) </li>
+<li><code>~1.1.0</code>: &gt;= 1.1.0 &amp;&amp; &lt; 1.2.0(相当于1.1.x) </li>
+<li><code>^1.2.3</code>: &gt;= 1.2.3 &lt; 2.0.0 </li>
+<li><code>^0.0.3</code>: &gt;= 0.0.3 &lt; 0.0.4 </li>
+<li><code>^0.0</code>: &gt;= 0.0.0 &lt; 0.1.0 </li>
+<li><code>^0.x</code>: &gt;= 0.0.0 &lt; 1.0.0</li>
+</ul>
+<p><code>^</code>和<code>~</code>：</p>
+<ul>
+<li><code>~</code> 前缀表示，安装大于指定的这个版本，并且匹配到 x.y.z 中 z 最新的版本 </li>
+<li><code>^</code> 前缀在 <code>^0.y.z</code> 时的表现和 <code>~0.y.z</code> 是一样的，然而 <code>^1.y.z</code> 的时候，就会匹配到 y 和 z 都是最新的版本</li>
+</ul>
+<p><a href="https://cnpmjs.org/package/semver">具体可以看这里</a></p>
+<h2 id="npm-scripts">npm scripts</h2><p>我们可以通过 <code>npm run myScript</code> 来通过 npm 运行一个脚本或命令:</p>
+<pre><code>&quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node index.js&quot;
+}
+</code></pre><h3 id="usage">usage</h3><p>以下 script 可以直接 <code>npm xxx</code> 运行，可以不加 <code>run</code>:</p>
+<ul>
+<li>prepublish: Run BEFORE the package is published.(Also run on local npm install without any arguments.) </li>
+<li>publish, postpublish: Run AFTER the package is published. * preinstall: Run BEFORE the package is installed </li>
+<li>install, postinstall: Run AFTER the package is installed. <em> preuninstall,<br>uninstall: Run BEFORE the package is uninstalled. </em> postuninstall: Run AFTER the package is uninstalled. </li>
+<li>preversion, version: Run BEFORE bump the package version. * postversion: Run AFTER bump the package version. </li>
+<li>pretest, test, posttest: Run by the npm test command. </li>
+<li>prestop, stop, poststop: Run by the npm stop command. </li>
+<li>prestart, start, poststart: Run by the npm start command. </li>
+<li>prerestart, restart, postrestart: Run by the npm restart command.Note: npm restart will run the stop and start scripts if no restart script is provided.</li>
+</ul>
+<p>例如，typescript 写的 module 如果要发布到 npm，可以使用 <code>prepublish</code>，在 <code>npm publish</code> 之前会先执行 <code>tsc</code> 命令:</p>
+<pre><code>&quot;scripts&quot;: {
+    &quot;prepublish&quot;: &quot;tsc&quot;
+}
+</code></pre><p>npm 对两个脚本提供了默认值，可以不定义直接使用:</p>
+<ul>
+<li><code>&quot;start&quot;: &quot;node server.js&quot;</code> </li>
+<li><code>&quot;install&quot;: &quot;node-gyp rebuild&quot;</code></li>
+</ul>
+<h3 id="arguments">arguments</h3><p>向 npm script 传递参数时，用 <code>--</code> 表明。</p>
+<p>如 <code>&quot;test&quot;: &quot;mocha test/*.js&quot;</code>，传参 <code>npm test -- --grep &#39;my test&#39;</code>，相当于 <code>&quot;test&quot;: &quot;mocha test/*.js --grep &#39;my test&#39;&quot;</code>。</p>
+<h3 id="environment---path">environment - path</h3><p><code>npm run</code> 会将当前 <code>node_modules / .bin</code> 目录加入 <code>PATH</code> 变量, 执行结束后再恢复<code>PATH</code>, 如果本目录下已安装的 module 有可执行脚本，我们可以直接使用。不必全局安装或者使用 <code>/ node_modules / .bin</code> 路径：</p>
+<pre><code>&quot;test&quot;: &quot;mocha test/*.js&quot;
+</code></pre><p>不需要全局安装 <code>mocha</code> 或者 <code>. / node_modules / .bin / mocha test/*.js</code>。</p>
+<h3 id="environment---variables-of-packagejson">environment - variables of package.json</h3><p>package.json 中的字段都可以通过 <code>npm_package_</code> 前缀访问。</p>
+<p>例如 package.json:</p>
+<pre><code>{
+    &quot;name&quot;: &quot;test&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;scripts&quot;: {
+        &quot;go&quot;: &quot;node index.js&quot;
+    }
+}
+</code></pre><p>index.js:</p>
+<pre><code>console.log(process.env.npm_package_name);     
+console.log(process.env.npm_package_version);
+</code></pre><p><code>npm run go</code> 输出:</p>
+<pre><code>test
+1.0.0
+</code></pre><h3 id="environment---npm-configuration">environment - npm configuration</h3><p>我们可以通过 <code>npm_config_</code> 前缀访问 npm configuration。</p>
+<p>例如：<code>npm config get userconfig</code> 输出为 <code>/home/ubuntu/.npmrc</code>，可以通过环境变量访问 <code>&quot;test&quot;: &quot;echo $npm_config_userconfig&quot;</code></p>
+<h3 id="hook">hook</h3><p>npm 脚本有 <code>pre</code> 和 <code>post</code> 两个钩子。</p>
+<pre><code>&quot;prego&quot;: &quot;echo &#39;before go&#39;&quot;,
+&quot;go&quot;: &quot;node index.js&quot;,
+&quot;postgo&quot;: &quot;echo &#39;after go&#39;&quot;,
+</code></pre><p><code>npm run go</code> 会顺序执行 <code>npm run prego</code> =&gt; <code>npm run go</code> =&gt; <code>npm run postgo</code>。</p>
+<p>利用 hook 可以做一些准备和清理操作:</p>
+<pre><code>&quot;lint&quot;: &quot;tslint &#39;src/*.js&#39;&quot;,
+&quot;prebuild&quot;: &quot;npm run lint&quot;,
+&quot;build&quot;: &quot;tsc&quot;
+</code></pre><h3 id="execution-sequence">execution sequence</h3><ul>
+<li><code>&amp;</code> 并行执行， 如 <code>npm run lint &amp; npm run tsc</code></li>
+<li><code>&amp;&amp;</code> 串行执行， 如 <code>npm run lint &amp;&amp; npm run test</code></li>
+</ul>
+<h3 id="wildcards">wildcards</h3><p>npm script 中可以使用 shell 通配符。</p>
+<ul>
+<li><code>*</code> 代表任意文件， 如 <code>&quot;test&quot;: &quot;mocha test/*.js&quot;</code></li>
+<li><code>**</code> 代表任意目录， 如 <code>&quot;test&quot;: &quot;mocha test/**/*.js &quot;</code></li>
+</ul>
+<h3 id="bash">bash</h3><p>npm script 执行 bash 命令</p>
+<p><code>&quot;bash&quot;: &quot;echo $(pwd)&quot;,</code></p>
+<pre><code>npm run bash
+
+&gt; test@1.0.0 bash /data/data/dongss/tmp
+&gt; echo $(pwd)
+
+/data/data/dongss/tmp
+</code></pre><h3 id="exiting">exiting</h3><p>如果 npm script 的 exit code 不是 0， 会认为执行失败， 终止进程。</p>
+<h2 id="practical-usage">practical usage</h2><h3 id="with-docker">with docker</h3><p>背景：</p>
+<ul>
+<li>typescript 项目</li>
+<li>docker 交付和部署</li>
+</ul>
+<p>npm script:</p>
+<pre><code>...
+&quot;build &quot;: &quot;tsc &quot;,
+...
+</code></pre><p>最开始的 dockerfile:</p>
+<pre><code>FROM mynode:6.0
+...
+RUN npm --registry=http://registry.npm.taobao.org  install
+RUN npm run build
+...
+
+CMD [&quot;npm &quot;, &quot;start &quot;]
+</code></pre><p>痛点：</p>
+<p>每次都要安装依赖，某几个依赖需要编译，如 zookeeper， 甚至下载官方nodejs镜像，很不稳定。总结，有风险且速度慢。</p>
+<p>改进思路：</p>
+<ul>
+<li>构建一个专门用来安装依赖和编译 typescript 的镜像，做到:更换了编镜像的机器或项目新增加了依赖时才会下载。</li>
+<li>将 npm 依赖和编译后的 js 代码 copy 进镜像</li>
+</ul>
+<p>修改项目 npm script：</p>
+<pre><code>&quot;prebuild&quot;: &quot;npm --registry=http://registry.npm.taobao.org install&quot;,
+&quot;build&quot;: &quot;tsc&quot;,
+</code></pre><p>专门用来 build 的镜像, my-build:latest：</p>
+<pre><code># 必须和项目完全相同的父镜像
+FROM mynode:6.0
+
+RUN mkdir /app
+
+WORKDIR /app
+</code></pre><p>修改项目的 dockerfile：</p>
+<pre><code>FROM mynode:6.0
+...
+# 不再每次构建镜像时安装依赖, 而是 copy 进去
+COPY node_modules /app/node_modules
+# RUN npm --registry=http://registry.npm.taobao.org  install
+# RUN npm run build
+...
+
+CMD [&quot;npm &quot;, &quot;start &quot;]
+</code></pre><p>编译项目镜像时：</p>
+<pre><code>docker pull my-build:latest
+docker run --rm=true -v ${PROJECT_DIR}:/app my-build:latest npm run build
+docker build my-project:mytag .
+</code></pre>
+</div>
+<div class="footer">
+    作者/版权: <a href="mailto:dongsoso@hotmail.com?subject=Dogs%20Blog%20Email">Dogs</a> | 纠错/贡献: <a href="https://github.com/Dongss/dogs/tree/master/posts/nodejs/10.md">GitHub</a>
+</div>
+    </body>
+    <script src="http://cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script src="../dist/post.build.js"></script>
+    <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
+    </script>
+</html>
+
