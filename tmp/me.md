@@ -28,20 +28,20 @@
 
 ## 工作经历：
 
-* 2017.7-至今 [银联智慧](https://www.unionpaysmart.com/) nodejs dev
+* 2017.7-至今 [银联智慧](https://www.unionpaysmart.com/) nodejs dev
 * 2014.10-2017.7 [ucloud](https://www.ucloud.cn/) nodejs dev
 
-## 项目经验
+## 项目经验
 
-总的描述：
+总的描述：
 
 * 可独立完成nodejs web server服务或纯后台服务，喜欢typescript
-* 主导组内nodejs项目从pm2到docker化的过渡
-* 主导从单点服务到高可用服务
-* 完成部门日志收集和告警工作
-* 参与服务服务模块从http通信到grpc的转变
+* 主导组内nodejs项目从pm2到docker化的过渡
+* 主导从单点服务到高可用服务
+* 完成部门日志收集和告警工作
+* 参与服务服务模块从http通信到grpc的转变
 
-### 银联智慧广告投放系统
+### 银联智慧广告投放系统
 
 项目介绍：
 
@@ -51,11 +51,11 @@
 
 使用技术：nodejs,typescript,mysql,redis
 
-### 银联智慧权限系统
+### 银联智慧权限系统
 
 项目介绍：
 
-基于角色的权限控制系统，用于控制用户登陆权限、操作权限。
+基于角色的权限控制系统，用于控制用户登陆权限、操作权限。
 
 职责：后端开发
 
@@ -67,19 +67,19 @@
 
 云端工作流引擎，简单配制即可与云端服务深度集成（未上线）
 
-系统核心是基于redis的ttl来控制job执行，基于elasticsearch的历史任务搜索 
+系统核心是基于redis的ttl来控制job执行，基于elasticsearch的历史任务搜索 
 
 职责：研发
 
-使用技术：nodejs，conductor, docker，redis, ardb, leveldb
+使用技术：nodejs，conductor, docker，redis, ardb, leveldb
 
 ### ucloud uautoscaling 产品
 
 项目介绍：
 
-ucloud自动伸缩产品，帮助客户自动伸缩集群规模或带宽大小。可主动调整、按负载自动调整、定时调整。
+ucloud自动伸缩产品，帮助客户自动伸缩集群规模或带宽大小。可主动调整、按负载自动调整、定时调整。
 
-系统本身是一个基于状态机的任务调度系统。
+系统本身是一个基于状态机的任务调度系统。
 
 职责：主要研发，产品主要负责人
 
