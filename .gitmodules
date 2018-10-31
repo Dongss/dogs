@@ -1,3 +1,0 @@
-[submodule "dogs"]
-	path = dogs
-	url = git@github.com:Dongss/dogs.git

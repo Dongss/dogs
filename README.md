@@ -1,23 +1,33 @@
 # dogs
 
-[个人博客 Dogs Blog](http://dongss.cn/)
+Blog
 
-## 新建和编辑文章
+## JavaScript
 
-[文章 markdown 源文件](https://github.com/Dongss/dogs/tree/master/posts)
+2016-12-01 [Promise Magic](/posts/javascript/9.md)
 
-### 新增文章
+2016-11-23 [JavaScript Function、函数声明、函数表达式](/posts/javascript/8.md)
 
-在 dogs/map.js 中添加文章信息， 在对应分类的文件夹下创建 markdown 文件， 例如 100.md;
+2016-05-25 [JavaScript 原型、原型链与继承](/posts/javascript/6.md)
 
-编辑完成后执行 `node build.js 100`
+2016-05-24 [JavaScript Array 常用属性和方法](/posts/javascript/5.md)
 
-### 修改文章
+2016-05-11 [JavaScript 变量作用域、this、闭包](/posts/javascript/3.md)
 
-找到对应 markdown 文件，例如 100.md， 修改，执行 `node build.js 100`
+## Node.js
 
-### 提交修改
+2016-12-28 [NPM Magic](/posts/nodejs/10.md)
 
-dogs (submodule)目录下：提交修改至 gh-pages 分支；
+2016-05-16 [测试框架：ava](/posts/nodejs/4.md)
 
-根目录下： 提交修改至 master 分支。
+## OPS
+
+2017-01-17 [日志管理工具-Graylog 安装使用](/posts/ops/11.md)
+
+2016-07-17 [Build Node.Js web server in Docker containers: nodejs+pm2+mongodb+redis](/posts/ops/7.md)
+
+## Others
+
+2018-10-15 [优秀的编程原则-译](https://github.com/Dongss/principles-of-good-programming-cn)
+
+2016-05-09 [Git 小技巧](/posts/others/2.md)

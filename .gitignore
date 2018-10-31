@@ -1,7 +1,0 @@
-node_modules
-*.log
-build
-dist
-index.html
-.vscode
-deploy.sh
