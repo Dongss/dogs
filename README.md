@@ -22,7 +22,7 @@ Blog
 
 ## OPS
 
-2019-01-24 [Kubernetes v1.13 安装](/posts/opts/13.md)
+2019-01-24 [Kubernetes v1.13 安装](/posts/ops/13.md)
 
 2018-11-01 [Build golang http server with docker](/posts/ops/12.md)
 
