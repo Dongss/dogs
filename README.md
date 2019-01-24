@@ -22,6 +22,8 @@ Blog
 
 ## OPS
 
+2019-01-24 [Kubernetes v1.13 安装](/posts/opts/13.md)
+
 2018-11-01 [Build golang http server with docker](/posts/ops/12.md)
 
 2017-01-17 [日志管理工具-Graylog 安装使用](/posts/ops/11.md)
