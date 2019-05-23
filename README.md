@@ -35,3 +35,9 @@ Blog
 2018-10-15 [优秀的编程原则-译](https://github.com/Dongss/principles-of-good-programming-cn)
 
 2016-05-09 [Git 小技巧](/posts/others/2.md)
+
+## Share: Running in Go
+
+Golang 分享
+
+2019-05-23 [1. 简介](/posts/share/running-in-go/1.md)
