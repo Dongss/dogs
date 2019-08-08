@@ -11,8 +11,8 @@
 * 邮箱：dongsoso@hotmail.com
 * 籍贯：山东烟台
 * 政治面貌：党员
-* 工作年限：3年
-* 目前状态：在职（银联智慧nodejs工程师）
+* 工作年限：4年
+* 目前状态：在职（蔚来汽车）
 * 期望职位：nodejs后端开发
 
 ## 链接
@@ -25,12 +25,13 @@
 
 精通：nodejs, javascript, typescript
 
-熟练：linux, docker, mysql, redis, http, grpc, websocket
+熟练：linux, docker, graphql, mysql, redis, http, grpc, websocket
 
 ## 工作经历：
 
-* 2017.7-至今 [银联智慧](https://www.unionpaysmart.com/) nodejs dev
-* 2014.10-2017.7 [ucloud](https://www.ucloud.cn/) nodejs dev
+* 2018.03-至今 [蔚来汽车](https://www.nio.cn/) 数据服务工程师
+* 2017.07-2018.03 [银联智慧](https://www.unionpaysmart.com/) nodejs dev
+* 2014.10-2017.07 [UCloud](https://www.ucloud.cn/) nodejs dev
 
 ## 项目经验
 
@@ -42,7 +43,13 @@
 * 完成部门日志收集和告警工作
 * 参与服务服务模块从http通信到grpc的转变
 
-### 银联智慧广告投放系统
+按时间倒序
+
+### 蔚来汽车 智能客服多轮会话
+
+### 蔚来汽车 报表中台
+
+### 银联智慧 广告投放系统
 
 项目介绍：
 
@@ -52,7 +59,7 @@
 
 使用技术：nodejs,typescript,mysql,redis
 
-### 银联智慧权限系统
+### 银联智慧 权限系统
 
 项目介绍：
 
@@ -62,7 +69,7 @@
 
 使用技术：nodejs,typescript,mysql
 
-### ucloud uworkflow 产品
+### UCloud uworkflow 产品
 
 项目介绍：
 
@@ -74,7 +81,7 @@
 
 使用技术：nodejs，conductor, docker，redis, ardb, leveldb
 
-### ucloud uautoscaling 产品
+### UCloud uautoscaling 产品
 
 项目介绍：
 
@@ -86,7 +93,7 @@ ucloud自动伸缩产品，帮助客户自动伸缩集群规模或带宽大小�
 
 使用技术：nodejs, typescript, docker, mysql, rancher, zk, leveldb, graylog, prometheus, rabbitmq
 
-### ucloud support 平台
+### UCloud support 平台
 
 项目介绍：
 
