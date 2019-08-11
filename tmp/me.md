@@ -61,7 +61,7 @@
 
 职责：后端微服务搭建和开发
 
-使用技术：NodeJS, Golang, Docker, Rancher, Kafka, MongoDB
+使用技术：NodeJS, Golang, Docker, Rancher, Kafka, MongoDB, Graylog, Prometheus
 
 ### 银联智慧 广告投放系统
 
