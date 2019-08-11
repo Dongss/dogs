@@ -13,7 +13,7 @@
 * 政治面貌：党员
 * 工作年限：4年
 * 目前状态：在职（蔚来汽车）
-* 期望职位：nodejs后端开发
+* 期望职位：后端开发
 
 ## 链接
 
@@ -23,31 +23,45 @@
 
 ## 专业技能
 
-精通：nodejs, javascript, typescript
+开发语言： NodeJS, TypeScript, Golang
 
-熟练：linux, docker, graphql, mysql, redis, http, grpc, websocket
+熟练使用：Linux, Docker, GraphQL, Mysql, MongoDB, Redis, GRPC, Websocket, Kafka
 
 ## 工作经历：
 
 * 2018.03-至今 [蔚来汽车](https://www.nio.cn/) 数据服务工程师
-* 2017.07-2018.03 [银联智慧](https://www.unionpaysmart.com/) nodejs dev
-* 2014.10-2017.07 [UCloud](https://www.ucloud.cn/) nodejs dev
+* 2017.07-2018.03 [银联智慧](https://www.unionpaysmart.com/) Nodejs工程师
+* 2014.10-2017.07 [UCloud](https://www.ucloud.cn/) Nodejs工程师
 
 ## 项目经验
 
 总的描述：
 
-* 可独立完成nodejs web server服务或纯后台服务，喜欢typescript
-* 主导组内nodejs项目从pm2到docker化的过渡
-* 主导从单点服务到高可用服务
+* 可独立完成 Nodejs/Golang 后端项目体系搭建和开发
+* 有主导容器化迁移经验
 * 完成部门日志收集和告警工作
-* 参与服务服务模块从http通信到grpc的转变
 
 按时间倒序
 
-### 蔚来汽车 智能客服多轮会话
+### 蔚来汽车 智能客服多轮会话引擎
+
+项目介绍：
+
+智能客服多轮会话引擎，负责会话任务调度的状态机，与意图识别、内部系统等交互，与客户进行对话。
+
+职责： 主要后端开发
+
+使用技术：Golang, Docker, MongoDB
 
 ### 蔚来汽车 报表中台
+
+项目介绍：
+
+公司级别的报表系统，移动端、PC端
+
+职责：后端微服务搭建和开发
+
+使用技术：NodeJS, Golang, Docker, Rancher, Kafka, MongoDB
 
 ### 银联智慧 广告投放系统
 
@@ -57,7 +71,7 @@
 
 职责：后端开发
 
-使用技术：nodejs,typescript,mysql,redis
+使用技术：NodeJS, TypeScript, MySQL, Redis
 
 ### 银联智慧 权限系统
 
@@ -67,7 +81,7 @@
 
 职责：后端开发
 
-使用技术：nodejs,typescript,mysql
+使用技术：NodeJS, TypeScript, MySQL
 
 ### UCloud uworkflow 产品
 
@@ -79,7 +93,7 @@
 
 职责：研发
 
-使用技术：nodejs，conductor, docker，redis, ardb, leveldb
+使用技术：NodeSJ，Conductor, Docker，Redis, ardb, LevelDB
 
 ### UCloud uautoscaling 产品
 
@@ -91,7 +105,7 @@ ucloud自动伸缩产品，帮助客户自动伸缩集群规模或带宽大小�
 
 职责：主要研发，产品主要负责人
 
-使用技术：nodejs, typescript, docker, mysql, rancher, zk, leveldb, graylog, prometheus, rabbitmq
+使用技术：NodeJS, TypeScript, Docker, Mysql, Rancher, Zookeeper, LevelDB, Graylog, Prometheus, RabbitMQ
 
 ### UCloud support 平台
 
@@ -101,4 +115,4 @@ ucloud自动伸缩产品，帮助客户自动伸缩集群规模或带宽大小�
 
 职责：全栈开发、维护
 
-使用技术：nodejs,mysql,jquery,vuejs,mongodb
+使用技术：NodeJS, Mysql, JQuery, VueJS, MongoDB
