@@ -25,7 +25,7 @@
 
 开发语言： NodeJS, TypeScript, Golang
 
-熟练使用：Linux, Docker, GraphQL, Mysql, MongoDB, Redis, GRPC, Websocket, Kafka
+熟练使用：Linux, Docker, GraphQL, Mysql, MongoDB, Redis, GRPC, Websocket, Kafka, Graylog
 
 ## 工作经历：
 
@@ -55,6 +55,8 @@
 
 使用技术：Golang, Docker, MongoDB
 
+详细：使用 Golang 开发多轮任务引擎，引擎有单独后台配置页面配置对话流程，数据存储在 MongoDB，基于 Docker 部署。
+
 ### 蔚来汽车 报表中台
 
 2018, 2019
@@ -63,9 +65,13 @@
 
 公司级别的报表系统，移动端、PC端，对接大数据处理端，提供可配置的可视化报表。
 
+整体是基于ECharts的数据可视化系统，NodeJS 服务端支撑移动端(企业微信) 报表，可视化方面提供配置页面供用户配置报表，数据方面提供 HTTP 接口、Kafka 推送、 主动拉取等多种方式。并围绕报表提供权限控制、总结统计、社交等功能。
+
 职责：后端微服务搭建和开发
 
 使用技术：NodeJS, Golang, Docker, Rancher, Kafka, MongoDB, Graylog, Prometheus
+
+详细：基于 Docker 部署，Rancher 做的容器管理，Graylog 负责日志收集和日志告警，Prometheus 提供指标监控和告警。
 
 ### 银联智慧 广告投放系统
 
