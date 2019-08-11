@@ -18,7 +18,7 @@
 ## 链接
 
 * github：https://github.com/Dongss
-* 博客（新）：http://dongss.cn/
+* 博客（新）：https://github.com/Dongss/dogs/
 * 博客（旧）：http://blog.csdn.net/dongshaoshuai
 
 ## 专业技能
