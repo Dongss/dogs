@@ -13,7 +13,7 @@
 * 政治面貌：党员
 * 工作年限：4年
 * 目前状态：在职（蔚来汽车）
-* 期望职位：后端开发
+* 期望职位：后端开发（NodeJS/Go）
 
 ## 链接
 
@@ -25,7 +25,7 @@
 
 开发语言： NodeJS, TypeScript, Golang
 
-熟练使用：Linux, Docker, GraphQL, Mysql, MongoDB, Redis, GRPC, Websocket, Kafka, Graylog
+熟练使用：Linux, Docker, GraphQL, Mysql, MongoDB, Rancher, Redis, GRPC, Websocket, Kafka, Graylog
 
 ## 工作经历：
 
