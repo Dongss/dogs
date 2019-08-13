@@ -42,7 +42,7 @@
 * 2017.07-2018.03 [银联智慧](https://www.unionpaysmart.com/) Nodejs工程师
 * 2014.10-2017.07 [UCloud](https://www.ucloud.cn/) Nodejs工程师
 
-## 项目经验
+## 主要项目经验
 
 以下按时间倒序：
 
