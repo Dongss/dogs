@@ -112,7 +112,7 @@
 
 职责：研发
 
-使用技术：NodeSJ，Conductor, Docker，Redis, ardb, LevelDB
+使用技术：NodeJS，Conductor, Docker，Redis, ardb, LevelDB
 
 ### UCloud uautoscaling 产品
 
