@@ -74,7 +74,7 @@
 
 使用技术：NodeJS, Golang, Docker, Rancher, Kafka, MongoDB, Graylog, Prometheus
 
-详细：基于 Docker 部署，Rancher 做的容器管理，Graylog 负责日志收集和日志告警，Prometheus 提供指标监控和告警。
+详细：基于 Docker 部署，Rancher 做的容器管理，Graylog 负责日志收集和日志告警，Prometheus 提供指标监控和告警。负责主要架构设计、微服务模块划分、部署实施和部分后端开发。
 
 ### 银联智慧 广告投放系统
 
@@ -110,7 +110,7 @@
 
 系统核心是基于redis的ttl来控制job执行，基于elasticsearch的历史任务搜索，基于Conductor可以做到百万级的并发调度。
 
-职责：研发
+职责：后端开发
 
 使用技术：NodeJS，Conductor, Docker，Redis, ardb, LevelDB
 
