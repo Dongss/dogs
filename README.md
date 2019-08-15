@@ -1,6 +1,4 @@
-# dogs
-
-Blog
+# 博客
 
 ## JavaScript
 
