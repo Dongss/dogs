@@ -39,8 +39,8 @@
 ## 工作经历：
 
 * 2018.03-至今 [蔚来汽车](https://www.nio.cn/) 数据服务后端工程师
-* 2017.07-2018.03 [银联智慧](https://www.unionpaysmart.com/) Nodejs工程师
-* 2014.10-2017.07 [UCloud](https://www.ucloud.cn/) Nodejs工程师
+* 2017.07-2018.03 [银联智慧](https://www.unionpaysmart.com/) Nodejs后端工程师
+* 2014.10-2017.07 [UCloud](https://www.ucloud.cn/) Nodejs后端工程师
 
 ## 主要项目经验
 
