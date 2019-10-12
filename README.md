@@ -18,6 +18,10 @@
 
 2016-05-16 [测试框架：ava](/posts/nodejs/4.md)
 
+## Golang
+
+2019-10-11 [Go Careful](/posts/golang/14.md)
+
 ## OPS
 
 2019-01-24 [Kubernetes v1.13 安装](/posts/ops/13.md)

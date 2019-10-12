@@ -3,6 +3,7 @@
 let CategoryMap = {
     javascript: 'JavaScript',
     nodejs: 'Node.js',
+    golang: "Go",
     web: 'Web',
     ops: 'OPS',
     others: 'Others'
@@ -21,7 +22,8 @@ let PostsMap = [
     { id: 10, title: 'NPM Magic', category: 'nodejs', date: 1482912684 },
     { id: 11, title: '日志管理工具-Graylog 安装使用', category: 'ops', date: 1484620294 },
     { id: 12, title: 'Build golang http server with docker', category: 'ops', date: 1541058935 },
-    { id: 13, title: 'Kubernetes v1.13 安装', category: 'ops', date: 1548296370 }
+    { id: 13, title: 'Kubernetes v1.13 安装', category: 'ops', date: 1548296370 },
+    { id: 14, title: 'Go Careful', category: 'golang', date: 1570787609 }
 ];
 
 let GHAddr = 'https://github.com/Dongss/dogs/tree/master/';
