@@ -34,6 +34,8 @@
 
 ## Others
 
+2021-04-27 [整洁架构-译](https://github.com/Dongss/the-clean-architecture-cn)
+
 2018-10-15 [优秀的编程原则-译](https://github.com/Dongss/principles-of-good-programming-cn)
 
 2016-05-09 [Git 小技巧](/posts/others/2.md)
