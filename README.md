@@ -1,5 +1,7 @@
 # 博客
 
+[搜索内容](https://sourcegraph.com/github.com/Dongss/dogs)
+
 ## JavaScript
 
 2016-12-01 [Promise Magic](/posts/javascript/9.md)
