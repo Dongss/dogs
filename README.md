@@ -36,6 +36,8 @@
 
 ## Others
 
+2022-11-02 [我在20年的软件工程师生涯中学到的20件事-译](https://github.com/Dongss/20-things-ive-learned-cn)
+
 2021-04-27 [整洁架构-译](https://github.com/Dongss/the-clean-architecture-cn)
 
 2018-10-15 [优秀的编程原则-译](https://github.com/Dongss/principles-of-good-programming-cn)
