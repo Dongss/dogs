@@ -36,6 +36,8 @@
 
 ## Others
 
+2022-12-30 [2022 年终总结](/posts/others/15.md)
+
 2022-11-02 [我在20年的软件工程师生涯中学到的20件事-译](https://github.com/Dongss/20-things-ive-learned-cn)
 
 2021-04-27 [整洁架构-译](https://github.com/Dongss/the-clean-architecture-cn)
