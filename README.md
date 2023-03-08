@@ -22,7 +22,7 @@
 
 ## Golang
 
-2019-10-11 [Go Careful](/posts/golang/14.md)
+2019-10-11 [Go Careful：一些 Golang 知识点](/posts/golang/14.md)
 
 ## OPS
 
