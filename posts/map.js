@@ -24,7 +24,9 @@ let PostsMap = [
     { id: 12, title: 'Build golang http server with docker', category: 'ops', date: 1541058935 },
     { id: 13, title: 'Kubernetes v1.13 安装', category: 'ops', date: 1548296370 },
     { id: 14, title: 'Go Careful', category: 'golang', date: 1570787609 },
-    { id: 15, title: '2022年终总结', category: 'others', date: 1672383136 }
+    { id: 15, title: '2022年终总结', category: 'others', date: 1672383136 },
+    { id: 16, title: '思考：更适合中小型技术公司的技术方案', category: 'others', date: 1673320271 },
+    { id: 17, title: '配置文件加密方案', category: 'golang', date: 1679644461 }
 ];
 
 let GHAddr = 'https://github.com/Dongss/dogs/tree/master/';

@@ -22,6 +22,8 @@
 
 ## Golang
 
+2023-03-24 [配置文件加密方案](/posts/golang/17.md)
+
 2019-10-11 [Go Careful：一些 Golang 知识点](/posts/golang/14.md)
 
 ## OPS
